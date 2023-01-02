@@ -1,11 +1,12 @@
-  
-   
+import TransactionsBox from "../components/ui/transactions";
+
 const Home = () => {
   return (
-    <>
-     <p>I am Budget JS App 3.0</p>
-    </>
-  )
-}
-  
+    <section className="text-center">
+      <p>I am Budget JS App 3.0</p>
+      <TransactionsBox />
+    </section>
+  );
+};
+
 export default Home;
