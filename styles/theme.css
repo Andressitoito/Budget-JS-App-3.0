@@ -1,0 +1,65 @@
+/* BACKGROUND COLORS PALLETE */
+
+.bg-msk-50 {
+	background-color: #f2f4fc;
+}
+.bg-msk-100 {
+	background-color: #e1e7f8;
+}
+.bg-msk-200 {
+	background-color: #c9d4f4;
+}
+.bg-msk-300 {
+	background-color: #a5baeb;
+}
+.bg-msk-400 {
+	background-color: #7995e1;
+}
+.bg-msk-500 {
+	background-color: #5a73d7;
+}
+.bg-msk-600 {
+	background-color: #4657ca;
+}
+.bg-msk-700 {
+	background-color: #3c47b9;
+}
+.bg-msk-800 {
+	background-color: #363c97;
+}
+.bg-msk-900 {
+	background-color: #31377b;
+}
+
+/* TEXT COLOR PALLETE */
+
+.txt-msk-50 {
+	color: #f2f4fc;
+}
+.txt-msk-100 {
+	color: #e1e7f8;
+}
+.txt-msk-200 {
+	color: #c9d4f4;
+}
+.txt-msk-300 {
+	color: #a5baeb;
+}
+.txt-msk-400 {
+	color: #7995e1;
+}
+.txt-msk-500 {
+	color: #5a73d7;
+}
+.txt-msk-600 {
+	color: #4657ca;
+}
+.txt-msk-700 {
+	color: #3c47b9;
+}
+.txt-msk-800 {
+	color: #363c97;
+}
+.txt-msk-900 {
+	color: #31377b;
+}
