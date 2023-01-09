@@ -38,12 +38,8 @@ const MainControlPanel = () => {
 		},
 	];
 
-	
-
-
 	return (
-		<section className="relative bg-msk-600 w-80  mx-auto p-2 rounded-md min-h-[250px]">
-			<p>I am MainControlPanel</p>
+		<section className="relative bg-msk-600 w-80  mx-auto p-2 rounded-md">
 			<div className="absolute top-5 left-[-100px]">
 				<BaseButton text={"Add category"} xs />
 				<CategoryList />

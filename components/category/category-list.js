@@ -25,12 +25,11 @@ const CategoryList = () => {
   },
  ];
  return (
-  <section className="
-  ">
-   <CategoryItem/>
-   <CategoryItem/>
-   <CategoryItem/>
-   <CategoryItem/>
+  <section >
+   <CategoryItem />
+   <CategoryItem />
+   <CategoryItem />
+   <CategoryItem />
   </section>
  );
 };

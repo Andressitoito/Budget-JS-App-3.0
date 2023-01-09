@@ -1,4 +1,6 @@
 const BaseButton = (props) => {
+	const {onClick} = props
+
 	const bgColor =
 		(props.danger && "bg-red-500") ||
 		(props.success && "bg-green-600") ||
@@ -15,7 +17,8 @@ const BaseButton = (props) => {
 
 	return (
 		<button
-			className={`${bgColor} ${bgColorHover} ${text} ${padding} text-white font-bold py-2 px-4 rounded transition delay-100 duration-500 ease-in-out`}
+			className={`${bgColor} ${bgColorHover} ${text} ${padding} text-white  py-2 px-4 rounded transition delay-100 duration-500 ease-in-out`}
+			onClick={onClick}
 		>
 			{props.text}
 		</button>
