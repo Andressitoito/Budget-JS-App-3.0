@@ -4,7 +4,7 @@
 const CurrentBudget = () => {
  return (
   <>
-   <p>120000</p>
+   <p>12003300</p>
   </>
  )
 }

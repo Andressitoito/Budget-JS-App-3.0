@@ -2,8 +2,14 @@ import BaseButton from "../interaction/Base-button";
 import CategoryList from "../category/category-list";
 import CategoryDetails from "../category/categoryDetails";
 import CategoryActions from "../category/categoryActions";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModalAddNewCategory } from "../../features/modals/modalAddNewCategory";
+import AddNewCategory from "../modals/addNewCategory";
 
 const MainControlPanel = () => {
+	const { modalAddNewCategory } = useSelector((state) => state);
+
+	const dispatch = useDispatch();
 	const DUMMY_DATA_FROM_REDUXSTATE = [
 		{
 			_id: "637fddc7b5985ce228c25984",
@@ -38,14 +44,27 @@ const MainControlPanel = () => {
 		},
 	];
 
+	const handleClickAddNewCategory = () => {
+		dispatch(toggleModalAddNewCategory());
+	};
+
 	return (
-		<section className="relative bg-msk-600 w-80  mx-auto p-2 rounded-md">
-			<div className="absolute top-5 left-[-100px]">
-				<BaseButton text={"Add category"} xs />
+		<section className="relative bg-msk-600 w-2/3 mx-auto p-2 rounded-md">
+			<div className="absolute top-7 left-[-100px]">
+				<BaseButton
+					text={"Add category"}
+					xs
+					onClick={() => {
+						handleClickAddNewCategory();
+					}}
+				/>
+				{modalAddNewCategory && <AddNewCategory />}
+
+				<AddNewCategory />
 				<CategoryList />
 			</div>
 
-			<div className="absolute top-5 right-[-120px]">
+			<div className="absolute top-7 right-[-120px]">
 				<CategoryActions />
 			</div>
 
