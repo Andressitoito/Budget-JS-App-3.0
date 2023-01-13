@@ -6,6 +6,10 @@ import modalNewTransaction from "../../../features/modals/modalNewTransaction";
 import modalAddNewCategory from "../../../features/modals/modalAddNewCategory";
 import modalEditTransaction from "../../../features/modals/modalEditTransacton";
 import modalDeleteTransaction from "../../../features/modals/modalDeleteTransaction";
+import organizationData from "../../../features/auth/organizationData";
+import categoryList from "../../../features/Category/categoryList";
+import currentCategory from "../../../features/Category/currentCategory";
+import getTransactionList from "../../../features/Transactions/getTransactionList";
 
 const store = configureStore({
 	reducer: {
@@ -15,7 +19,11 @@ const store = configureStore({
 		modalNewTransaction: modalNewTransaction,
 		modalAddNewCategory: modalAddNewCategory,
 		modalEditTransaction: modalEditTransaction,
-		modalDeleteTransaction: modalDeleteTransaction
+		modalDeleteTransaction: modalDeleteTransaction,
+		organizationData: organizationData,
+		categoryList: categoryList,
+		currentCategory: currentCategory,
+		getTransactionList: getTransactionList
 	},
 });
 

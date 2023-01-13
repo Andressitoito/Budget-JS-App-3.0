@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalNewTransaction } from "../../features/modals/modalNewTransaction";
+import HelperButtons from "../helpers/helperButtons";
 import BaseButton from "../interaction/Base-button";
 import NewTransaction from "../modals/newTransaction";
 import TransactionList from "../transactions/transactionList";
@@ -39,6 +40,12 @@ const CategoryDetails = () => {
 				/>
 			</div>
 			{modalNewTransaction && <NewTransaction />}
+
+
+
+<HelperButtons/>
+
+
 			<TransactionList />
 		</div>
 	);

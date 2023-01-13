@@ -8,6 +8,8 @@ const Home = () => {
     <CurrentBudget />
    </div>
    <MainControlPanel />
+
+   
   </section>
  );
 };

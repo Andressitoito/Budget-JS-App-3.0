@@ -1,37 +1,15 @@
 import CategoryItem from "./categoryItem";
 
-const CategoryList = () => {
- const DUMMY_DATA = [
-  {
-   _id: "637fddc7b5985ce228c25984",
-   _id_organization: "637fddc7b5985ce228c25984",
-   categoryName: "Food",
-   baseAmount: 21231,
-   transactions: [{}],
-  },
-  {
-   _id: "637fddc7b5985ce228c25984",
-   _id_organization: "637fddc7b5985ce228c25984",
-   categoryName: "Dates",
-   baseAmount: 111231,
-   transactions: [{}],
-  },
-  {
-   _id: "637fddc7b5985ce228c25984",
-   _id_organization: "637fddc7b5985ce228c25984",
-   categoryName: "Extra",
-   baseAmount: 12331,
-   transactions: [{}],
-  },
- ];
- return (
-  <section >
-   <CategoryItem />
-   <CategoryItem />
-   <CategoryItem />
-   <CategoryItem />
-  </section>
- );
+const CategoryList = (props) => {
+	const { categoryNameList } = props;
+
+	return (
+		<section className="mt-2 flex flex-col gap-2">
+			{categoryNameList.map((category) => (
+				<CategoryItem key={category._id} _id={category._id} categoryName={category.categoryName} />
+			))}
+		</section>
+	);
 };
 
 export default CategoryList;
