@@ -24,7 +24,7 @@ const CategoryDetails = () => {
   bg-gradient-to-b rounded-md pt-2 pb-2 px-2"
 		>
 			<CategoryName />
-			<div>
+			<div className="flex flex-col">
 				<CategoryCurrentBudget />
 				<CategoryBaseAmount />
 				<CategoryBalance />

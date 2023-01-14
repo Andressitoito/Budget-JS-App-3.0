@@ -6,7 +6,7 @@ const getTransactionListSlice = createSlice({
  name: 'getTransactionList',
  initialState: initialState,
  reducers: {
-  getTransactionListbyId: async (state, action) => {
+  getTransactionListbyId: (state, action) => {
 
    // const _id = action.payload._id
 
@@ -23,7 +23,7 @@ const getTransactionListSlice = createSlice({
      _id_organization: "637fddc7b5985ce228c25984",
      category: "culo",
      item: "q221342134",
-     price: 1234123,
+     price: 400,
      date: "2022-11-24T03:00:00.000Z"
     },
     {
@@ -31,7 +31,7 @@ const getTransactionListSlice = createSlice({
      _id_organization: "637fddc7b5985ce228c25984",
      category: "culo",
      item: "updatesd idtema",
-     price: 156345,
+     price: 300,
      date: "2022-11-24T03:00:00.000Z"
     },
     {
@@ -39,7 +39,7 @@ const getTransactionListSlice = createSlice({
      _id_organization: "637fddc7b5985ce228c25984",
      category: "culo",
      item: "updatesd idtema",
-     price: 156345,
+     price: 200,
      date: "2022-11-24T03:00:00.000Z"
     }
    ]

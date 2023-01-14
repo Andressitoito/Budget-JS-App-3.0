@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateCategoryListState } from "../../features/Category/categoryList";
+import { getTransactionListbyId } from "../../features/Transactions/getTransactionList";
 import BaseButton from "../interaction/Base-button";
 
 
@@ -31,7 +32,7 @@ const DUMMY_DATA_CATEGORY_LIST = [
 
 const HelperButtons = () => {
 
- const { categoryList } = useSelector((state) => state)
+ const { categoryList, getTransactionList } = useSelector((state) => state)
 
  const dispatch = useDispatch()
 
@@ -43,6 +44,14 @@ const HelperButtons = () => {
   console.log(categoryList)
  }
 
+ const getTransactionListButton = () => {
+  dispatch(getTransactionListbyId())
+ }
+
+ const showTransactionList = () => {
+  console.log(getTransactionList)
+ }
+
  return (
   <div>
    <BaseButton text={'Set current category name'} onClick={() => {
@@ -50,6 +59,12 @@ const HelperButtons = () => {
    }} />
    <BaseButton text={'Show current category state'} onClick={() => {
     showCurrentCategoryState()
+   }} />
+   <BaseButton text={'Get Trans List curr budget'} onClick={() => {
+    getTransactionListButton()
+   }} />
+   <BaseButton text={'show Trans List curr budget'} onClick={() => {
+    showTransactionList()
    }} />
   </div>
  )

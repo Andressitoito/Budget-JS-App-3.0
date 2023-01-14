@@ -10,6 +10,9 @@ module.exports = {
     extend: {
       // fontFamily: 
     },
+    maxWidth: {
+      '1/2': '50%',
+    }
   },
   plugins: [
     require("flowbite/plugin")

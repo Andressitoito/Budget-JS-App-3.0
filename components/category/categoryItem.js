@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentCategory } from "../../features/Category/currentCategory";
+import { getTransactionListbyId } from "../../features/Transactions/getTransactionList";
 
 const CategoryItem = (props) => {
 	const { categoryName, _id } = props;
@@ -8,11 +9,10 @@ const CategoryItem = (props) => {
 const dispatch = useDispatch()
 
 	const handleClickSetCurrentCategory = () => {
-		console.log(_id)
 		const selectedCategory = categoryList.find(category => category._id === _id)
 
-		console.log(selectedCategory.categoryName)
 		dispatch(setCurrentCategory(selectedCategory))
+		dispatch(getTransactionListbyId())
 	}
 
 	return (
