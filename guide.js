@@ -5,7 +5,7 @@ const items_to_prop_digging_CATEGORY = {
 	CategoryActions: "",
 	CategoryBalance: "",
 	CategoryBaseAmount: "",
-	CateogryCurrentBudget: "",
+	CateogryCurrentBudget: done,
 	CategoryDetails: "",
 	CategoryItem: done,
 	CategoryName: "",
@@ -25,3 +25,4 @@ const items_to_prop_digging_MODALS = {
 	editCategoryName: "",
 	newTransaction: "",
 };
+
