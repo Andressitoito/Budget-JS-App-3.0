@@ -25,7 +25,7 @@ const BaseButton = (props) => {
 			className={`${bgColor} ${bgColorHover} ${padding} uppercase
 			text-xl md:text-base
 			font-bold
-			txt-msk-100  py-1 px-2 rounded transition delay-100 duration-500 ease-in-out`}
+			txt-msk-100  py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out`}
 			onClick={onClick}
 		>
 			

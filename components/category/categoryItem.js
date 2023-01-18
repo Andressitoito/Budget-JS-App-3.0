@@ -6,7 +6,7 @@ const CategoryItem = (props) => {
 	const { categoryName, _id } = props;
 
 	const { categoryList } = useSelector((state) => state)
-const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
 	const handleClickSetCurrentCategory = () => {
 		const selectedCategory = categoryList.find(category => category._id === _id)

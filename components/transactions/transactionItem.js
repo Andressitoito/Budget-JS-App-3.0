@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleModalDeleteTransaction } from "../../features/modals/modalDeleteTransaction";
 import { toggleModalEditTransaction } from "../../features/modals/modalEditTransacton";
 import BaseButton from "../interaction/Base-button";
@@ -28,9 +28,6 @@ const TransactionItem = (props) => {
 		minute: "2-digit",
 	};
 	const formattedDate = newDate.toLocaleTimeString("es-AR", options);
-
-
-
 
 	return (
 		<div className="relative bg-msk-200 rounded-md">

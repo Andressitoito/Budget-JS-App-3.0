@@ -37,6 +37,7 @@ const MainControlPanel = () => {
 	const DUMMY_DATA_CATEGORY_LIST = [
 		{
 			_id: "637fddc7b5985ce21231228c25984",
+			_id_category: "637fddc7b5985ceaswqd228c25984",
 			_id_organization: "637fddc7b5985ce228ec259842",
 			categoryName: "Food",
 			baseAmount: 21231,
@@ -44,6 +45,7 @@ const MainControlPanel = () => {
 		},
 		{
 			_id: "637fddc7b5985ce22312328c25984",
+			_id_category: "637fddc7b5985casde2eqw28c25984",
 			_id_organization: "637fddc7b5985ce22e8c2598423",
 			categoryName: "Dates",
 			baseAmount: 111231,
@@ -51,6 +53,7 @@ const MainControlPanel = () => {
 		},
 		{
 			_id: "637fddc7b5985ce228c231225984",
+			_id_category: "637fddc7b5985ceweasd228c25984",
 			_id_organization: "637fddc7b5985cee228c25984123",
 			categoryName: "Extra",
 			baseAmount: 12331,
@@ -60,7 +63,7 @@ const MainControlPanel = () => {
 
 	const categoryNameList = DUMMY_DATA_CATEGORY_LIST.map(category => (
 		{
-			_id: category._id,
+			_id: category._id_category,
 			categoryName: category.categoryName
 		}))
 

@@ -9,8 +9,8 @@ const CategoryCurrentBudget = () => {
 
 	return (
 		<div className="bg-msk-800 m-auto max-w-[80%] flex rounded-md p-1">
-			<p className="bg-msk-300 w-auto txt-msk-90 px-2 text-5xl mx-auto rounded-md overflow-x-auto overflow-y-hidden">
-				{currentSpend}
+			<p className="bg-msk-300 w-auto txt-msk-90  py-2 px-4 text-5xl mx-auto rounded-md overflow-x-auto overflow-y-hidden">
+				{currentSpend && currentSpend || 0}
 			</p>
 		</div>
 	);
