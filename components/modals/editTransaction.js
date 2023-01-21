@@ -22,7 +22,7 @@ const EditTransaction = () => {
 			size="md"
 			popup={true}
 			onClose={onClose}
-			className="bg-opacity-5 backdrop-blur-[2px] pt-[15%] md:pt-0"
+			className="bg-opacity-5 backdrop-blur-[2px] pt-[15%] md:pt-0 h-[100%]"
 		>
 			<Modal.Body className="bg-msk-800 py-7 p-5 gap-3 rounded-md">
 				<div className="space-y-1 py-5 ">
@@ -42,7 +42,7 @@ const EditTransaction = () => {
 					<input
 						type="text"
 						id="itemName"
-						className="bg-gray-50 border border-gray-300 text-gray-900 text-3xl md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+						className="bg-gray-50 border border-gray-300 text-gray-900 text-2xl md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
 						placeholder="burgers, milk, bolts..."
 						required
 					/>

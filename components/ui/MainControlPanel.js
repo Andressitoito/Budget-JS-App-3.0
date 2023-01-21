@@ -85,7 +85,7 @@ const MainControlPanel = () => {
 				/>
 				{modalAddNewCategory && <AddNewCategory />}
 
-				<AddNewCategory />
+				{/* <AddNewCategory /> */}
 				<CategoryList categoryNameList={categoryNameList} />
 			</div>
 

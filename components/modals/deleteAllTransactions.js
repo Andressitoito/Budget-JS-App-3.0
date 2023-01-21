@@ -24,7 +24,7 @@ const DeleteAllTransactions = (props) => {
 					size="md"
 					popup={true}
 					onClose={onClose}
-					className="backdrop-blur-sm pt-[15%] md:pt-0"
+					className="backdrop-blur-sm pt-[15%] md:pt-0 h-[100%]"
 				>
 					<div className="relative rounded-lg p-4  bg-msk-800">
 						<h3 className="mb-5 text-center 
