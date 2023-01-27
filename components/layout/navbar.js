@@ -19,22 +19,20 @@ const Navbar = () => {
        Budget Js App 3.0
       </span>
      </a>
+
+
+
      <ul className="flex gap-3">
 
-
- {/*      <li className={` ${router.pathname === '/' ? 'bg-blue-600' : ''} active active:bg-slate-50  uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700`}>
+      <li className={` ${router.pathname === '/' ? 'bg-blue-600' : ''} active active:bg-slate-50  uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700`}>
        <Link href={'/'}>Home</Link>
       </li>
       <li className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700">
-       <Link href={'#'}>Sign In</Link>
-      </li>
-      <li className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700">
-       <Link href={'/auth/signup'}>Sign Up</Link>
+       <Link href={'/auth/register'}>Register</Link>
       </li>
       <li className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700">
        <Link href={'#'}>Log Out</Link>
-      </li> */}
-
+      </li>
 
      </ul>
 

@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const { default: next } = require('next');
-
 const nextConfig = {
  reactStrictMode: true,
  images: {
@@ -25,6 +23,7 @@ const nextConfig = {
    },
   ];
  },
+ appDir: true
 };
 
 module.exports = nextConfig;

@@ -1,21 +1,39 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
+import { useRouter } from "next/router";
 
 const Signin = () => {
  const [user, setUser] = useState({});
+ const router = useRouter()
 
  const handleCallbackResponse = (response) => {
   console.log("Encoded JWT ID TOKEN: " + response.credential);
 
   let userObject = jwt_decode(response.credential);
 
+  console.log(userObject);
+
   /* AS AN EXAMPLE */
 
   setUser(userObject);
   document.getElementById("signInDiv").hidden = true;
+  router.replace('/')
+
+  const {family_name, given_name, name, picture, email} = userObject
+
+  const user = {
+   family_name,
+   given_name,
+   name,
+   picture,
+   email
+  }
+
  };
 
+ // 1a227c9b7f3862072fc44375deae3dca090f6c54
+ // 111724539571640628484
  useEffect(() => {
   /* global google */
   google.accounts.id.initialize({
@@ -46,7 +64,6 @@ const Signin = () => {
 
  return (
   <>
-
    <form>
     <div className="mb-6">
      <input
@@ -99,7 +116,10 @@ const Signin = () => {
      <p className="text-center font-semibold mx-4 mb-0">OR</p>
     </div>
     <div className="flex justify-center p-5 transform ">
-     <div id="signInDiv" className="w-230 text-center scale-x-[140%] scale-y-[120%]"></div>
+     <div
+      id="signInDiv"
+      className="w-230 text-center scale-x-[140%] scale-y-[120%]"
+     ></div>
     </div>
    </form>
   </>

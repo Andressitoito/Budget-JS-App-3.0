@@ -83,7 +83,7 @@ const Register = () => {
 				</div>
 
 				{/* md:w-8/12 lg:w-6/12 */}
-				<section className="rounded-lg bg-msk-600 mt-2 flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
+				<section className="rounded-lg bg-msk-600 mt-2 flex justify-center items-center flex-col gap-4 h-full g-6 text-gray-800 p-5">
 					<div className="md:w-[240px] md:h-[300px] w-[120px] h-[150px] flex justify-center align-middle rounded-md overflow-hidden relative">
 						<Image
 							src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
@@ -93,7 +93,7 @@ const Register = () => {
 							style={{ objectFit: 'cover' }}
 						/>
 					</div>
-					<div className="md:w-8/12 lg:w-5/12 lg:ml-20">
+					<div>
 						{activeTab === "signin" ? <Signin /> : <SignUp />}
 					</div>
 				</section>

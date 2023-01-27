@@ -1,0 +1,8 @@
+CLUSTER
+
+BUDGET JS APP 3.0
+
+
+when i connect to mongoose database using <MY_CONNECTION_STRING> in this connection string is already given the name of the database. is there a way to switch databases via some property of mongoose.connection?
+
+thanks a lot, you are making my work as a developer a lot easier, also i feel more confident about my work with you as my friend
