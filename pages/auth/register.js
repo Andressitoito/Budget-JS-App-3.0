@@ -8,21 +8,25 @@ const Register = () => {
 
 	const handleClickActiveTab = (tab, e) => {
 		setActiveTab(tab);
+		console.log(tab)
 
 		document.querySelectorAll(".tab").forEach((tab) => {
+			tab.classList.remove("bg-indigo-400");
+			tab.classList.remove("bg-indigo-500");
 			tab.classList.add("bg-indigo-500");
 		});
 
 		if (e.target.tagName === "svg") {
 			return;
 		} else {
+			e.target.classList.remove("bg-indigo-400");
 			e.target.classList.remove("bg-indigo-500");
 			e.target.classList.add("bg-indigo-400");
 		}
 	};
 
 	return (
-		<div className="flex justify-center mt-2">
+		<div className="flex justify-center mt-2 mx-7">
 			{/* If our user doesnt have any attributes it means that there is no user logged in*/}
 
 			{/* {Object.keys(user).length != 0 && (
@@ -39,7 +43,7 @@ const Register = () => {
 			<div className="md:w-[50%]">
 				<div className="flex justify-between gap-5">
 					<button
-						className="tab text-white w-1/2 p-4 rounded bg-indigo-500  hover:bg-indigo-400 hover:text-indigo-100 shadow-md flex items-center justify-center
+						className="tab text-white w-1/2 p-4 rounded bg-indigo-400  hover:bg-indigo-400 hover:text-indigo-100 shadow-md flex items-center justify-center
 						transition duration-400 ease-in-out"
 						onClick={(e) => handleClickActiveTab("signin", e)}
 					>
