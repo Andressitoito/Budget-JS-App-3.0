@@ -8,7 +8,6 @@ const Register = () => {
 
 	const handleClickActiveTab = (tab, e) => {
 		setActiveTab(tab);
-		console.log(tab)
 
 		document.querySelectorAll(".tab").forEach((tab) => {
 			tab.classList.remove("bg-indigo-400");
@@ -26,7 +25,7 @@ const Register = () => {
 	};
 
 	return (
-		<div className="flex justify-center mt-2 mx-7">
+		<div className="flex justify-center mt-2 mx-7 pb-5">
 			{/* If our user doesnt have any attributes it means that there is no user logged in*/}
 
 			{/* {Object.keys(user).length != 0 && (
@@ -40,7 +39,7 @@ const Register = () => {
 				</div>
 			)} */}
 
-			<div className="md:w-[50%]">
+			<div className="md:w-[50%] max-w-[500px] min-w-[400px]">
 				<div className="flex justify-between gap-5">
 					<button
 						className="tab text-white w-1/2 p-4 rounded bg-indigo-400  hover:bg-indigo-400 hover:text-indigo-100 shadow-md flex items-center justify-center
@@ -86,8 +85,7 @@ const Register = () => {
 					</button>
 				</div>
 
-				{/* md:w-8/12 lg:w-6/12 */}
-				<section className="rounded-lg bg-msk-600 mt-2 flex justify-center items-center flex-col gap-4 h-full g-6 text-gray-800 p-5">
+				<section className="rounded-lg bg-msk-600 mt-2 flex justify-center items-center flex-col gap-4 g-6 text-gray-800 p-5">
 					<div className="md:w-[240px] md:h-[300px] w-[120px] h-[150px] flex justify-center align-middle rounded-md overflow-hidden relative">
 						<Image
 							src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"

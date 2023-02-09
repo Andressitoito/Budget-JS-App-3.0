@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
-import BaseButton from "../interaction/Base-button";
-import InputOrganizationID from "../organization/inputOrganizationID";
-import CreateNewOrganization from "../organization/createNewOrganization";
-import Image from "next/image";
 import AccountInfo from "../organization/accountInfo";
 
 const Signup = () => {
@@ -60,7 +56,7 @@ const Signup = () => {
 			<form>
 				<div className="flex">
 					<div className="w-1/2 text-center px-2">
-						<div className="bg-msk-300 rounded-lg flex items-center justify-center border border-gray-200">
+						<div className="bg-msk-300 rounded-lg flex items-center justify-center border border-indigo-500 outline-2 shadow-lg shadow-violet-200">
 							<div className="w-1/3 bg-transparent h-20 flex items-center justify-center icon-step">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +85,9 @@ const Signup = () => {
 						</svg>
 					</div>
 					<div className="w-1/2 text-center px-2">
-						<div className="bg-msk-300 rounded-lg flex items-center justify-center border border-gray-200">
+						<div className={`bg-msk-300 rounded-lg flex items-center justify-center border border-indigo-500 ${Object.keys(user).length != 0
+							? 'shadow-violet-200 shadow-lg'
+							: ''}`}>
 							<div className="w-1/3 bg-transparent h-20 flex items-center justify-center icon-step">
 								<svg
 									width="24"
@@ -115,7 +113,37 @@ const Signup = () => {
 						className="w-230 text-center scale-x-[140%] scale-y-[120%]"
 					></div>
 
-					{loadingUser && (
+				
+				</div>
+
+
+
+
+				{
+					Object.keys(user).length != 0 && <AccountInfo />
+				}
+
+			</form>
+		</>
+	);
+};
+
+export default Signup;
+
+{/* If our user doesnt have any attributes it means that there is no user logged in*/ }
+
+{/* {Object.keys(user).length != 0 && (
+				<button onClick={(e) => handleSignOut(e)}>Sign Out</button>
+			)}
+
+			{user && (
+				<div>
+					{user.picture && <Image src={imageSrc} height={50} width={50} alt="123" />}
+					<h3>{user.name}</h3>
+				</div>
+			)} */}
+
+				{/* {loadingUser && (
 						<button
 							disabled
 							type="button"
@@ -140,36 +168,4 @@ const Signup = () => {
 							</svg>
 							Creating new user...
 						</button>
-					)}
-				</div>
-
-
-				{/* If our user doesnt have any attributes it means that there is no user logged in*/}
-
-				{/* {Object.keys(user).length != 0 && (
-				<button onClick={(e) => handleSignOut(e)}>Sign Out</button>
-			)}
-
-			{user && (
-				<div>
-					{user.picture && <Image src={imageSrc} height={50} width={50} alt="123" />}
-					<h3>{user.name}</h3>
-				</div>
-			)} */}
-
-	{
-		Object.keys(user).length != 0 && <AccountInfo/>
-	}
-
-
-
-
-
-			</form>
-		</>
-	);
-};
-
-export default Signup;
-
-1929
+					)} */}
