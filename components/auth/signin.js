@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useRouter } from "next/router";
 
+
+
 const Signin = () => {
  const [user, setUser] = useState({});
  const router = useRouter()
@@ -115,12 +117,14 @@ const Signin = () => {
     <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
      <p className="text-center font-semibold mx-4 mb-0">OR</p>
     </div>
+
     <div className="flex justify-center p-5 transform ">
      <div
       id="signInDiv"
       className="w-230 text-center scale-x-[140%] scale-y-[120%]"
      ></div>
     </div>
+
    </form>
   </>
  );

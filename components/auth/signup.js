@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AccountInfo from "../organization/accountInfo";
+import { useRouter } from "next/router";
 
-const Signup = () => {
-
+const Signup = ({activeTab}) => {
+	const router = useRouter()
 	const [user, setUser] = useState({});
 	const [loadingUser, setLoadingUser] = useState(false);
 
@@ -15,10 +16,35 @@ const Signup = () => {
 		setUser(userObject);
 		document.getElementById("signInDiv").hidden = true;
 
+		const { email, name } = user;
 
+		try {
+			const res = await fetch("/api/data/find_user", {
+				method: "POST",
+				body: JSON.stringify({
+					email: email,
+					name: name
+				}),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			const data = await res.json();
+			console.log(data);
+
+			if (data.userExists === undefined) {
+				console.log("no user");
+				activeTab('signin')
+				// router.replace("/");
+			} else {
+				console.log("there is something");
+			}
+		} catch (error) {
+			// throw new Error({ message: error });
+			console.log(error)
+		}
 	};
-
-
 
 	useEffect(() => {
 		/* global google */
@@ -48,8 +74,6 @@ const Signup = () => {
 		setUser({});
 		document.getElementById("signInDiv").hidden = false;
 	};
-
-
 
 	return (
 		<>
@@ -85,9 +109,11 @@ const Signup = () => {
 						</svg>
 					</div>
 					<div className="w-1/2 text-center px-2">
-						<div className={`bg-msk-300 rounded-lg flex items-center justify-center border border-indigo-500 ${Object.keys(user).length != 0
-							? 'shadow-violet-200 shadow-lg'
-							: ''}`}>
+						<div
+							className={`bg-msk-300 rounded-lg flex items-center justify-center border border-indigo-500 ${
+								Object.keys(user).length != 0 ? "shadow-violet-200 shadow-lg" : ""
+							}`}
+						>
 							<div className="w-1/3 bg-transparent h-20 flex items-center justify-center icon-step">
 								<svg
 									width="24"
@@ -112,17 +138,9 @@ const Signup = () => {
 						id="signInDiv"
 						className="w-230 text-center scale-x-[140%] scale-y-[120%]"
 					></div>
-
-				
 				</div>
 
-
-
-
-				{
-					Object.keys(user).length != 0 && <AccountInfo />
-				}
-
+				{Object.keys(user).length != 0 && <AccountInfo />}
 			</form>
 		</>
 	);
@@ -130,9 +148,12 @@ const Signup = () => {
 
 export default Signup;
 
-{/* If our user doesnt have any attributes it means that there is no user logged in*/ }
+{
+	/* If our user doesnt have any attributes it means that there is no user logged in*/
+}
 
-{/* {Object.keys(user).length != 0 && (
+{
+	/* {Object.keys(user).length != 0 && (
 				<button onClick={(e) => handleSignOut(e)}>Sign Out</button>
 			)}
 
@@ -141,9 +162,11 @@ export default Signup;
 					{user.picture && <Image src={imageSrc} height={50} width={50} alt="123" />}
 					<h3>{user.name}</h3>
 				</div>
-			)} */}
+			)} */
+}
 
-				{/* {loadingUser && (
+{
+	/* {loadingUser && (
 						<button
 							disabled
 							type="button"
@@ -168,4 +191,5 @@ export default Signup;
 							</svg>
 							Creating new user...
 						</button>
-					)} */}
+					)} */
+}

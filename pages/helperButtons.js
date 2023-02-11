@@ -1,8 +1,11 @@
+import { useRouter } from "next/router";
 import BaseButton from "../components/interaction/Base-button";
 
 
 
 const HelperButtons = () => {
+
+ const router = useRouter()
 
 
  const handleClickDatabaseCall = async (e) => {
@@ -13,6 +16,14 @@ const HelperButtons = () => {
   const data = await res.json()
 
   console.log(data)
+
+  if (data.userExists === undefined) {
+   console.log('no user')
+   router.replace('/auth/register')
+
+  } else {
+   console.log('there is something')
+  }
 
  }
 
