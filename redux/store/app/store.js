@@ -10,6 +10,7 @@ import organizationData from "../../../features/auth/organizationData";
 import categoryList from "../../../features/Category/categoryList";
 import currentCategory from "../../../features/Category/currentCategory";
 import getTransactionList from "../../../features/Transactions/getTransactionList";
+import user from "../../../features/auth/user";
 
 const store = configureStore({
 	reducer: {
@@ -23,7 +24,8 @@ const store = configureStore({
 		organizationData: organizationData,
 		categoryList: categoryList,
 		currentCategory: currentCategory,
-		getTransactionList: getTransactionList
+		getTransactionList: getTransactionList,
+		user: user
 	},
 });
 

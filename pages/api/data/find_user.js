@@ -1,8 +1,7 @@
-const mongoose = require('mongoose')
-const User = require('../models/usersModel')
+const mongoose = require("mongoose");
+const User = require("../models/usersModel");
 
 async function handler(req, res) {
-
  // const userFromReq = {
  //  name: 'Michael Jackson',
  //  given_name: 'Michael',
@@ -11,36 +10,60 @@ async function handler(req, res) {
  //  email: 'MichaelJackson@mail.com'
  // }
 
- const userFromReq = req.body
+ if (req.method === "GET") {
 
- if (req.method === 'POST') {
-  try {
-   mongoose.connect("mongodb+srv://Andresitoito:1Zqq8lWA2zwwkJrr@bugetjsapp-iii.xbppxph.mongodb.net/Users?retryWrites=true&w=majority", {
-    useNewUrlParser: true
+  if (mongoose.connection.readyState === 0) {
+   mongoose.connect("mongodb+srv://Andresitoito:1Zqq8lWA2zwwkJrr@bugetjsapp-iii.xbppxph.mongodb.net/?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
    })
-  } catch (error) {
-   res.status(500).json({ message: 'Could not connect to database' })
+    .then(() => console.log('Connected to the database'))
+    .catch((error) => console.log('Error connectiong to the database ', error))
+  } else {
+   console.log('there is already an active connection')
   }
 
-  let isUser
 
-  try {
-   const users = await User.find()
+  const users = await User.find()
 
-   isUser = await users.find(user => user.email === userFromReq.email)
-
-  } catch (error) {
-   res.status(500).json({ message: 'Could not search in users' })
-  }
+  console.log(users)
 
   res.status(200).json({
-   message: 'hi from find users',
-   userExists: isUser,
+   message: 'users sent',
+   users: users
   })
 
  }
 
+ const userFromReq = req.body;
+
+ if (req.method === "POST") {
+  try {
+   mongoose.connect(
+    "mongodb+srv://Andresitoito:1Zqq8lWA2zwwkJrr@bugetjsapp-iii.xbppxph.mongodb.net/Users?retryWrites=true&w=majority",
+    {
+     useNewUrlParser: true,
+    }
+   );
+  } catch (error) {
+   return res.status(500).json({ message: "Could not connect to database" });
+  }
+
+  let isUser;
+
+  try {
+   const users = await User.find();
+
+   isUser = await users.find((user) => user.email === userFromReq.email);
+  } catch (error) {
+   return res.status(500).json({ message: "Could not search in users" });
+  }
+
+  res.status(200).json({
+   message: "hi from find users",
+   userExists: isUser,
+  });
+ }
 }
 
-
-export default handler
+export default handler;

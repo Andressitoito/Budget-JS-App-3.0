@@ -34,6 +34,31 @@ _id: to target to delete or modify this UNIQUE transaction,
 _id_category: to target all transactions from THIS category, to show or delete all transactions from THIS category
 _id_organization: to target all transactions to delete
 
+using mongoose schema, how could i create a schema for an organization and an array of users like
+
+_id: 'ORGANIZATION_ID'
+organization: 'foo',
+users: [
+ {
+  "username": "jackson3",
+  "password": "qwe4134132re432re",
+  "_id": "637fddc7b5985ce228c25984",
+  "_id_organization": 'ORGANIZATION_ID',
+ },
+ {
+  "username": "jackson2",
+  "password": "qwe232134132re432re",
+  "_id": "6380bad817f10e2eb4598c9b",
+  "_id_organization": 'ORGANIZATION_ID',
+ },
+ {
+  "username": "jackson13",
+  "password": "qwe2342134132re432re",
+  "_id": "6380bad817f1023432e2eb4598c9b",
+  "_id_organization": 'ORGANIZATION_ID',
+ }
+]
+
 
 
 //  USER
