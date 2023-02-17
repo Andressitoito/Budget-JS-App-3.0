@@ -1,25 +1,43 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import HelperText from "../helpers/helperText";
 import BaseButton from "../interaction/Base-button";
 
 const CreateNewOrganizationForm = () => {
 	const {
 		register,
-		formState: { errors, isSubmitting, isValid },
+		formState: { errors, isValid },
 	} = useForm({ mode: "onBlur" });
 
+	const { user } = useSelector((state) => state)
 	const [buttonState, setButtonState] = useState(true);
 
 	useEffect(() => {
 		isValid === true ? setButtonState(false) : setButtonState(true);
 	}, [isValid]);
 
-	const handleClick_createNewOrganization = (e) => {
+	const handleClick_createNewOrganization = async (e) => {
 		e.preventDefault();
-  console.log('create new organization button done!')
+		console.log('create new organization button done!')
 
-  
+
+
+		console.log(user)
+
+		const response = await fetch('/api/data/create_new_organization', {
+			method: 'POST',
+			body: JSON.stringify(user),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const data = await response.json()
+
+		console.log(data)
+
+
 	};
 
 	return (
@@ -49,7 +67,7 @@ const CreateNewOrganizationForm = () => {
 				<HelperText>{errors.authorization_token.message}</HelperText>
 			)}
 			<BaseButton
-				text={"Create New organization"}
+				text={"Create New User and Organization"}
 				disabled={buttonState}
 				w_full
 				p_xl

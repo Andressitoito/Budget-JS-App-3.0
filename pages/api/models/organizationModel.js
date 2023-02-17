@@ -9,7 +9,7 @@ const organizationSchema = new mongoose.Schema({
   trim: true
  },
  users: [
-  usersModel
+  usersModel.schema
  ]
 })
 
