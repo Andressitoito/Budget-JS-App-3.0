@@ -2,7 +2,7 @@ import { useState } from "react";
 import CreateNewOrganization from "./createNewOrganizationForm";
 import InputOrganizationID from "./inputOrganizationID";
 
-const AccountInfo = () => {
+const AccountInfo = ({user}) => {
 	const [showOrganizationForm, setShowOrganizationForm] = useState(false);
 
 	const handleClickCheckbox = () => {
@@ -22,7 +22,7 @@ const AccountInfo = () => {
 					className="form-check-label text-lg inline-block txt-msk-200"
 					htmlFor="organizationID"
 				>
-					Already have an organization ID?
+					{`${user?.given_name}, already have an organization ID?`}
 				</label>
 			</div>
 			{showOrganizationForm ? <InputOrganizationID /> : <CreateNewOrganization />}

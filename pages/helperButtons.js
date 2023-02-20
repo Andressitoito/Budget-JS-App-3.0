@@ -25,9 +25,14 @@ const HelperButtons = () => {
 
  const handleClick_createNewOrganization = async () => {
 
+  const DUMMY_USER = {
+    name: 'Max',
+    lastname: 'Wai'
+  }
+
   const response = await fetch('/api/data/create_new_organization', {
    method: 'POST',
-   body: JSON.stringify(user),
+   body: JSON.stringify(DUMMY_USER),
    headers: {
     'Content-Type': 'application/json'
    }
@@ -39,6 +44,27 @@ const HelperButtons = () => {
   console.log(data)
  }
 
+
+ const handleClick_createNewOrganization_GET = async (e) => {
+
+  e.preventDefault()
+
+  console.log('ORGANIZATION GET')
+
+  const DUMMY_USER = {
+    name: 'Max',
+    lastname: 'Wai'
+  }
+
+  const response = await fetch('/api/data/create_new_organization')
+
+  const data = await response.json()
+
+  console.log('ESTA ES LA DATA')
+  console.log(data)
+ }
+
+ 
 
  const setUser = () => {
   console.log('set User')
@@ -67,6 +93,8 @@ const HelperButtons = () => {
 
 
     <BaseButton onClick={(e) => handleClick_createNewOrganization(e)} text={'Create Organization'} />
+
+    <BaseButton onClick={(e) => handleClick_createNewOrganization_GET(e)} text={'Create Organization METHOD GET'} />
 
 
     <BaseButton onClick={(e) => setUser(e)} text={'Set user'} />
