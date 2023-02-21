@@ -19,6 +19,7 @@ export default function Document() {
    </Head>
    <body className="bg-msk-800">
     <div id="modals"></div>
+    <div id="notifications"></div>
     <Main />
     <NextScript />
    </body>

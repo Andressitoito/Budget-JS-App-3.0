@@ -32,7 +32,7 @@ each category name in the list is coming from MainControlPanel, from a DUMMY_DAT
 from here to each button is given _id_category and categoryName wich is passed to a component to build a list of categories.
 
 From each category button we can call to a redux state where we can take any data.
-
+ 
 
 `
 /* 
@@ -59,5 +59,12 @@ CLIENT SECRET
 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
 
 */
+
+
+   // const result = await client.collection('Users')
+
+   // const resultado = await client.admin().listDatabases()
+   // console.log(result)
+   // console.log(resultado)
 
 
