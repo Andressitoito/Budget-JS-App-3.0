@@ -1,127 +1,97 @@
-const mongoose = require('mongoose')
+import { mongo_connect } from "../../../lib/mongo_connect";
+
+// const mongoose = require('mongoose')
 const User = require("../models/usersModel");
-const Organization = require('../models/organizationModel')
+const Organization = require("../models/organizationModel");
 
 async function handler(req, res) {
+	if (req.method === "POST") {
+		try {
+			await mongo_connect("Organizationsensor");
+		} catch (error) {
+			res.status(500).json({
+				status: 500,
+				message: "Error connecting to the database",
+				error,
+			});
+		}
 
- if (req.method === "GET") {
+		try {
+			console.log("CREATE ORGANIZATION");
 
-  if (mongoose.connection.readyState === 0) {
-   mongoose.connect("mongodb+srv://Andresitoito:1Zqq8lWA2zwwkJrr@bugetjsapp-iii.xbppxph.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-   })
-    .then(() => console.log('Connected to the database'))
-    .catch((error) => console.log('Error connectiong to the database ', error))
-  } else {
-   console.log('there is already an active connection')
-  }
+			const organizations = await Organization.find();
 
-  console.log('ENTRO AL GET')
+			console.log(organizations);
 
-  const organizations = await Organization.find()
-  const users = await User.find()
+			console.log(req.body);
 
-  console.log(users)
-  console.log(organizations)
+			const new_organization = new Organization({
+				organization: req.body.organization,
+				users: [],
+			});
 
-  res.status(200).json({
-   message: 'users sent from POST',
-   organizations: organizations,
-   users: users
-  })
+			console.log(new_organization);
 
+			// new_organization.save((err, saved_organization) => {
+			//  if (err) {
+			//   res.status(500).json({
+			//    status: 500,
+			//    message: `Could not save ${req.body.organization} in database`,
+			//    error: err
+			//   })
+			//  } else {
+			//   console.log(saved_organization)
+			//   res.status(200).json({
+			//    message: 'users sent from POST',
+			//    organizations: organizations,
+			//    new_organization: saved_organization
+			//   })
+			//  }
+			// })
+		} catch (error) {
+			res.status(500).json({
+				status: 500,
+				message: "There was a problem with create",
+				error: error,
+			});
+		}
 
- }
+		try {
+			console.log(req.body.user);
+			console.log(req.body.user.name);
+			console.log(req.body.user.lastname);
 
- if (req.method === 'POST') {
+			const new_user = new User({
+				name: req.body.user.name,
+				given_name: req.body.user.given_name,
+				family_name: req.body.user.family_name,
+				picture: req.body.user.picture,
+				email: req.body.user.email,
+			});
 
-  if (mongoose.connection.readyState === 0) {
-   mongoose.connect("mongodb+srv://Andresitoito:1Zqq8lWA2zwwkJrr@bugetjsapp-iii.xbppxph.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-   })
-    .then(() => console.log('Connected to the database'))
-    .catch((error) => console.log('Error connectiong to the database ', error))
-  } else {
-   console.log('there is already an active connection')
-  }
+			console.log(new_user);
 
-  console.log('ENTRO AL POST')
+			Organization.findOne({ organization: "Maxilares" }, (err, org) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log("THIS IS THE ORGANIZATION ", org);
 
-  const organizations = await Organization.find()
-  const users = await User.find()
+					org.users.push(new_user);
 
-  console.log(users)
-  console.log(organizations)
+					org.save((err, updated_organization) => {
+						if (err) {
+							console.log(err);
+						} else {
+							console.log(updated_organization);
+						}
+					});
+				}
+			});
+		} catch (error) {}
+	}
 
-  res.status(200).json({
-   message: 'users sent from POST',
-   organizations: organizations,
-   users: users
-  })
-
-
- }
-
-
+	// res.status(404).json({ message: "Not found" });
 }
 
-export default handler
-
-
-
-/* 
-
-
-
- if (req.method === 'POST') {
-
-  if (mongoose.connection.readyState === 0) {
-   mongoose.connect("mongodb+srv://Andresitoito:1Zqq8lWA2zwwkJrr@bugetjsapp-iii.xbppxph.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-   })
-    .then(() => console.log('Connected to the database'))
-    .catch((error) => console.log('Error connectiong to the database ', error))
-  } else {
-   console.log('there is already an active connection')
-  }
-
-
-  try {
-
-
-   console.log('entro al create')
-
-   console.log(req.method)
-
-
-
-
-   res.status(201).json({
-    message: 'User Organization Created',
-   })
-
-  } catch (error) {
-   res.status(404).json({
-    message: 'Something went wrong',
-    error: error
-   })
-  }
-
-
-
-
-
-
-
-
-
-
- }
-
-
- 
-
-*/
+export default handler;
