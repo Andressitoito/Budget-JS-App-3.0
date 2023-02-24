@@ -43,7 +43,6 @@ const HelperButtons = () => {
   });
 
   const data = await response.json();
-
   console.log("ESTA ES LA DATA");
   console.log(data);
  };

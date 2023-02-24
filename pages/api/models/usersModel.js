@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validate = require("mongoose-validator");
+mongoose.set('debug', true);
 
 const urlValidator = [
 	validate({
@@ -23,12 +24,12 @@ const userSchema = new mongoose.Schema({
 	},
 	given_name: {
 		type: String,
-		required: [true, "A user must hace a first name"],
+		required: [true, "A user must have a first name"],
 		trim: true,
 	},
 	family_name: {
 		type: String,
-		required: [true, "A user must hace a last name"],
+		required: [true, "A user must have a last name"],
 		trim: true,
 	},
 	picture: {

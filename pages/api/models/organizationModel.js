@@ -10,7 +10,9 @@ const organizationSchema = new mongoose.Schema({
  },
  users: [
   usersModel.schema
- ]
+ ],
 })
 
 module.exports = mongoose.models.Organization || mongoose.model('Organization', organizationSchema)
+
+
