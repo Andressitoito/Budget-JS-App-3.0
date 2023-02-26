@@ -4,151 +4,146 @@ import BaseButton from "../components/interaction/Base-button";
 import { signIn } from "../features/auth/user";
 
 const HelperButtons = () => {
- const { user } = useSelector((state) => state);
- const dispatch = useDispatch();
+	const { user } = useSelector((state) => state);
+	const dispatch = useDispatch();
 
- const router = useRouter();
+	const router = useRouter();
 
- const handleClickDatabaseCall = async (e) => {
-  e.preventDefault();
+	const handleClickDatabaseCall = async (e) => {
+		e.preventDefault();
 
-  const response = await fetch("/api/data/find_user");
-  const data = await response.json();
+		const response = await fetch("/api/data/find_user");
+		const data = await response.json();
 
-  console.log(data);
- };
+		console.log(data);
+	};
 
- const handleClick_createNewOrganization = async () => {
+	const handleClick_createNewOrganization = async () => {
+		const DUMMY_USER = {
+			name: "Max",
+			given_name: "Wai",
+			family_name: "Mann",
+			picture: "https://i.stack.imgur.com/2ixs2.png",
+			email: "maxilares@max.com",
+		};
 
-  const DUMMY_USER = {
-   name: "Max",
-   given_name: "Wai",
-   family_name: 'Mann',
-   picture: 'https://i.stack.imgur.com/2ixs2.png',
-   email: 'maxilares@max.com'
-  };
+		const DUMMY_ORGANIZATION = {
+			organization: "Maxilares",
+			user: DUMMY_USER,
+		};
 
-  const DUMMY_ORGANIZATION = {
-   organization: "Maxilares",
-   user: DUMMY_USER,
-  };
+		const response = await fetch("/api/data/create_new_organization", {
+			method: "POST",
+			body: JSON.stringify(DUMMY_ORGANIZATION),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 
+		const data = await response.json();
+		console.log("DATA FROM CREATE ORGANIZATION");
+		console.log(data);
+	};
 
-  const response = await fetch("/api/data/create_new_organization", {
-   method: "POST",
-   body: JSON.stringify(DUMMY_ORGANIZATION),
-   headers: {
-    "Content-Type": "application/json",
-   },
-  });
+	const handleClick_createNewOrganization_GET = async (e) => {
+		e.preventDefault();
 
-  const data = await response.json();
-  console.log("ESTA ES LA DATA");
-  console.log(data);
- };
+		console.log("ORGANIZATION FIND");
 
- const handleClick_createNewOrganization_GET = async (e) => {
-  e.preventDefault();
+		const DUMMY_USER = {
+			name: "Max",
+			lastname: "Wai",
+		};
 
-  console.log("ORGANIZATION FIND");
+		const DUMMY_ORGANIZATION = {
+			organization: "Maxilares",
+			users: [DUMMY_USER],
+		};
 
-  const DUMMY_USER = {
-   name: "Max",
-   lastname: "Wai",
-  };
+		const response = await fetch("/api/data/find_organization", {
+			method: "POST",
+			body: JSON.stringify(DUMMY_ORGANIZATION),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 
-  const DUMMY_ORGANIZATION = {
-   organization: "Maxilares",
-   users: [DUMMY_USER],
-  };
+		const data = await response.json();
 
-  const response = await fetch("/api/data/find_organization", {
-   method: "POST",
-   body: JSON.stringify(DUMMY_ORGANIZATION),
-   headers: {
-    "Content-Type": "application/json",
-   },
-  });
+		console.log("RESPUESTA DEL POST FIND");
+		console.log(data);
+	};
 
-  const data = await response.json();
+	const handleClick_createNewUser = async (e) => {
+		e.preventDefault();
 
-  console.log("RESPUESTA DEL POST FIND");
-  console.log(data);
- };
+		const DUMMY_USER = {
+			name: "Max",
+			given_name: "Wai",
+			family_name: "Mann",
+			picture: "https://i.stack.imgur.com/2ixs2.png",
+			email: "maxilares@max.com",
+		};
 
- const handleClick_createNewUser = async (e) => {
-  e.preventDefault()
+		const response = await fetch("/api/data/create_new_user", {
+			method: "POST",
+			body: JSON.stringify(DUMMY_USER),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 
-  const DUMMY_USER = {
-   name: "Max",
-   given_name: "Wai",
-   family_name: 'Mann',
-   picture: 'https://i.stack.imgur.com/2ixs2.png',
-   email: 'maxilares@max.com'
-  };
+		const data = await response.json();
+		console.log("DATA FROM CREATE USER");
+		console.log(data);
+	};
 
-  const response = await fetch("/api/data/create_new_user", {
-   method: "POST",
-   body: JSON.stringify(DUMMY_USER),
-   headers: {
-    "Content-Type": "application/json",
-   },
-  });
+	const setUser = () => {
+		console.log("set User");
 
-  const data = await response.json();
+		dispatch(
+			signIn({
+				name: "jhon",
+				lastname: "doe",
+			})
+		);
+	};
 
-  console.log("ESTA ES LA DATA");
-  console.log(data);
+	const showUser = () => {
+		console.log("show user");
 
+		console.log(user);
+	};
 
- }
+	return (
+		<>
+			<div className="m-4 flex flex-wrap gap-3">
+				<BaseButton
+					onClick={(e) => handleClickDatabaseCall(e)}
+					text={"Fetch Database"}
+				/>
 
- const setUser = () => {
-  console.log("set User");
+				<BaseButton
+					onClick={(e) => handleClick_createNewOrganization(e)}
+					text={"Create Organization"}
+				/>
 
-  dispatch(
-   signIn({
-    name: "jhon",
-    lastname: "doe",
-   })
-  );
- };
+				<BaseButton
+					onClick={(e) => handleClick_createNewOrganization_GET(e)}
+					text={"Create Organization METHOD GET"}
+				/>
 
- const showUser = () => {
-  console.log("show user");
+				<BaseButton
+					onClick={(e) => handleClick_createNewUser(e)}
+					text={"Create and Push User"}
+				/>
 
-  console.log(user);
- };
+				<BaseButton onClick={(e) => setUser(e)} text={"Set user"} />
 
- return (
-  <>
-   <div className="m-4 flex flex-wrap gap-3">
-    <BaseButton
-     onClick={(e) => handleClickDatabaseCall(e)}
-     text={"Fetch Database"}
-    />
-
-    <BaseButton
-     onClick={(e) => handleClick_createNewOrganization(e)}
-     text={"Create Organization"}
-    />
-
-    <BaseButton
-     onClick={(e) => handleClick_createNewOrganization_GET(e)}
-     text={"Create Organization METHOD GET"}
-    />
-
-    <BaseButton
-     onClick={(e) => handleClick_createNewUser(e)}
-     text={"Create and Push User"}
-    />
-
-    <BaseButton onClick={(e) => setUser(e)} text={"Set user"} />
-
-    <BaseButton onClick={(e) => showUser(e)} text={"Show user"} />
-   </div>
-  </>
- );
+				<BaseButton onClick={(e) => showUser(e)} text={"Show user"} />
+			</div>
+		</>
+	);
 };
 
 export default HelperButtons;

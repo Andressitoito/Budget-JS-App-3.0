@@ -5,6 +5,12 @@ const User = require("../models/usersModel");
 const Organization = require("../models/organizationModel");
 
 async function handler(req, res) {
+
+	const { organization, user } = req.body
+
+	console.log('ORGANIZATION: ', organization)
+	console.log('USER: ', user)
+
 	if (req.method === "POST") {
 		try {
 			await mongo_connect();
@@ -12,43 +18,36 @@ async function handler(req, res) {
 			res.status(500).json({
 				status: 500,
 				message: "Error connecting to the database",
-				error,
+				error: error.toString()
 			});
 		}
 
 		try {
-			console.log("CREATE ORGANIZATION");
+			const organizations_list = await Organization.find();
 
 
-			
+			// const isOrganization = organizations.some(elem => elem == organization )
 
-			const organizations = await Organization.find();
+			// console.log(isOrganization)
 
-			console.log(organizations);
+			// const new_organization = new Organization({
+			// 	organization: req.body.organization,
+			// 	users: [],
+			// });
 
-			// console.log(req.body);
+			// const users = await User.find();
 
-			const new_organization = new Organization({
-				organization: req.body.organization,
-				users: [],
-			});
+			// console.log("LOG USERS", users);
 
-			console.log(new_organization);
+			// const new_user = new User({
+			// 	name: req.body.user.name,
+			// 	given_name: req.body.user.given_name,
+			// 	family_name: req.body.user.family_name,
+			// 	picture: req.body.user.picture,
+			// 	email: req.body.user.email,
+			// });
 
-			const users = await User.find();
-
-   console.log('LOG USERS', users);
-
-   const new_user = User.create({
- 				name: req.body.user.name,
-				given_name: req.body.user.given_name,
-				family_name: req.body.user.family_name,
-				picture: req.body.user.picture,
-				email: req.body.user.email,
-   });
-
-   console.log(new_user);
-
+			// console.log(new_user);
 
 			// new_organization.save((err, saved_organization) => {
 			//  if (err) {
@@ -70,7 +69,7 @@ async function handler(req, res) {
 			res.status(500).json({
 				status: 500,
 				message: "There was a problem creating an organization",
-				error: error,
+				error: error.toString(),
 			});
 		}
 
@@ -78,7 +77,6 @@ async function handler(req, res) {
 			// console.log(req.body.user);
 			// console.log(req.body.user.name);
 			// console.log(req.body.user.lastname);
-
 			// const new_user = new User({
 			// 	name: req.body.user.name,
 			// 	given_name: req.body.user.given_name,
@@ -86,17 +84,13 @@ async function handler(req, res) {
 			// 	picture: req.body.user.picture,
 			// 	email: req.body.user.email,
 			// });
-
 			// console.log(new_user);
-
 			// Organization.findOne({ organization: "Maxilares" }, (err, org) => {
 			// 	if (err) {
 			// 		console.log(err);
 			// 	} else {
 			// 		console.log("THIS IS THE ORGANIZATION ", org);
-
 			// 		org.users.push(new_user);
-
 			// 		org.save((err, updated_organization) => {
 			// 			if (err) {
 			// 				console.log(err);
@@ -106,12 +100,28 @@ async function handler(req, res) {
 			// 		});
 			// 	}
 			// });
-
-
-		} catch (error) {}
+		} catch (error) { }
 	}
 
 	// res.status(404).json({ message: "Not found" });
 }
 
 export default handler;
+
+
+/* 
+HELPER CALLS
+
+			const new_organization = await Organization.create({
+				organization: 'Maxilares',
+			});
+
+			res.status(201).json({
+				message: `Organization saved succesfully in database`,
+				new_organization: new_organization.toString(),
+			});
+
+
+
+
+*/
