@@ -1,39 +1,110 @@
 import { mongo_connect } from "../../../lib/mongo_connect";
-
-// const mongoose = require('mongoose')
 const User = require("../models/usersModel");
 const Organization = require("../models/organizationModel");
 
 async function handler(req, res) {
 
-	const { organization, user } = req.body
-
-	console.log('ORGANIZATION: ', organization)
-	console.log('USER: ', user)
-
 	if (req.method === "POST") {
+		////////////////////////////////
+		// DECLARE GLOBAL VARIABLES
+		////////////////////////////////
+		const { organization, user } = req.body;
+
+		console.log("ORGANIZATION: ", organization);
+		console.log("USER: ", user);
+
+		let saved_organization;
+		let saved_user
+		let new_organization
+		let new_user
+
+		////////////////////////////////
+		// CONNECT TO THE DATABASE
+		////////////////////////////////
 		try {
 			await mongo_connect();
 		} catch (error) {
 			res.status(500).json({
 				status: 500,
 				message: "Error connecting to the database",
-				error: error.toString()
+				error: error.toString(),
 			});
 		}
+
+		////////////////////////////////
+		// FIND DUPLICATES ORGANIZATIONS 
+		// AND CREATE	NEW ORGANIZATION
+		////////////////////////////////
+		try {
+			const organizations_list = await Organization.find()
+
+			const isOrganization = organizations_list.some(org => org.organization.toLowerCase() === organization.toLowerCase())
+
+			console.log("ORGANIZATION EXISTS?: ", isOrganization);
+
+			if (isOrganization) {
+				res.status(422).json({
+					status: 422,
+					message: `The organization ${organization} already exists`,
+					error: error.toString()
+				})
+			} else {
+				try {
+					new_organization = await new Organization({
+						organization: organization
+					})
+				} catch (error) {
+					res.status(500).json({
+						status: 500,
+						message: `There was a problem creating new organization ${organization}`,
+						error: error.toString()
+					})
+				}
+			}
+		} catch (error) {
+			res.status(500).json({
+				status: 500,
+				message: 'There was a problem in the process of creating an organization',
+				error: error.toString()
+			})
+		}
+
+		////////////////////////////////
+		// CREATE NEW USER
+		////////////////////////////////
+
+
+
 
 		try {
 			const organizations_list = await Organization.find();
 
+			const isOrganization = organizations_list.some(
+				(org) => org.organization.toLowerCase() === organization.toLowerCase()
+			);
 
-			// const isOrganization = organizations.some(elem => elem == organization )
 
-			// console.log(isOrganization)
+			if (isOrganization) {
+				res.status(422).json({
+					status: 422,
+					message: `The organization ${organization} already exists`,
+				});
+			} else if (isUser) {
+			} else {
+				console.log("Continue");
 
-			// const new_organization = new Organization({
-			// 	organization: req.body.organization,
-			// 	users: [],
-			// });
+				const new_organization = await new Organization({
+					organization: organization,
+					users: [],
+				});
+
+				console.log(new_organization);
+			}
+
+			let saved_organization;
+			try {
+				saved_organization = await new_organization.save();
+			} catch (error) { }
 
 			// const users = await User.find();
 
@@ -107,7 +178,6 @@ async function handler(req, res) {
 }
 
 export default handler;
-
 
 /* 
 HELPER CALLS

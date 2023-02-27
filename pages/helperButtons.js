@@ -28,7 +28,7 @@ const HelperButtons = () => {
 		};
 
 		const DUMMY_ORGANIZATION = {
-			organization: "Maxilares",
+			organization: "MaxiMax",
 			user: DUMMY_USER,
 		};
 
