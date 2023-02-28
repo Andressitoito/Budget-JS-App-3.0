@@ -1,90 +1,3 @@
-// import { mongo_connect } from "../../../lib/mongo_connect";
-
-// // const mongoose = require('mongoose')
-// const User = require("../models/usersModel");
-// const Organization = require("../models/organizationModel");
-
-// async function handler(req, res) {
-// 	if (req.method === "POST") {
-// 		try {
-// 			await mongo_connect();
-// 		} catch (error) {
-// 			res.status(500).json({
-// 				status: 500,
-// 				message: "Error connecting to the database",
-// 				error,
-// 			});
-// 		}
-
-// 		try {
-// 			console.log("CREATE ORGANIZATION");
-
-// 			// const organizations = await Organization.find();
-
-// 			// console.log(organizations);
-
-// 			// console.log(req.body);
-
-// 			// const new_organization = new Organization({
-// 			// 	organization: req.body.organization,
-// 			// 	users: [],
-// 			// });
-
-// 			// console.log(new_organization);
-
-// 			const users = await User.find();
-
-//    console.log('LOG USERS', users);
-
-//    const new_user = new User({
-//  				name: req.body.user.name,
-// 				given_name: req.body.user.given_name,
-// 				family_name: req.body.user.family_name,
-// 				picture: req.body.user.picture,
-// 				email: req.body.user.email,
-//    });
-
-//    console.log(new_user);
-
-// 		} catch (error) {
-// 			res.status(500).json({
-// 				status: 500,
-// 				message: "There was a problem creating an user",
-// 				error: error,
-// 			});
-// 		}
-
-// 		try {
-// 			// console.log(req.body.user);
-// 			// console.log(req.body.user.name);
-// 			// console.log(req.body.user.lastname);
-
-// 			// const new_user = new User({
-// 			// 	name: req.body.user.name,
-// 			// 	given_name: req.body.user.given_name,
-// 			// 	family_name: req.body.user.family_name,
-// 			// 	picture: req.body.user.picture,
-// 			// 	email: req.body.user.email,
-// 			// });
-
-// 			// console.log(new_user);
-
-// 		} catch (error) {}
-// 	}
-
-// 	// res.status(404).json({ message: "Not found" });
-// }
-
-// export default handler;
-
-
-
-
-// const usersModel = require('./usersModel')
-// users: [
-//  usersModel.schema
-// ],
-
 import { mongo_connect } from "../../../lib/mongo_connect";
 
 const User = require("../models/usersModel");
@@ -92,68 +5,87 @@ const Organization = require("../models/organizationModel");
 
 async function handler(req, res) {
 	if (req.method === "POST") {
+		////////////////////////////////
+		// DECLARE GLOBAL VARIABLES
+		////////////////////////////////
+		const { organization_id, user } = req.body;
+
+		console.log(organization_id);
+		console.log(user);
+
+		// const organization_id = "63fcf35baa8a76f2c87ed547";
+		// const user = "Diego";
+
+		let saved_user;
+		let valid_organization_id;
+
+		////////////////////////////////
+		// CONNECT TO THE DATABASE
+		////////////////////////////////
 		try {
 			await mongo_connect();
 		} catch (error) {
-			res.status(500).json({
+			return res.status(500).json({
 				status: 500,
 				message: "Error connecting to the database",
-				error,
-			});
-		}
-
-		try {
-			console.log("CREATE USER");
-
-			const users = await User.find();
-
-			console.log("LOG USERS", users.length, "END LOG USERS");
-
-			console.log("RECIBO BODY: ", req.body);
-
-			let new_user;
-
-			try {
-				new_user = new User({
-					name: req.body.name,
-					given_name: req.body.given_name,
-					family_name: req.body.family_name,
-					picture: req.body.picture,
-					email: req.body.email,
-				});
-
-				console.log("NEW_USER ", new_user);
-
-				new_user.save((err, saved_user) => {
-					if (err) {
-						res.status(500).json({
-							status: 500,
-							message: `Could not save ${req.body.name} in database`,
-							error: err.toString(),
-						});
-					} else {
-						console.log(saved_user);
-						res.status(201).json({
-							message: `${req.body.name} saved succesfully in database`,
-							new_user: saved_user,
-						});
-					}
-				});
-			} catch (error) {
-				console.log(error.message);
-				res.status(500).json({
-					error,
-				});
-			}
-		} catch (error) {
-			console.log(error.message);
-			res.status(500).json({
-				status: 500,
-				message: "There was a problem creating an user",
 				error: error.toString(),
 			});
 		}
-		res.status(404).json({ message: "Not found" });
+
+		////////////////////////////////
+		// FIND ORGANIZATION BY ID
+		////////////////////////////////
+		try {
+			await Organization.findById(organization_id);
+		} catch (error) {
+			return res.status(422).json({
+				status: 422,
+				message: `The provided Organization ID is invalid`,
+				error: error.toString(),
+			});
+		}
+
+		////////////////////////////////
+		// CREATE AND SAVE NEW USER
+		////////////////////////////////
+		try {
+			let new_user = {
+				...user,
+			};
+			console.log("ORGANIZATION_ID ", organization_id);
+			console.log("NEW USER ", new_user);
+
+			const { name, given_name, family_name, picture, email } = new_user;
+
+			let new_user_toSave = await new User({
+				name,
+				given_name,
+				family_name,
+				picture,
+				email,
+				organization_id,
+			});
+
+			console.log("NEW USER TO SAVE ", new_user_toSave);
+
+			saved_user = await new_user_toSave.save();
+		} catch (error) {
+			return res.status(500).json({
+				status: 500,
+				message: `There was a problem in the process of creating and saving a new user`,
+				error: error.toString(),
+			});
+		}
+
+		////////////////////////////////
+		// SEND RESPONSE
+		// USER
+		////////////////////////////////
+		res.status(201).json({
+   status: 201,
+   message: `New user ${user.name} has been successfully created and saved`,
+   user: saved_user
+  });
 	}
 }
 

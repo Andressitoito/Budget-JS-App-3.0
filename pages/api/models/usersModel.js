@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validate = require("mongoose-validator");
-mongoose.set('debug', true);
+mongoose.set("debug", true);
 
 const urlValidator = [
 	validate({
@@ -17,19 +17,24 @@ const emailValidator = [
 ];
 
 const userSchema = new mongoose.Schema({
+	organization_id: {
+		type: String,
+		required: [true, "An organization ID is required"],
+		trim: true,
+	},
 	name: {
 		type: String,
-		required: [true, "A user must have a name"],
+		required: [true, "An user must have a name"],
 		trim: true,
 	},
 	given_name: {
 		type: String,
-		required: [true, "A user must have a first name"],
+		required: [true, "An user must have a first name"],
 		trim: true,
 	},
 	family_name: {
 		type: String,
-		required: [true, "A user must have a last name"],
+		required: [true, "An user must have a last name"],
 		trim: true,
 	},
 	picture: {
@@ -42,7 +47,10 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		validate: emailValidator,
 	},
+	createdAt: {
+		type: Date,
+		default: Date.now(),
+	},
 });
 
 module.exports = mongoose.models.User || mongoose.model("User", userSchema);
-

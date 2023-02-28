@@ -28,7 +28,7 @@ const HelperButtons = () => {
 		};
 
 		const DUMMY_ORGANIZATION = {
-			organization: "MaxiMax",
+			organization: "MaxiMaximo",
 			user: DUMMY_USER,
 		};
 
@@ -78,16 +78,21 @@ const HelperButtons = () => {
 		e.preventDefault();
 
 		const DUMMY_USER = {
-			name: "Max",
-			given_name: "Wai",
-			family_name: "Mann",
+			name: "Mi",
+			given_name: "RaK",
+			family_name: "Erim",
 			picture: "https://i.stack.imgur.com/2ixs2.png",
-			email: "maxilares@max.com",
+			email: "Kul@Ova.com",
 		};
+		
+		const DUMMY_ORGANIZATION = {
+			organization_id: "63fce7fcef1c706621d5aa766",
+			user: DUMMY_USER
+		}
 
 		const response = await fetch("/api/data/create_new_user", {
 			method: "POST",
-			body: JSON.stringify(DUMMY_USER),
+			body: JSON.stringify(DUMMY_ORGANIZATION),
 			headers: {
 				"Content-Type": "application/json",
 			},
