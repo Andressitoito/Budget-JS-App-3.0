@@ -1,3 +1,4 @@
+import { find_duplicate_organization } from "../../../lib/find_duplicate_organization";
 import { mongo_connect } from "../../../lib/mongo_connect";
 const User = require("../models/usersModel");
 const Organization = require("../models/organizationModel");
@@ -20,28 +21,14 @@ async function handler(req, res) {
 		////////////////////////////////
 		// CONNECT TO THE DATABASE
 		////////////////////////////////
-		try {
-			await mongo_connect();
-		} catch (error) {
-			return res.status(500).json({
-				status: 500,
-				message: "Error connecting to the database",
-				error: error.toString(),
-			});
-		}
+		await mongo_connect();
 
 		////////////////////////////////
 		// FIND DUPLICATES ORGANIZATIONS
 		// AND CREATE	NEW ORGANIZATION
 		////////////////////////////////
 		try {
-			const organizations_list = await Organization.find();
-
-			const isOrganization = organizations_list.some(
-				(org) => org.organization.toLowerCase() === organization.toLowerCase()
-			);
-
-			console.log("ORGANIZATION EXISTS?: ", isOrganization);
+			const isOrganization = find_duplicate_organization(organization)
 
 			if (isOrganization) {
 				return res.status(422).json({
@@ -50,6 +37,7 @@ async function handler(req, res) {
 				});
 			} else {
 				try {
+
 					new_organization = await new Organization({
 						organization: organization,
 					});

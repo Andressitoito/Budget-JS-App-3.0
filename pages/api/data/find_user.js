@@ -1,3 +1,5 @@
+import { mongo_connect } from "../../../lib/mongo_connect";
+
 const mongoose = require("mongoose");
 const User = require("../models/usersModel");
 
@@ -11,19 +13,18 @@ async function handler(req, res) {
  // }
 
  if (req.method === "GET") {
+  
+  await mongo_connect()
 
-  if (mongoose.connection.readyState === 0) {
-   mongoose.connect("mongodb+srv://Andresitoito:1Zqq8lWA2zwwkJrr@bugetjsapp-iii.xbppxph.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+
+  try {
+
+  } catch (error) {
+   return res.status(422).json({
+    status: 422,
+    message: `This user: `
    })
-    .then(() => console.log('Connected to the database'))
-    .catch((error) => console.log('Error connectiong to the database ', error))
-  } else {
-   console.log('there is already an active connection')
   }
-
-
   const users = await User.find()
 
   console.log(users)

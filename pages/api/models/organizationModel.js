@@ -7,10 +7,15 @@ const organizationSchema = new mongoose.Schema({
 		unique: true,
 		trim: true,
 	},
- createdAt: {
-  type: Date,
-  default: Date.now(),
- },
+	main_budget: {
+		type: Number,
+		required: [true, 'An organization must have a main budget'],
+		default: 0
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now(),
+	},
 });
 
 module.exports =
