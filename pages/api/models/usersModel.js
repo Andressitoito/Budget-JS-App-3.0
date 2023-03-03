@@ -18,9 +18,9 @@ const emailValidator = [
 
 const userSchema = new mongoose.Schema({
 	organization_id: {
-		type: String,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Organization',
 		required: [true, "An organization ID is required"],
-		trim: true,
 	},
 	name: {
 		type: String,

@@ -11,7 +11,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		const { transaction } = req.body;
 
-  console.log(transaction)
+		console.log(transaction)
 
 		let saved_transaction;
 
@@ -25,6 +25,10 @@ async function handler(req, res) {
 		////////////////////////////////
 		saved_transaction = await create_new_transaction(transaction);
 
+		////////////////////////////////
+		// SEND RESPONSE
+		// TRANSACTION
+		////////////////////////////////
 		res.status(201).json({
 			status: 201,
 			message: "The transaction was successfully created",

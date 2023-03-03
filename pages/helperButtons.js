@@ -15,7 +15,7 @@ const HelperButtons = () => {
 	const handleClickDatabaseCall = async (e) => {
 		e.preventDefault();
 
-		const response = await fetch("/api/data/find_user");
+		const response = await fetch("/api/data/transactions");
 		const data = await response.json();
 
 		console.log(data);
@@ -34,7 +34,7 @@ const HelperButtons = () => {
 		};
 
 		const DUMMY_ORGANIZATION = {
-			organization: "AmilAtragantado",
+			organization: "AmilA",
 			user: DUMMY_USER,
 		};
 
@@ -58,15 +58,15 @@ const HelperButtons = () => {
 		e.preventDefault();
 
 		const DUMMY_USER = {
-			name: "Mi",
+			name: "An",
 			given_name: "RaK",
 			family_name: "Erim",
 			picture: "https://i.stack.imgur.com/2ixs2.png",
-			email: "Kul@Ova.com",
+			email: "Merik@Ova.com",
 		};
 
 		const DUMMY_ORGANIZATION = {
-			organization_id: "63fce7fcef1c706621d5aa766D",
+			organization_id: "63fcf35baa8a76f2c87ed547",
 			user: DUMMY_USER,
 		};
 
@@ -99,17 +99,41 @@ const HelperButtons = () => {
 			date: "2022-11-24T03:00:00.000Z",
 		};
 
-		console.log(transaction)
+		console.log(transaction);
 
 		const response = await fetch("/api/data/create_new_transaction", {
 			method: "POST",
-			body: JSON.stringify({transaction}),
+			body: JSON.stringify({ transaction }),
 			headers: {
 				"Content-Type": "application/json",
 			},
 		});
 		const data = await response.json();
 		console.log("DATA FROM CREATE NEW TRANSACTION");
+		console.log(data);
+	};
+
+	///////////////////////////////////
+	// CREATE NEW CATEGORY
+	///////////////////////////////////
+	const handleClick_createNewCategory = async (e) => {
+		e.preventDefault();
+
+		const category = {
+			category_name: "Food",
+			organization_id: "637fddc7b5985ce228c132259e4",
+			base_amount: 2000,
+		};
+
+		const response = await fetch("/api/data/create_new_category", {
+			method: "POST",
+			body: JSON.stringify({ category }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const data = await response.json();
+
 		console.log(data);
 	};
 
@@ -151,6 +175,11 @@ const HelperButtons = () => {
 				<BaseButton
 					onClick={(e) => handleClick_createNewTransaction(e)}
 					text={"new transaction"}
+				/>
+
+				<BaseButton
+					onClick={(e) => handleClick_createNewCategory(e)}
+					text={"new category"}
 				/>
 
 				<BaseButton onClick={(e) => setUser(e)} text={"Set user"} />
