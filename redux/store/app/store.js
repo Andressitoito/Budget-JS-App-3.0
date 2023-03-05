@@ -10,6 +10,7 @@ import organizationData from "../../../features/auth/organizationData";
 import categoryList from "../../../features/Category/categoryList";
 import currentCategory from "../../../features/Category/currentCategory";
 import getTransactionList from "../../../features/Transactions/getTransactionList";
+import notifications from "../../../features/Notifications/notifications";
 import user from "../../../features/auth/user";
 
 const store = configureStore({
@@ -25,7 +26,8 @@ const store = configureStore({
 		categoryList: categoryList,
 		currentCategory: currentCategory,
 		getTransactionList: getTransactionList,
-		user: user
+		notifications: notifications,
+		user: user,
 	},
 });
 
