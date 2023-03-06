@@ -1,32 +1,38 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { createPortal } from 'react-dom';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { showNotification } from "../../features/Notifications/notifications";
+import { notification_style } from "../../lib/notification_style";
 
-const Notification = (props) => {
+const Notification = () => {
+	const { notifications } = useSelector((state) => state);
+	const dispatch = useDispatch();
+	const { message, status } = notifications;
 
- const { title, message, status } = props
+	let notificationStyle = notification_style(status);
 
- let statusClasses = ''
+	useEffect(() => {
+		if (status === "Success" || status === "Error") {
+			const timer = setTimeout(() => {
+				dispatch(
+					showNotification({
+						show: false,
+						message: "",
+						status: "",
+					})
+				);
+			}, 3000);
+			return () => clearTimeout(timer);
+		}
+	}, [status]);
 
- if (status === 'success') {
-  status.Classes = 'success'
- }
-
-
-
- return (
-  <div className='fixed bottom-0 z-50 bg-blue-400 md:w-[50%] w-[75%] md:ml-[25%] ml-[12.5%] rounded-md outline-2 outline-blue-500'>
-
-
-   <div className="border-blue-300 border-4 rounded-md">
-    <h2 className='text-2xl text-center'>Titles</h2>
-    <p className='text-xl text-center'>Messages and more messeeages</p>
-   </div>
-  </div>
- )
-}
-
-
+	return (
+		<div
+			className={`fixed top-5 z-50  md:w-[50%] w-[75%] md:ml-[25%] ml-[12.5%] rounded-md border-4 ${notificationStyle}`}
+		>
+			<p className="text-xl text-center">{status}</p>
+			<h2 className="text-2xl text-center">{message}</h2>
+		</div>
+	);
+};
 
 export default Notification;
