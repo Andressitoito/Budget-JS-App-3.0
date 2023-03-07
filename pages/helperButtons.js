@@ -2,10 +2,12 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import BaseButton from "../components/interaction/Base-button";
 import { signIn } from "../features/auth/user";
+import { useNotification } from "../hooks/notificationHook";
 
 const HelperButtons = () => {
 	const { user } = useSelector((state) => state);
 	const dispatch = useDispatch();
+	const dispatchNotification = useNotification();
 
 	const router = useRouter();
 
@@ -116,8 +118,14 @@ const HelperButtons = () => {
 	///////////////////////////////////
 	// CREATE NEW CATEGORY
 	///////////////////////////////////
+
 	const handleClick_createNewCategory = async (e) => {
 		e.preventDefault();
+
+		dispatchNotification(
+			"Pending",
+			"Creating category in process"
+		);
 
 		const category = {
 			category_name: "Food",
@@ -134,8 +142,24 @@ const HelperButtons = () => {
 		});
 		const data = await response.json();
 
+		if (response.ok) {
+			dispatchNotification(
+				"Success",
+				`${data.message}`
+			);
+		} else {
+			dispatchNotification(
+				"Error",
+				`${data.message}`
+			);
+		}
+
 		console.log(data);
 	};
+
+	///////////////////////////////////
+	// USE EFFCT FOR NOTIFICATION
+	///////////////////////////////////
 
 	const setUser = () => {
 		console.log("set User");
