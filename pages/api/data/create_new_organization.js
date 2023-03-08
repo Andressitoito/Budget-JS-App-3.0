@@ -28,7 +28,9 @@ async function handler(req, res) {
 		// AND CREATE	NEW ORGANIZATION
 		////////////////////////////////
 		try {
-			const isOrganization = find_duplicate_organization(organization)
+			const isOrganization = await find_duplicate_organization(organization);
+
+			console.log("IS ORGANIZATION: ", isOrganization);
 
 			if (isOrganization) {
 				return res.status(422).json({
@@ -37,7 +39,6 @@ async function handler(req, res) {
 				});
 			} else {
 				try {
-
 					new_organization = await new Organization({
 						organization: organization,
 					});
@@ -93,7 +94,7 @@ async function handler(req, res) {
 		}
 
 		////////////////////////////////
-		// SEND RESPONSE 
+		// SEND RESPONSE
 		// USER AND ORGANIZATION
 		////////////////////////////////
 		res.status(201).json({

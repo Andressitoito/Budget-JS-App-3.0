@@ -9,13 +9,19 @@ const organizationSchema = new mongoose.Schema({
 	},
 	main_budget: {
 		type: Number,
-		required: [true, 'An organization must have a main budget'],
-		default: 0
+		required: [true, "An organization must have a main budget"],
+		default: 0,
 	},
 	createdAt: {
 		type: Date,
 		default: Date.now(),
 	},
+	users: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+		},
+	],
 });
 
 module.exports =

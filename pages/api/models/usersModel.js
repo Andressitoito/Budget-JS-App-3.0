@@ -19,9 +19,20 @@ const emailValidator = [
 const userSchema = new mongoose.Schema({
 	organization_id: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Organization',
+		ref: "Organization",
 		required: [true, "An organization ID is required"],
 	},
+	organization_owner: {
+		type: String,
+		required: [true, "Ownership must be defined"],
+		default: false,
+	},
+	guest_organizations: [
+		{
+			type: mongoose.Schema.Typer.ObjectId,
+			ref: "Organization",
+		},
+	],
 	name: {
 		type: String,
 		required: [true, "An user must have a name"],
