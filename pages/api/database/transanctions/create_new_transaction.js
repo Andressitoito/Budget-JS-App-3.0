@@ -1,8 +1,8 @@
-import { mongo_connect } from "../../../lib/mongo_connect";
+import { mongo_connect } from "../../../../lib/mongo_connect";
 
 const {
 	create_new_transaction,
-} = require("../../../lib/create_new_transaction");
+} = require("../../../../lib/create_new_transaction");
 
 async function handler(req, res) {
 	if (req.method === "POST") {

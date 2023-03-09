@@ -1,7 +1,7 @@
-import { find_duplicate_organization } from "../../../lib/find_duplicate_organization";
-import { mongo_connect } from "../../../lib/mongo_connect";
-const User = require("../models/usersModel");
-const Organization = require("../models/organizationModel");
+import { find_duplicate_organization } from "../../../../lib/find_duplicate_organization";
+import { mongo_connect } from "../../../../lib/mongo_connect";
+const User = require("../../models/usersModel");
+const Organization = require("../../models/organizationModel");
 
 async function handler(req, res) {
 	if (req.method === "POST") {
