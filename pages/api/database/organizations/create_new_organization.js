@@ -1,5 +1,6 @@
-import { find_duplicate_organization } from "../../../../lib/find_duplicate_organization";
-import { mongo_connect } from "../../../../lib/mongo_connect";
+import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
+import { find_duplicate_organization } from "../../../../lib/organizations/find_duplicate_organization";
+
 const User = require("../../models/usersModel");
 const Organization = require("../../models/organizationModel");
 
@@ -8,7 +9,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
-		const { organization, user } = req.body;
+		const { organization, user} = req.body;
 
 		console.log("ORGANIZATION: ", organization);
 		console.log("USER: ", user);
@@ -22,6 +23,12 @@ async function handler(req, res) {
 		// CONNECT TO THE DATABASE
 		////////////////////////////////
 		await mongo_connect();
+
+		////////////////////////////////
+		// CHECK USER OWNERSHIP
+		////////////////////////////////
+		
+
 
 		////////////////////////////////
 		// FIND DUPLICATES ORGANIZATIONS

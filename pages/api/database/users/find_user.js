@@ -1,4 +1,5 @@
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
+import { check_user } from "../../../../lib/users/check_user";
 
 const User = require("../../models/usersModel");
 
@@ -7,11 +8,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
-		// const { email } = req.body;
-
-		let user;
-
-		let email = 'max@max.com'
+		const { email } = req.body;
 
 		////////////////////////////////
 		// CONNECT TO THE DATABASE
@@ -22,31 +19,15 @@ async function handler(req, res) {
 		// FIND USER
 		////////////////////////////////
 		try {
-			user = await User.findOne({ email: email });
+			const user_info = await check_user(email)
 
-			console.log(user);
-
-			if (user) {
-
-				let user_props = {
-					organization_owner: user.organization_owner,
-				}
-
-				res.status(200).json({
-					status: 200,
-					message: `Find user successfully`,
-					user: user
-				})
-			} else {
-				res.status(422).json({
-					status: 422,
-					message: `User email`,
-					user: user
-				})
-			}
-
-
-
+			////////////////////////////////
+			// SEND RESPONSE
+			////////////////////////////////
+			return res.status(200).json({
+				status: 200,
+				user_info
+			});
 		} catch (error) {
 			return res.status(422).json({
 				status: 422,

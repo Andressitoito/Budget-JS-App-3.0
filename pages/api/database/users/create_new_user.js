@@ -2,6 +2,7 @@ import { create_new_user } from "../../../../lib/users/create_new_user";
 import { find_organization_by_id } from "../../../../lib/organizations/find_organization_by_id";
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 import { save_new_user } from "../../../../lib/users/save_new_user";
+import { find_user_by_email } from "../../../../lib/users/find_user_by_email";
 
 const User = require("../../models/usersModel");
 const Organization = require("../../models/organizationModel");
@@ -13,32 +14,39 @@ async function handler(req, res) {
 		////////////////////////////////
 		const { organization_id, user } = req.body;
 
-		console.log(organization_id);
-		console.log(user);
-
 		let saved_user;
 		let organization
 		let new_user_toSave
+
 		////////////////////////////////
 		// CONNECT TO THE DATABASE
 		////////////////////////////////
 		await mongo_connect();
 
 		////////////////////////////////
-		// FIND USER BY ID
+		// FIND USER BY EMAIL
 		////////////////////////////////
-		const isUser = await User.findOne({ email: user.email })
-
-		if (isUser !== null) {
+		try {
+			await find_user_by_email(user.email, res);
+		} catch (error) {
 			return res.status(401).json({
 				status: 401,
-				message: 'This user already exists',
-			})
+				error: error.toString(),
+			});
 		}
+
 		////////////////////////////////
 		// FIND ORGANIZATION BY ID
 		////////////////////////////////
-		organization = await find_organization_by_id(organization_id)
+		try {
+			organization = await find_organization_by_id(organization_id)
+			console.log('This is organization', organization)
+		} catch (error) {
+			return res.status(422).json({
+				status: 422,
+				error: error.toString(),
+			});
+		}
 
 		////////////////////////////////
 		// DEFINE USER PATH TRUE / FALSE
@@ -46,15 +54,13 @@ async function handler(req, res) {
 		if (user.organization_owner) {
 			////////////////////////////////
 			// PATH USER TRUE
-			////////////////////////////////
+			////////////////////
 			console.log('This is an OWNER')
-			console.log(user.organization_owner)
 
 		} else {
 			////////////////////////////////
 			// PATH USER FALSE
-			////////////////////////////////
-
+			////////////////////
 			console.log('This is NOT an OWNER')
 
 
@@ -65,7 +71,6 @@ async function handler(req, res) {
 
 		}
 
-		a new database folder was created, to separate better and have a better reading of all api routes calls. Also the migration to a new structure in users and organization is in progress. Fin some bugs with the unitary function who needs to be fixed and some were fixed
 		////////////////////////////////
 		// SEND RESPONSE
 		// USER
@@ -79,3 +84,17 @@ async function handler(req, res) {
 }
 
 export default handler;
+
+
+			////////////////////////////////
+			// STOP ORGANIZATION CREATION
+			// BY OWNERSHIP
+
+// return res.status(401).json({
+// 	status: 401,
+// 	message: 'An user cant create more than 1 (one) organization',
+// 	org_data: {
+// 		user: user.name,
+// 		oganization: user.organization_owner
+// 	}
+// })

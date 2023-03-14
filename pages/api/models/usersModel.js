@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
 	organization_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Organization",
-		required: [true, "An organization ID is required"],
+		required: [false, "An organization ID is required"],
 	},
 	organization_owner: {
 		type: String,
@@ -29,8 +29,9 @@ const userSchema = new mongoose.Schema({
 	},
 	guest_organizations: [
 		{
-			type: mongoose.Schema.Typer.ObjectId,
+			type: mongoose.Schema.Types.ObjectId,
 			ref: "Organization",
+			default: []
 		},
 	],
 	name: {
@@ -62,6 +63,16 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now(),
 	},
+	lastLogin: {
+		type: Date,
+		default: Date.now(),
+	},
 });
+
+userSchema.pre('save', function (next) {
+	this.lastLogin = new Date();
+	next();
+});
+
 
 module.exports = mongoose.models.User || mongoose.model("User", userSchema);

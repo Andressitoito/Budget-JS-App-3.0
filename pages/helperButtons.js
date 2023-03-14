@@ -17,7 +17,15 @@ const HelperButtons = () => {
 	const handleClickDatabaseCall = async (e) => {
 		e.preventDefault();
 
-		const response = await fetch("/api/data/transactions");
+		const email = 'andresledesma87@gmail.com'
+
+		const response = await fetch("/api/database/users/find_user", {
+			method: 'POST',
+			body: JSON.stringify({ email }),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 		const data = await response.json();
 
 		console.log(data);
@@ -64,15 +72,16 @@ const HelperButtons = () => {
 			given_name: "RaK",
 			family_name: "Erim",
 			picture: "https://i.stack.imgur.com/2ixs2.png",
-			email: "Merik@Ova.com",
+			email: "Merikf@Ova.com",
+			organization_owner: 'Jhon'
 		};
 
 		const DUMMY_ORGANIZATION = {
-			organization_id: "63fcf35baa8a76f2c87ed547",
+			organization_id: "63fcf35baa8a76f2c87ed547d",
 			user: DUMMY_USER,
 		};
 
-		const response = await fetch("/api/data/create_new_user", {
+		const response = await fetch("/api/database/users/create_new_user", {
 			method: "POST",
 			body: JSON.stringify(DUMMY_ORGANIZATION),
 			headers: {
