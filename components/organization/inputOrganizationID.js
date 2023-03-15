@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useNotification } from "../../hooks/notificationHook";
 import HelperText from "../helpers/helperText";
 import BaseButton from "../interaction/Base-button";
 
 const InputOrganizationID = () => {
+	const { user } = useSelector((state) => state);
+	const dispatchNotification = useNotification();
 	const {
 		register,
+		getValues,
 		formState: { errors, isValid },
 	} = useForm({ mode: "onBlur" });
 
@@ -15,9 +20,33 @@ const InputOrganizationID = () => {
 		isValid === true ? setButtonState(false) : setButtonState(true);
 	}, [isValid]);
 
-	const handleClick_joinOrganization = (e) => {
+	const handleClick_joinOrganization = async (e) => {
 		e.preventDefault();
-		console.log("join new organization button done!");
+
+		const organization ={
+			user,
+			organization_id: getValues('join_organization')
+		}
+
+		dispatchNotification("Pending", "Creating user and joining organization");
+
+		const response = await fetch("/api/data/create_new_user", {
+			method: "POST",
+			body: JSON.stringify({organization}),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const data = await response.json()
+
+		console.log(data)
+
+		if (response.ok) {
+			dispatchNotification("Success", `${data.message}`);
+		} else {
+			dispatchNotification("Error", `${data.message}`);
+		}
+
 	};
 
 	return (
@@ -35,7 +64,7 @@ const InputOrganizationID = () => {
 				<HelperText>{errors.join_organization.message}</HelperText>
 			)}
 			<BaseButton
-				text={"Join Organization"}
+				text={"Create user and Join Organization"}
 				disabled={buttonState}
 				w_full
 				p_xl

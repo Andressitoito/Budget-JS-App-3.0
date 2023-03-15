@@ -12,6 +12,9 @@ const userSlice = createSlice({
   },
   logOut: (state, action) => {
 
+  },
+  user_status: (state, action) => {
+
   }
 
  }

@@ -1,5 +1,7 @@
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 import { find_duplicate_organization } from "../../../../lib/organizations/find_duplicate_organization";
+import { check_user } from "../../../../lib/users/check_user";
+import { find } from "../../models/usersModel";
 
 const User = require("../../models/usersModel");
 const Organization = require("../../models/organizationModel");
@@ -9,7 +11,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
-		const { organization, user} = req.body;
+		const { organization, user } = req.body;
 
 		console.log("ORGANIZATION: ", organization);
 		console.log("USER: ", user);
@@ -27,51 +29,73 @@ async function handler(req, res) {
 		////////////////////////////////
 		// CHECK USER OWNERSHIP
 		////////////////////////////////
-		
+		if (user.organization_owner !== false) {
+			////////////////////////////////
+			// JOIN ORGANIZATION
+			////////////////////////////////
 
+			// check if not to join the same organization
 
-		////////////////////////////////
-		// FIND DUPLICATES ORGANIZATIONS
-		// AND CREATE	NEW ORGANIZATION
-		////////////////////////////////
-		try {
-			const isOrganization = await find_duplicate_organization(organization);
+		} else {
+			////////////////////////////////
+			// FIND DUPLICATES ORGANIZATIONS
+			// AND CREATE	NEW ORGANIZATION
+			////////////////////////////////
+			try {
+				const isOrganization = await find_duplicate_organization(organization);
 
-			console.log("IS ORGANIZATION: ", isOrganization);
+				console.log("IS ORGANIZATION: ", isOrganization);
 
-			if (isOrganization) {
-				return res.status(422).json({
-					status: 422,
-					message: `The organization ${organization} already exists`,
-				});
-			} else {
-				try {
-					new_organization = await new Organization({
-						organization: organization,
+				if (isOrganization) {
+					return res.status(422).json({
+						status: 422,
+						message: `The organization ${organization} already exists`,
 					});
-					saved_organization = await new_organization.save();
-					console.log(saved_organization);
-					new_organization_id = saved_organization.id;
-					console.log(new_organization_id);
-				} catch (error) {
-					return res.status(500).json({
-						status: 500,
-						message: `There was a problem saving a new organization ${organization}`,
-						error: error.toString(),
-					});
+				} else {
+					try {
+						////////////////////////////////
+						// CREATE ORGANIZATION
+						////////////////////////////////
+						new_organization = await new Organization({
+							organization: organization,
+						});
+						saved_organization = await new_organization.save();
+						console.log(saved_organization);
+						new_organization_id = saved_organization.id;
+						console.log(new_organization_id);
+					} catch (error) {
+						return res.status(500).json({
+							status: 500,
+							message: `There was a problem saving a new organization ${organization}`,
+							error: error.toString(),
+						});
+					}
 				}
+			} catch (error) {
+				return res.status(500).json({
+					status: 500,
+					message: `There was a problem in the process of creating and saving a new organization ${organization}`,
+					error: error.toString(),
+				});
 			}
-		} catch (error) {
-			return res.status(500).json({
-				status: 500,
-				message: `There was a problem in the process of creating and saving a new organization ${organization}`,
-				error: error.toString(),
-			});
 		}
 
 		////////////////////////////////
-		// CREATE AND SAVE NEW USER
+		// CHECK USER TRUE / FALSE
 		////////////////////////////////
+
+		if (user.userExists) {
+		////////////////////////////////
+		// USER TRUE
+		// SET ORGANIZATION_OWNER TRUE
+		////////////////////////////////
+		
+		const actual_user = await find({email: user.email})
+
+		
+
+		}
+
 		try {
 			let new_user = {
 				...user,
