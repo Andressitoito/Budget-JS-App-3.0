@@ -17,10 +17,13 @@ const emailValidator = [
 ];
 
 const userSchema = new mongoose.Schema({
+	_id: {
+		type: String,
+	},
 	organization_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Organization",
-		required: [false, "An organization ID is required"],
+		default: false,
 	},
 	organization_owner: {
 		type: String,
@@ -31,7 +34,7 @@ const userSchema = new mongoose.Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Organization",
-			default: []
+			default: [],
 		},
 	],
 	name: {
@@ -69,10 +72,9 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
-userSchema.pre('save', function (next) {
+userSchema.pre("save", function (next) {
 	this.lastLogin = new Date();
 	next();
 });
-
 
 module.exports = mongoose.models.User || mongoose.model("User", userSchema);

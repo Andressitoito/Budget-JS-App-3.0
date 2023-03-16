@@ -23,7 +23,9 @@ const nextConfig = {
    },
   ];
  },
- appDir: true
+ experimental: {
+  appDir: true,
+},
 };
 
 module.exports = nextConfig;
