@@ -16,10 +16,21 @@ const organizationSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now(),
 	},
+	organization_owner: {
+		type: String,
+		required: [true, "An organization must have an owner"],
+		default: "Unknown",
+	},
 	users: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
+			_id: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+			},
+			name: {
+				type: String,
+				required: [true, "An user must have a name"],
+			},
 		},
 	],
 });
