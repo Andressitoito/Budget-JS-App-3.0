@@ -1,7 +1,8 @@
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
-import { find_duplicate_organization } from "../../../../lib/organizations/find_duplicate_organization";
-import { check_user } from "../../../../lib/users/check_user";
-import { find } from "../../models/usersModel";
+import { find_duplicates_and_create_organization } from "../../../../lib/organizations/find_duplicates_and _create_organization";
+import { update_organization_member } from "../../../../lib/organizations/update_organization_member";
+import { create_new_user } from "../../../../lib/users/create_new_user";
+import { update_user_ownership } from "../../../../lib/users/update_user_ownership";
 
 const User = require("../../models/usersModel");
 const Organization = require("../../models/organizationModel");
@@ -11,15 +12,18 @@ async function handler(req, res) {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
-		const { organization, user } = req.body;
+		let { organization, user: user_info } = req.body;
+
+		console.log('////////////////', user_info)
 
 		console.log("ORGANIZATION: ", organization);
-		console.log("USER: ", user);
 
+		organization = organization.trim();
 		let saved_organization;
 		let saved_user;
 		let new_organization_id;
 		let new_organization;
+		let user;
 
 		////////////////////////////////
 		// CONNECT TO THE DATABASE
@@ -27,113 +31,202 @@ async function handler(req, res) {
 		await mongo_connect();
 
 		////////////////////////////////
-		// CHECK USER OWNERSHIP
+		// CHECK CONDITIONALLY ROUTING
 		////////////////////////////////
-		if (user.organization_owner !== false) {
-			////////////////////////////////
-			// JOIN ORGANIZATION
-			////////////////////////////////
+		const actual_data = await User.findOne({ email: user_info.email });
 
-			// check if not to join the same organization
+		console.log("actual_user //////////////////", actual_data)
+		if (actual_data === null) {
+			user = user_info;
+			user.organization_owner = "none";
+		} else {
+			user = actual_data
+		}
 
+
+
+		if (user_info.userExists === true) {
+			if (user.organization_owner !== "none") {
+				////////////////////////////////
+				// USER TRUE
+				////////////////////////////////
+				// ORGANIZATION_OWNER TRUE
+				////////////////////////////////
+				// REJECT USER
+				// REDIRECT TO JOIN ORGANIZATION
+				////////////////////////////////
+				return res.status(403).json({
+					status: 403,
+					redirect_join_organization: true,
+					error:
+						"This user already has an organization, cannot create more than 1 (one) organization.",
+				});
+			} else {
+				console.log(
+					"USER OWNERSHIP FALSE, CREATE ORGANIZATION",
+					user.organization_owner
+				);
+				////////////////////////////////
+				// USER TRUE
+				////////////////////////////////
+				// ORGANIZATION_OWNER FALSE
+				// CREATE ORGANIZATION
+				////////////////////////////////
+
+				////////////////////////////////
+				// FIND DUPLICATES ORGANIZATIONS
+				// & CREATE	NEW ORGANIZATION
+				////////////////////////////////
+				try {
+					new_organization = await find_duplicates_and_create_organization(
+						organization
+					);
+
+					const { saved_organization: saved_org, new_organization_id: new_org_id } =
+						new_organization;
+
+					saved_organization = saved_org;
+					new_organization_id = new_org_id;
+
+					console.log(new_organization);
+				} catch (error) {
+					return res.status(403).json({
+						status: 403,
+						message: "Something went wrong with duplicates",
+						error: error.toString(),
+					});
+				}
+				////////////////////////////////
+				// UPDATE USER OWNERSHIP
+				////////////////////////////////
+				try {
+					saved_user = await update_user_ownership(
+						user._id,
+						organization,
+						new_organization_id
+					);
+				} catch (error) {
+					return res.status(500).json({
+						status: 500,
+						message: "Error updating ownership",
+						error: error.toString(),
+					});
+				}
+				////////////////////////////////
+				// UPDATE ORGANIZATION MEMBER
+				////////////////////////////////
+				try {
+					saved_organization = await update_organization_member(
+						saved_user.id,
+						saved_user.name,
+						new_organization_id
+					);
+				} catch (error) {
+					return res.status(500).json({
+						status: 500,
+						message: "Error updating organization member",
+						error: error.toString(),
+					});
+				}
+				////////////////////////////////
+				// SEND RESPONSE
+				// USER AND ORGANIZATION
+				////////////////////////////////
+				return res.status(201).json({
+					status: 201,
+					message: `Organization ${organization} and User ${user.name} has been successfully created and saved`,
+					user: saved_user,
+					organization: saved_organization,
+				});
+			}
 		} else {
 			////////////////////////////////
+			// USER FALSE
+			////////////////////////////////
+			// ORGANIZATION_OWNER NONE
+			// CREATE ORGANIZATION
+			////////////////////////////////
+
+			////////////////////////////////
 			// FIND DUPLICATES ORGANIZATIONS
-			// AND CREATE	NEW ORGANIZATION
+			// & CREATE	NEW ORGANIZATION
 			////////////////////////////////
 			try {
-				const isOrganization = await find_duplicate_organization(organization);
+				new_organization = await find_duplicates_and_create_organization(
+					organization
+				);
 
-				console.log("IS ORGANIZATION: ", isOrganization);
+				const { saved_organization: saved_org, new_organization_id: new_org_id } =
+					new_organization;
 
-				if (isOrganization) {
-					return res.status(422).json({
-						status: 422,
-						message: `The organization ${organization} already exists`,
-					});
-				} else {
-					try {
-						////////////////////////////////
-						// CREATE ORGANIZATION
-						////////////////////////////////
-						new_organization = await new Organization({
-							organization: organization,
-						});
-						saved_organization = await new_organization.save();
-						console.log(saved_organization);
-						new_organization_id = saved_organization.id;
-						console.log(new_organization_id);
-					} catch (error) {
-						return res.status(500).json({
-							status: 500,
-							message: `There was a problem saving a new organization ${organization}`,
-							error: error.toString(),
-						});
-					}
-				}
+				saved_organization = saved_org;
+				new_organization_id = new_org_id;
+
+				console.log(new_organization_id);
 			} catch (error) {
-				return res.status(500).json({
-					status: 500,
-					message: `There was a problem in the process of creating and saving a new organization ${organization}`,
+				return res.status(403).json({
+					status: 403,
+					message: 'Possible duplicates or type errors',
 					error: error.toString(),
 				});
 			}
-		}
 
-		////////////////////////////////
-		// CHECK USER TRUE / FALSE
-		////////////////////////////////
-
-		if (user.userExists) {
-		////////////////////////////////
-		// USER TRUE
-		// SET ORGANIZATION_OWNER TRUE
-		////////////////////////////////
-		
-		const actual_user = await find({email: user.email})
-
-		
-
-		}
-
-		try {
-			let new_user = {
-				...user,
-				organization_id: new_organization_id,
-			};
-			const { name, given_name, family_name, picture, email, organization_id } =
-				new_user;
-			console.log(new_user);
-
-			let new_user_toSave = await new User({
-				name,
-				given_name,
-				family_name,
-				picture,
-				email,
-				organization_id,
+			////////////////////////////////
+			// CREATE	NEW USER
+			////////////////////////////////
+			try {
+				saved_user = await create_new_user(user, new_organization_id, organization);
+			} catch (error) {
+				return res.status(422).json({
+					status: 422,
+					message: "There was a problem creating a new user",
+					error: error.toString(),
+				});
+			}
+			////////////////////////////////
+			// UPDATE USER OWNERSHIP
+			////////////////////////////////
+			try {
+				saved_user = await update_user_ownership(
+					saved_user._id,
+					organization,
+					new_organization_id
+				);
+			} catch (error) {
+				return res.status(500).json({
+					status: 500,
+					message: "Error updating ownership",
+					error: error.toString(),
+				});
+			}
+			////////////////////////////////
+			// UPDATE ORGANIZATION MEMBER
+			////////////////////////////////
+			try {
+				saved_organization = await update_organization_member(
+					saved_user.id,
+					saved_user.name,
+					new_organization_id
+				);
+			} catch (error) {
+				return res.status(422).json({
+					status: 422,
+					message:
+						"Error updating organization member, check the provided organizatoin_id",
+					error: error.toString(),
+				});
+			}
+			////////////////////////////////
+			// SEND RESPONSE
+			// USER AND ORGANIZATION
+			////////////////////////////////
+			return res.status(201).json({
+				status: 201,
+				message: `Organization ${organization} and User ${user.name} has been successfully created and saved`,
+				user: saved_user,
+				organization: saved_organization,
 			});
-
-			saved_user = await new_user_toSave.save();
-			console.log(saved_user);
-		} catch (error) {
-			return res.status(500).json({
-				status: 500,
-				message: "There was a problem in the process of creating a new user",
-				error: error.toString(),
-			});
 		}
-
-		////////////////////////////////
-		// SEND RESPONSE
-		// USER AND ORGANIZATION
-		////////////////////////////////
-		res.status(201).json({
-			status: 201,
-			message: `Organization ${organization} and User ${user.name} has been successfully created and saved`,
-			user: saved_user,
-			organization: saved_organization,
-		});
 	}
 }
 

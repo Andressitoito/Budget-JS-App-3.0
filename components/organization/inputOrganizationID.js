@@ -5,7 +5,7 @@ import { useNotification } from "../../hooks/notificationHook";
 import HelperText from "../helpers/helperText";
 import BaseButton from "../interaction/Base-button";
 
-const InputOrganizationID = () => {
+const InputOrganizationID = ({ user_info }) => {
 	const { user } = useSelector((state) => state);
 	const dispatchNotification = useNotification();
 	const {
@@ -23,30 +23,46 @@ const InputOrganizationID = () => {
 	const handleClick_joinOrganization = async (e) => {
 		e.preventDefault();
 
-		const organization ={
-			user,
-			organization_id: getValues('join_organization')
-		}
-
 		dispatchNotification("Pending", "Creating user and joining organization");
 
-		const response = await fetch("/api/data/create_new_user", {
-			method: "POST",
-			body: JSON.stringify({organization}),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		const data = await response.json()
+		const { organization_owner, user: userExists } = user_info;
+		const { name, given_name, family_name, picture, email } = user;
 
-		console.log(data)
+		const user_org = {
+			name,
+			given_name,
+			family_name,
+			picture,
+			email,
+			organization_owner,
+			userExists,
+		};
+
+		const organization = {
+			organization_id: getValues("join_organization").trim(),
+			user: user_org,
+		};
+
+		console.log(organization.organization_id.length)
+		const response = await fetch(
+			"/api/database/organizations/join_organization",
+			{
+				method: "POST",
+				body: JSON.stringify(organization),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+		const data = await response.json();
+
+		console.log(data);
 
 		if (response.ok) {
 			dispatchNotification("Success", `${data.message}`);
 		} else {
-			dispatchNotification("Error", `${data.message}`);
+			dispatchNotification("Error", `${data.error}`);
 		}
-
 	};
 
 	return (
