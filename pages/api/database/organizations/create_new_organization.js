@@ -59,7 +59,7 @@ async function handler(req, res) {
 					status: 403,
 					redirect_join_organization: true,
 					error:
-						"This user already has an organization, cannot create more than 1 (one) organization.",
+						`Sorry ${user.name}, but each user can only create one organization. If you'd like to make changes to your existing organization, please log in and make the necessary updates.`,
 				});
 			} else {
 				console.log(

@@ -5,7 +5,7 @@ import { useNotification } from "../../hooks/notificationHook";
 import HelperText from "../helpers/helperText";
 import BaseButton from "../interaction/Base-button";
 
-const InputOrganizationID = ({ user_info }) => {
+const InputOrganizationID = ({ user_info, setActiveTab }) => {
 	const { user } = useSelector((state) => state);
 	const dispatchNotification = useNotification();
 	const {
@@ -60,6 +60,7 @@ const InputOrganizationID = ({ user_info }) => {
 
 		if (response.ok) {
 			dispatchNotification("Success", `${data.message}`);
+			setActiveTab('signin')
 		} else {
 			dispatchNotification("Error", `${data.error}`);
 		}

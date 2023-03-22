@@ -21,13 +21,13 @@ const userSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 	},
 	organization_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Organization",
+		type: String,
+		default: 'none'
 	},
 	organization_owner: {
 		type: String,
 		required: [true, "Ownership must be defined"],
-		default: 'none',
+		default: "none",
 	},
 	guest_organizations: [
 		{
@@ -37,8 +37,9 @@ const userSchema = new mongoose.Schema({
 			},
 			organization: {
 				type: String,
-				required: [true, "An organization name must be provided"],
+				required: [false, "An organization name must be provided"],
 			},
+			required: false
 		},
 	],
 	name: {
@@ -69,6 +70,16 @@ const userSchema = new mongoose.Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now(),
+		get: function (createdAt) {
+			const options = {
+				day: "numeric",
+				month: "numeric",
+				year: "numeric",
+				timeZone: "America/Buenos_Aires",
+				hour12: false,
+			};
+			return createdAt.toLocaleDateString("es-AR", options);
+		},
 	},
 	lastLogin: {
 		type: Date,

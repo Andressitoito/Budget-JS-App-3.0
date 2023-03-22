@@ -4,54 +4,56 @@ import { random_message } from "../../../../lib/signin/random_message";
 const User = require("../../models/usersModel");
 
 async function handler(req, res) {
- if (req.method === "POST") {
-  ////////////////////////////////
-  // DECLARE GLOBAL VARIABLES
-  ////////////////////////////////
-  let email = req.body
-  let user;
-  ////////////////////////////////
-  // CONNECT TO THE DATABASE
-  ////////////////////////////////
-  await mongo_connect();
+	if (req.method === "POST") {
+		////////////////////////////////
+		// DECLARE GLOBAL VARIABLES
+		////////////////////////////////
+  		let email = req.body;
+		let user;
 
-  ////////////////////////////////
-  // CHECK USER
-  ////////////////////////////////
-  try {
-   const userData = await User.findOne({ email: email });
+  console.log(user)
+  console.log(email)
+		////////////////////////////////
+		// CONNECT TO THE DATABASE
+		////////////////////////////////
+		await mongo_connect();
 
-   console.log(userData);
+		////////////////////////////////
+		// CHECK USER
+		////////////////////////////////
+		try {
+			const userData = await User.findOne({ email: email });
 
-   if (userData.email === email) {
-    console.log("userData.email ", userData.email)
-    user = userData;
-   } else {
-    throw new Error(
-     `This user ${email}  is not registered, please Signup and try again!`
-    );
-   }
-  } catch (error) {
-   return res.status(403).json({
-    status: 403,
-    message: "Invalid user",
-    error: error.toString(),
-   });
-  }
-  ////////////////////////////////
-  // GET RANDOM MESSAGE
-  ////////////////////////////////
-  const message = random_message(user.given_name)
+   console.log(userData)
 
-  ////////////////////////////////
-  // SEND RESPONSE USER
-  ////////////////////////////////
-  res.status(200).json({
-   status: 200,
-   message: message,
-   user: user,
-  });
- }
+			if (userData?.email === email) {
+				user = userData;
+			} else {
+				throw new Error(
+					`This user ${email} is not registered, please Signup and try again!`
+				);
+			}
+		} catch (error) {
+			return res.status(403).json({
+				status: 403,
+				message: "Invalid user",
+				error: error.toString(),
+			});
+		}
+		////////////////////////////////
+		// GET RANDOM MESSAGE
+		////////////////////////////////
+		const message = random_message(user.given_name);
+
+		////////////////////////////////
+		// SEND RESPONSE USER
+		////////////////////////////////
+		res.status(200).json({
+			status: 200,
+			message: message,
+			user: user,
+		});
+	}
 }
 
 export default handler;
