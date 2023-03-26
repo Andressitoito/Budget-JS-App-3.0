@@ -1,4 +1,3 @@
-import Notification from "../components/notifications/notifications";
 import CurrentBudget from "../components/ui/currentBudget";
 import MainControlPanel from "../components/ui/MainControlPanel";
 

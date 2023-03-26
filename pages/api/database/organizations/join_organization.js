@@ -119,12 +119,6 @@ async function handler(req, res) {
 				});
 			}
 
-			give a title and a description for a commit, describe it like "users created, bugs were fixed". This was  a very hard work so make it look like what it was.
-			
-			'After long tests and bug fixing i was finnaly able to finish the signin and signup routes, front end and backend communication with notifications also.'
-
-			After days of rigorous testing and intense bug fixing, I am thrilled to announce the completion of the sign-in/sign-up process. The revamped process includes significant upgrades to the front-end and back-end communication, and now supports full-stack notification functionalities. 
-
 			////////////////////////////////
 			// SEND RESPONSE
 			// USER AND ORGANIZATION
