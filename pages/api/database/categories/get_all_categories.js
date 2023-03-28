@@ -6,6 +6,7 @@ async function handler(req, res) {
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
 		const { organization_id } = req.body;
+		console.log("ENTRO A ROUTE CATEGORIES ", req.body);
 
 		let categoriesArray;
 
@@ -25,11 +26,11 @@ async function handler(req, res) {
 		////////////////////////////////
 		// SEND RESPONSE
 		////////////////////////////////
-  res.status(200).json({
-   status: 200,
-   message: 'Get array of categories successfully',
-   categoriesArray
-  })
+		res.status(200).json({
+			status: 200,
+			message: "Get array of categories successfully",
+			categoriesArray,
+		});
 	}
 }
 

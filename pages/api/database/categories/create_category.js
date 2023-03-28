@@ -1,5 +1,6 @@
-import { create_new_category } from "../../../../lib/create_new_category";
-import { mongo_connect } from "../../../../lib/mongo_connect";
+import { create_category } from "../../../../lib/categories/create_category";
+import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
+
 
 async function handler(req, res) {
 	if (req.method === "POST") {
@@ -19,7 +20,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		// CREATE NEW CATEGORY
 		////////////////////////////////
-		saved_category = await create_new_category(category);
+		saved_category = await create_category(category);
 
 		////////////////////////////////
 		// SEND RESPONSE
