@@ -14,7 +14,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		let { organization, user: user_info } = req.body;
 
-		console.log('////////////////', user_info)
+		console.log("////////////////", user_info);
 
 		console.log("ORGANIZATION: ", organization);
 
@@ -35,15 +35,12 @@ async function handler(req, res) {
 		////////////////////////////////
 		const actual_data = await User.findOne({ email: user_info.email });
 
-		console.log("actual_user //////////////////", actual_data)
 		if (actual_data === null) {
 			user = user_info;
 			user.organization_owner = "none";
 		} else {
-			user = actual_data
+			user = actual_data;
 		}
-
-
 
 		if (user_info.userExists === true) {
 			if (user.organization_owner !== "none") {
@@ -58,14 +55,9 @@ async function handler(req, res) {
 				return res.status(403).json({
 					status: 403,
 					redirect_join_organization: true,
-					error:
-						`Sorry ${user.name}, but each user can only create one organization. If you'd like to make changes to your existing organization, please log in and make the necessary updates.`,
+					error: `Sorry ${user.name}, but each user can only create one organization. If you'd like to make changes to your existing organization, please log in and make the necessary updates.`,
 				});
 			} else {
-				console.log(
-					"USER OWNERSHIP FALSE, CREATE ORGANIZATION",
-					user.organization_owner
-				);
 				////////////////////////////////
 				// USER TRUE
 				////////////////////////////////
@@ -166,7 +158,7 @@ async function handler(req, res) {
 			} catch (error) {
 				return res.status(403).json({
 					status: 403,
-					message: 'Possible duplicates or type errors',
+					message: "Possible duplicates or type errors",
 					error: error.toString(),
 				});
 			}
@@ -203,10 +195,13 @@ async function handler(req, res) {
 			// UPDATE ORGANIZATION MEMBER
 			////////////////////////////////
 			try {
+				const isNewOrganization = true;
+
 				saved_organization = await update_organization_member(
 					saved_user.id,
 					saved_user.name,
-					new_organization_id
+					new_organization_id,
+					isNewOrganization
 				);
 			} catch (error) {
 				return res.status(422).json({

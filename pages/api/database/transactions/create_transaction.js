@@ -1,8 +1,8 @@
 import { mongo_connect } from "../../../../lib/mongo_connect";
 
 const {
-	create_new_transaction,
-} = require("../../../../lib/create_new_transaction");
+	create_transaction,
+} = require("../../../../lib/transactions/create_transaction");
 
 async function handler(req, res) {
 	if (req.method === "POST") {
@@ -11,7 +11,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		const { transaction } = req.body;
 
-		console.log(transaction)
+		console.log(transaction);
 
 		let saved_transaction;
 
@@ -21,9 +21,17 @@ async function handler(req, res) {
 		await mongo_connect();
 
 		////////////////////////////////
-		// CREATE NEW TRANSACTION
+		// CREATE TRANSACTION
 		////////////////////////////////
-		saved_transaction = await create_new_transaction(transaction);
+		try {
+			saved_transaction = await create_transaction(transaction);
+		} catch (error) {
+			return res.status(421).json({
+				status: 421,
+				message: "Something went wrong creating a new transaction",
+				error: error.toString(),
+			});
+		}
 
 		////////////////////////////////
 		// SEND RESPONSE
@@ -37,4 +45,4 @@ async function handler(req, res) {
 	}
 }
 
-export default handler
+export default handler;
