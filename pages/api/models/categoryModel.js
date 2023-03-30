@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const categorySchema = new mongoose.Schema({
+	category_id: {
+		type: mongoose.Schema.Types.ObjectId,
+	},
 	category_name: {
 		type: String,
 		required: [true, "A category must have a name"],
@@ -30,3 +33,4 @@ const categorySchema = new mongoose.Schema({
 
 module.exports =
 	mongoose.models.Category || mongoose.model("Category", categorySchema);
+

@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const transactionSchema = new mongoose.Schema({
 	category_id: {
-		type: String,
-		required: [true, "A transaction must have a category ID"],
-		trim: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Category",
+		required: [true, "A transaction must have a category ref ID"],
 	},
 	category_name: {
 		type: String,
@@ -34,11 +34,6 @@ const transactionSchema = new mongoose.Schema({
 	date: {
 		type: Date,
 		default: Date.now(),
-	},
-	category: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Category",
-		required: [true, "A transaction must have a category"],
 	},
 });
 
