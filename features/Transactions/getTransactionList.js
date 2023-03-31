@@ -1,55 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = null
+const initialState = null;
 
 const getTransactionListSlice = createSlice({
- name: 'getTransactionList',
- initialState: initialState,
- reducers: {
-  getTransactionListbyId: (state, action) => {
+	name: "getTransactionList",
+	initialState: initialState,
+	reducers: {
+		getTransactionListbyId: (state, action) => {
+			const { transactions, category_id } = action.payload;
 
-  
+			console.log("/////REDUX///////////////////");
+			console.log(action.payload);
+			console.log(transactions);
+			console.log(category_id);
+			// return (state = action.payload);
+			return (state = transactions);
+		},
+	},
+});
 
-   // const transactionList = [
-   //  {
-   //   _id: "637fddc7b5985ce228c25984",
-   //   _id_category: "637fddc7b5985ce228c25984",
-   //   _id_organization: "637fddc7b5985ce228c13225984",
-   //   username: 'Andrew',
-   //   category: "culo",
-   //   item: "compras multinacionales ",
-   //   price: 400,
-   //   date: "2022-11-24T03:00:00.000Z"
-   //  },
-   //  {
-   //   _id: "6380bad817f10e2eb4598c9b",
-   //   _id_category: "637fddc7b5985ce228c25984",
-   //   _id_organization: "637fddc7b5985ce228c13225984",
-   //   username: 'Looker',
-   //   category: "culo",
-   //   item: "higienic paper",
-   //   price: 300,
-   //   date: "2022-11-24T03:00:00.000Z"
-   //  },
-   //  {
-   //   _id: "6380bad817f4310e2eb4598c9b",
-   //   _id_category: "637fddc7b5985ce228c25984",
-   //   _id_organization: "637fddc7b5985ce228c13225984",
-   //   username: 'Andrew',
-   //   category: "culo",
-   //   item: "potatoes",
-   //   price: 200,
-   //   date: "2022-11-24T03:00:00.000Z"
-   //  }
-   // ]
+export const { getTransactionListbyId } = getTransactionListSlice.actions;
 
-
-   // return transactionList
-
-  }
- }
-})
-
-export const { getTransactionListbyId } = getTransactionListSlice.actions
-
-export default getTransactionListSlice.reducer
+export default getTransactionListSlice.reducer;

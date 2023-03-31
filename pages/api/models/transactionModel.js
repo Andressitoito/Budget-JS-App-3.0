@@ -6,11 +6,6 @@ const transactionSchema = new mongoose.Schema({
 		ref: "Category",
 		required: [true, "A transaction must have a category ref ID"],
 	},
-	category_name: {
-		type: String,
-		required: [true, "A transaction must have a category name"],
-		trim: true,
-	},
 	organization_id: {
 		type: String,
 		required: [true, "A transaction must have an organization ID"],
