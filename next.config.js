@@ -24,7 +24,7 @@ const nextConfig = {
   ];
  },
  experimental: {
-  appDir: true,
+  appDir: false,
 },
 };
 

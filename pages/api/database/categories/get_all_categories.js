@@ -1,4 +1,5 @@
 import { get_all_categories } from "../../../../lib/categories/get_all_categories";
+import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 
 async function handler(req, res) {
 	if (req.method === "POST") {
@@ -6,9 +7,14 @@ async function handler(req, res) {
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
 		const { organization_id } = req.body;
-		console.log("ENTRO A ROUTE CATEGORIES ", req.body);
+		console.log("ENTRO A ROUTE CATEGORIES ");
 
 		let categoriesArray;
+
+		////////////////////////////////
+		// CONNECT TO THE DATABASE
+		////////////////////////////////
+		await mongo_connect();
 
 		////////////////////////////////
 		// GET ARRAY OF CATEGORIES

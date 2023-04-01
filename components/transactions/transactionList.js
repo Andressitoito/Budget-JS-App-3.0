@@ -4,6 +4,8 @@ import TransactionItem from "./transactionItem";
 const TransactionList = () => {
 	const { getTransactionList } = useSelector((state) => state);
 
+	console.log(getTransactionList);
+
 	return (
 		<>
 			{getTransactionList && (

@@ -10,7 +10,7 @@ async function handler(req, res) {
 
 	let transactions;
 	////////////////////////////////
-	// CONNECT TO DATABASE
+	// CONNECT TO THE DATABASE
 	////////////////////////////////
 	await mongo_connect();
 

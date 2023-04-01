@@ -3,77 +3,33 @@ import CategoryList from "../category/category-list";
 import CategoryDetails from "../category/categoryDetails";
 import CategoryActions from "../category/categoryActions";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModalAddNewCategory } from "../../features/modals/modalAddNewCategory";
+import { toggleModalAddNewCategory } from "../../features/Modals/modalAddNewCategory";
 import AddNewCategory from "../modals/addNewCategory";
+import { useState, useEffect } from "react";
+import { getAllCategories } from "../../utils/helpers/categories/getAllCategories";
+import { setCategoryData } from "../../features/Category/categoryData";
 
 const MainControlPanel = () => {
-	const { modalAddNewCategory } = useSelector((state) => state);
+	const { modalAddNewCategory, user } = useSelector((state) => state);
 
 	const dispatch = useDispatch();
 
-	const DUMMY_DATA_FROM_REDUXSTATE = [
-		{
-			_id: "637fddc7b5985ce228c25984",
-			_id_organization: "637fddc7b5985ce228c25984",
-			categoryName: "Food",
-			baseAmount: 21231,
-			transactions: [{}],
-		},
-	];
+	useEffect(() => {
+		let category_List;
+		(async () => {
+			category_List = await getAllCategories("6418e62930a356ee6570ffb0");
+			console.log(category_List);
+			dispatch(setCategoryData(category_List));
 
-	/* 
-	FROM DATABASE REQUEST
 
-	find: _id_organization (from redux)
-
-	get all categories
-
-{
-	_id: "234refdsdew25t",
-	categoryName: "example"
-}
-*/
-
-	const DUMMY_DATA_CATEGORY_LIST = [
-		{
-			_id: "637fddc7b5985ce21231228c25984",
-			_id_category: "637fddc7b5985ceaswqd228c25984",
-			_id_organization: "637fddc7b5985ce228ec259842",
-			categoryName: "Food",
-			baseAmount: 21231,
-			transactions: [{}],
-		},
-		{
-			_id: "637fddc7b5985ce22312328c25984",
-			_id_category: "637fddc7b5985casde2eqw28c25984",
-			_id_organization: "637fddc7b5985ce22e8c2598423",
-			categoryName: "Dates",
-			baseAmount: 111231,
-			transactions: [{}],
-		},
-		{
-			_id: "637fddc7b5985ce228c231225984",
-			_id_category: "637fddc7b5985ceweasd228c25984",
-			_id_organization: "637fddc7b5985cee228c25984123",
-			categoryName: "Extra",
-			baseAmount: 12331,
-			transactions: [{}],
-		},
-	];
-
-	const categoryNameList = DUMMY_DATA_CATEGORY_LIST.map(category => (
-		{
-			_id: category._id_category,
-			categoryName: category.categoryName
-		}))
+		})();
+	}, []);
 
 	const handleClickAddNewCategory = () => {
 		dispatch(toggleModalAddNewCategory());
 	};
 
 	return (
-
-
 		<section className="relative bg-msk-600 w-2/3 mx-auto p-2 rounded-md">
 			<div className="absolute top-7 left-[-100px]">
 				<BaseButton
@@ -83,10 +39,14 @@ const MainControlPanel = () => {
 						handleClickAddNewCategory();
 					}}
 				/>
-				{modalAddNewCategory && <AddNewCategory />}
+				{modalAddNewCategory && (
+					<AddNewCategory
+						user_id={user._id}
+						organization_id={user.organization_id}
+					/>
+				)}
 
-				{/* <AddNewCategory /> */}
-				<CategoryList categoryNameList={categoryNameList} />
+				<CategoryList />
 			</div>
 
 			<div className="absolute top-7 right-[-120px]">
