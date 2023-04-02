@@ -11,8 +11,6 @@ async function handler(req, res) {
 		////////////////////////////////
 		const { transaction } = req.body;
 
-		console.log(transaction);
-
 		let saved_transaction;
 
 		////////////////////////////////

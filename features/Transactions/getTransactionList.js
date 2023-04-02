@@ -7,10 +7,7 @@ const getTransactionListSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		getTransactionListbyId: (state, action) => {
-			console.log("/////REDUX///////////////////");
-			console.log(action.payload);
-			const { transactions } = action.payload
-			return (state = transactions);
+			return (state = action.payload);
 		},
 	},
 });

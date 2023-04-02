@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { setNumberColor } from "../../lib/utils/set_number_color";
 
 const CategoryCurrentBudget = () => {
 	const { getTransactionList } = useSelector((state) => state);
@@ -8,12 +9,24 @@ const CategoryCurrentBudget = () => {
 	}, 0);
 
 	return (
-		<div className="bg-msk-800 m-auto max-w-[80%] flex rounded-md p-1">
-			<p className="bg-msk-300 w-auto txt-msk-90  py-2 px-4 text-5xl mx-auto rounded-md overflow-x-auto overflow-y-hidden">
-				{currentSpend && currentSpend || 0}
+		<div className="bg-msk-800 w-24 m-auto rounded-md p-1 mt-[-4px]">
+			<p
+				className={`${setNumberColor(
+					currentSpend, '+'
+				)} bg-msk-300 m-auto rounded-md  md:text-lg text-2xl p-0`}
+			>
+				{(currentSpend && currentSpend) || 0}
 			</p>
 		</div>
 	);
 };
 
 export default CategoryCurrentBudget;
+
+{
+	/* <div className="bg-msk-800 w-24 m-auto rounded-md p-1 mt-[-4px]">
+<p className={` bg-msk-300 m-auto rounded-md  md:text-lg text-2xl p-0`}>
+	{balance}
+</p>
+</div> */
+}

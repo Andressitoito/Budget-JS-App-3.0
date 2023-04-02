@@ -24,8 +24,6 @@ async function handler(req, res) {
 		////////////////////////////////
 		await mongo_connect();
 
-		// 6418e62930a356ee6570ffb0
-
 		////////////////////////////////
 		// GET USER FROM DATABASE
 		////////////////////////////////

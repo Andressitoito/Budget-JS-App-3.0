@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 
 const categorySchema = new mongoose.Schema({
-	category_id: {
-		type: mongoose.Schema.Types.ObjectId,
-	},
 	category_name: {
 		type: String,
 		required: [true, "A category must have a name"],
@@ -23,12 +20,11 @@ const categorySchema = new mongoose.Schema({
 		required: [true, "A category must have a remaining amount"],
 		default: 0,
 	},
-	transactions: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Transaction",
-		},
-	],
+	transactions:
+	{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Transaction",
+	},
 });
 
 module.exports =
