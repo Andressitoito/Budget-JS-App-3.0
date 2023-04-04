@@ -1,22 +1,21 @@
 import { Modal } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModalDeleteAllTransactions } from "../../features/Modals/modalDeleteAllTransactionsSlice";
+import { setCategoryData } from "../../features/Category/categoryData";
+import { toggleModalDeleteCategory } from "../../features/Modals/modalDeleteCategory";
 import { getTransactionListbyId } from "../../features/Transactions/getTransactionList";
 import { useNotification } from "../../hooks/notificationHook";
+import { getAllCategories } from "../../lib/categories/getAllCategories";
 import BaseButton from "../interaction/Base-button";
 
-const DeleteAllTransactions = () => {
+const DeleteCategory = () => {
 	const dispatch = useDispatch();
 	const dispatchNotification = useNotification();
 
-	const { modalDeleteAllTransactions, categoryData } = useSelector(
-		(state) => state
-	);
+	const { modalDeleteCategory, categoryData } = useSelector((state) => state);
 	const { currentCategory } = categoryData;
 
 	const onClick = async () => {
-		dispatch(toggleModalDeleteAllTransactions());
-
+		dispatch(toggleModalDeleteCategory());
 		dispatchNotification("Pending", `All transactions are being deleted...`);
 
 		////////////////////////////////
@@ -24,16 +23,18 @@ const DeleteAllTransactions = () => {
 		////////////////////////////////
 		const category_id = currentCategory._id;
 
-		const response = await fetch(
-			"/api/database/transactions/delete_all_transactions",
-			{
-				method: "DELETE",
-				body: JSON.stringify({ category_id }),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
+		const category_data = {
+			category_id,
+			category_name: currentCategory.category_name,
+		};
+
+		const response = await fetch("/api/database/categories/delete_category", {
+			method: "DELETE",
+			body: JSON.stringify({ category_data }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 		const data = await response.json();
 
 		////////////////////////////////
@@ -50,8 +51,9 @@ const DeleteAllTransactions = () => {
 			}
 		);
 		const data_transactionList = await response_transactionList.json();
-
 		dispatch(getTransactionListbyId(data_transactionList.transactions));
+		let category_List = await getAllCategories("6418e62930a356ee6570ffb0");
+		dispatch(setCategoryData(category_List));
 
 		if (response.ok) {
 			dispatchNotification("Success", `${data.message}`);
@@ -61,12 +63,12 @@ const DeleteAllTransactions = () => {
 	};
 
 	const onClose = () => {
-		dispatch(toggleModalDeleteAllTransactions());
+		dispatch(toggleModalDeleteCategory());
 	};
 
 	return (
 		<Modal
-			show={modalDeleteAllTransactions}
+			show={modalDeleteCategory}
 			size="md"
 			popup={true}
 			onClose={onClose}
@@ -79,7 +81,7 @@ const DeleteAllTransactions = () => {
 				>
 					Are you sure you want to <br />
 					<span className="text-red-800 uppercase font-bold">
-						delete all transactions?
+						delete this category?
 					</span>
 				</h3>
 				<div className="flex justify-between gap-4">
@@ -104,4 +106,4 @@ const DeleteAllTransactions = () => {
 	);
 };
 
-export default DeleteAllTransactions;
+export default DeleteCategory;

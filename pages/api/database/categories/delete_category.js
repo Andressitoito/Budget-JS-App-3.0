@@ -1,28 +1,29 @@
-import { get_all_categories } from "../../../../lib/categories/get_all_categories";
+import { delete_category } from "../../../../lib/categories/delete_category";
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 
 async function handler(req, res) {
-	if (req.method === "POST") {
+	if (req.method === "DELETE") {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
-		const { organization_id } = req.body;
-		let categoriesArray;
+		const { category_data } = req.body;
+		const { category_id, category_name } = category_data;
 
+		let deleted_category;
 		////////////////////////////////
 		// CONNECT TO THE DATABASE
 		////////////////////////////////
 		await mongo_connect();
 
 		////////////////////////////////
-		// GET ARRAY OF CATEGORIES
+		// DELETE CATEGORY
 		////////////////////////////////
 		try {
-			categoriesArray = await get_all_categories(organization_id);
+			deleted_category = await delete_category(category_id);
 		} catch (error) {
-			return res.status(500).json({
-				status: 500,
-				message: "Something went wrong",
+			return res.status(422).json({
+				status: 422,
+				message: "Something went wrong deleting category",
 				error: error.toString(),
 			});
 		}
@@ -32,8 +33,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		res.status(200).json({
 			status: 200,
-			message: "Get array of categories successfully",
-			categoriesArray,
+			message: `Category ${category_name}, with ${deleted_category} transactions, were successfully deleted`,
 		});
 	}
 }

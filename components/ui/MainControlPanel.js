@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleModalAddNewCategory } from "../../features/Modals/modalAddNewCategory";
 import AddNewCategory from "../modals/addNewCategory";
 import { useEffect } from "react";
-import { getAllCategories } from "../../utils/helpers/categories/getAllCategories";
 import { setCategoryData } from "../../features/Category/categoryData";
+import { getAllCategories } from "../../lib/categories/getAllCategories";
 
 const MainControlPanel = () => {
 	const { modalAddNewCategory, user } = useSelector((state) => state);

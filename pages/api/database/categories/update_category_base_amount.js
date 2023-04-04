@@ -1,11 +1,11 @@
-import { update_category_name } from "../../../../lib/categories/update_category_name";
+import { update_category_base_amount } from "../../../../lib/categories/update_category_base_amount";
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 
 async function handler(req, res) {
 	////////////////////////////////
 	// DECLARE GLOBAL VARIABLES
 	////////////////////////////////
-	const { category_id, newCategoryName } = req.body;
+	const { category_id, new_base_amount } = req.body;
 	let updated_category;
 
 	////////////////////////////////
@@ -13,27 +13,29 @@ async function handler(req, res) {
 	////////////////////////////////
 	await mongo_connect();
 
-	// //////////////////////////////
-	// UPDATE CATEGORY NAME
-	// //////////////////////////////
+	////////////////////////////////
+	// UPDATE CATEGORY BASE AMOUNT
+	////////////////////////////////
 	try {
-		updated_category = await update_category_name(category_id, newCategoryName);
+		updated_category = await update_category_base_amount(
+			category_id,
+			new_base_amount
+		);
 	} catch (error) {
 		return res.status(422).json({
 			status: 422,
-			message: "Something went wrong updating category name",
+			message: "Something went wrong updating category base amount",
 			error: error.toString(),
 		});
 	}
 
 	////////////////////////////////
 	// SEND RESPONSE
-	// CATEGORY
 	////////////////////////////////
 	res.status(200).json({
 		status: 200,
-		message: `Category: ${updated_category.category_name} was successfully updated`,
-		updated_category: updated_category,
+		message: "Base amount updated successfully",
+		updated_category,
 	});
 }
 

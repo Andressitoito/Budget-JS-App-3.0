@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { default: CategoryActions } = require("../../../components/category/categoryActions");
 
 const organizationSchema = new mongoose.Schema({
 	organization: {
@@ -21,6 +22,12 @@ const organizationSchema = new mongoose.Schema({
 		required: [true, "An organization must have an owner"],
 		default: "Unknown",
 	},
+	categories: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Category",
+		},
+	],
 	users: [
 		{
 			_id: {
@@ -38,3 +45,7 @@ const organizationSchema = new mongoose.Schema({
 module.exports =
 	mongoose.models.Organization ||
 	mongoose.model("Organization", organizationSchema);
+
+
+
+	// const arrayOfCategories = await CategoryActions.find({ organization_id: organization_id }).populate("organization_id")

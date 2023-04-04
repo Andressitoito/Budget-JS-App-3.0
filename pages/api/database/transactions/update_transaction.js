@@ -1,13 +1,12 @@
-import { get_all_categories } from "../../../../lib/categories/get_all_categories";
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
+import { update_transaction } from "../../../../lib/transactions/update_transaction";
 
 async function handler(req, res) {
-	if (req.method === "POST") {
+	if (req.method === "PUT") {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
-		const { organization_id } = req.body;
-		let categoriesArray;
+		const { transaction_id, transaction_item, transaction_price } = req.body;
 
 		////////////////////////////////
 		// CONNECT TO THE DATABASE
@@ -15,14 +14,18 @@ async function handler(req, res) {
 		await mongo_connect();
 
 		////////////////////////////////
-		// GET ARRAY OF CATEGORIES
+		// DELETE TRANSACTION
 		////////////////////////////////
 		try {
-			categoriesArray = await get_all_categories(organization_id);
+			await update_transaction(
+				transaction_id,
+				transaction_item,
+				transaction_price
+			);
 		} catch (error) {
-			return res.status(500).json({
-				status: 500,
-				message: "Something went wrong",
+			return res.status(422).json({
+				status: 422,
+				message: "Something went wrong updating transaction",
 				error: error.toString(),
 			});
 		}
@@ -32,8 +35,7 @@ async function handler(req, res) {
 		////////////////////////////////
 		res.status(200).json({
 			status: 200,
-			message: "Get array of categories successfully",
-			categoriesArray,
+			message: `${transaction_item} was successfully updated`,
 		});
 	}
 }
