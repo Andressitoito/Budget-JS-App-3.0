@@ -6,9 +6,12 @@ const userSlice = createSlice({
  name: 'user',
  initialState: initialState,
  reducers: {
-  signIn: (state, action) => {
+  signUp: (state, action) => {
    console.log('FROM ACTION', action.payload)
    return action.payload
+  },
+  signIn:(state, action) => {
+   return state = action.payload
   },
   logOut: (state, action) => {
 
@@ -16,12 +19,12 @@ const userSlice = createSlice({
   user_status: (state, action) => {
 
   }
-
+  
  }
 
 })
 
-export const { signIn } = userSlice.actions
+export const { signIn, signUp } = userSlice.actions
 
 export default userSlice.reducer
 
