@@ -1,11 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../features/auth/user";
 
 const Navbar = () => {
+ const router = useRouter();
+ const { user } = useSelector((state) => state);
+ const dispatch = useDispatch()
 
- const router = useRouter()
-
+ const setLogOut = () => {
+  dispatch(logOut)
+  router.replace('/')
+ }
 
  return (
   <>
@@ -13,36 +20,45 @@ const Navbar = () => {
     className="  fixed w-full z-20 top-0   
    bg-msk-500 px-2 sm:px-4 py-1 "
    >
-    <div className="container flex flex-wrap items-center justify-between mx-auto  px-5  md:px-0">
+    <div className="container flex flex-wrap items-center justify-center mx-auto  px-5  md:px-0">
      <a href="" className="flex items-center">
-      <span className="self-center text-2xl md:text-xl font-semibold whitespace-nowrap txt-msk-200">
-      
-      </span>
+      <span className="self-center text-2xl md:text-xl font-semibold whitespace-nowrap txt-msk-200"></span>
      </a>
 
-
-
      <ul className="flex gap-3">
-
-      <li className={` ${router.pathname === '/' ? 'bg-blue-600' : ''} active active:bg-slate-50  uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700`}>
-       <Link href={'/'}>Home</Link>
+      {!user && (
+       <li
+        className={` ${router.pathname === "/home" ? "bg-blue-600" : ""
+         } active active:bg-slate-50  uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1`}
+       >
+        <Link href={"/home"}>Home</Link>
+       </li>
+      )}
+      <li className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1">
+       <Link href={"/"}>Register</Link>
       </li>
-      <li className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700">
-       <Link href={'/auth/register'}>Register</Link>
-      </li>
-      <li className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700">
-       <Link href={'#'}>Log Out</Link>
-      </li>
-
+      {user && (
+       <li
+        onClick={setLogOut}
+        className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1">
+        Log Out
+       </li>
+      )}
      </ul>
 
-
      {/* AVATAR BADGE */}
-     <div className="items-center justify-between md:flex w-auto ">
+     <div className="absolute items-center justify-between md:flex w-auto right-10">
       <div className="relative">
        <Image
-        className="rounded-full ring-2 ring-blue-400 w-16 md:w-12 h-16 md:h-12"
-        src="/images/bearded-person.jpg"
+        className="rounded-full ring-2 ring-blue-400 w-12 md:w-12 h-12 md:h-12"
+        src={
+         user?.email ?
+          user.email === "andresledesma87@gmail.com"
+           ? "/images/person_with_glasses.jpeg"
+           : `${user.picture}`
+
+          : "/images/bearded-person.jpg"
+        }
         alt="ds"
         width={40}
         height={40}

@@ -10,14 +10,20 @@ import { setCategoryData } from "../../features/Category/categoryData";
 import { getAllCategories } from "../../lib/categories/getAllCategories";
 
 const MainControlPanel = () => {
-	const { modalAddNewCategory, user } = useSelector((state) => state);
+	const { modalAddNewCategory, user, organizationData } = useSelector((state) => state);
+
+	const { currentOrganization_id } = organizationData
 
 	const dispatch = useDispatch();
+
+	// if (organizationData.currentOrganization_id === null) {
+
+	// }
 
 	useEffect(() => {
 		let category_List;
 		(async () => {
-			category_List = await getAllCategories("6418e62930a356ee6570ffb0");
+			category_List = await getAllCategories(currentOrganization_id);
 			dispatch(setCategoryData(category_List));
 		})();
 	}, []);

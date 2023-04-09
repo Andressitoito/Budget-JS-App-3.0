@@ -11,7 +11,7 @@ const DeleteCategory = () => {
 	const dispatch = useDispatch();
 	const dispatchNotification = useNotification();
 
-	const { modalDeleteCategory, categoryData } = useSelector((state) => state);
+	const { modalDeleteCategory, categoryData, organizationData } = useSelector((state) => state);
 	const { currentCategory } = categoryData;
 
 	const onClick = async () => {
@@ -52,7 +52,7 @@ const DeleteCategory = () => {
 		);
 		const data_transactionList = await response_transactionList.json();
 		dispatch(getTransactionListbyId(data_transactionList.transactions));
-		let category_List = await getAllCategories("6418e62930a356ee6570ffb0");
+		let category_List = await getAllCategories(organizationData.currentOrganization_id);
 		dispatch(setCategoryData(category_List));
 
 		if (response.ok) {

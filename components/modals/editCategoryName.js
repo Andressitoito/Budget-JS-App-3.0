@@ -12,7 +12,7 @@ import HelperText from "../helpers/helperText";
 import BaseButton from "../interaction/Base-button";
 
 const EditCategoryName = () => {
-	const { modalEditCategoryName, categoryData } = useSelector((state) => state);
+	const { modalEditCategoryName, categoryData, organizationData } = useSelector((state) => state);
 	const {
 		register,
 		getValues,
@@ -55,7 +55,7 @@ const EditCategoryName = () => {
 
 		dispatch(setCurrentCategory(data.updated_category));
 
-		let category_List = await getAllCategories("6418e62930a356ee6570ffb0");
+		let category_List = await getAllCategories(organizationData.currentOrganization_id);
 		dispatch(setCategoryData(category_List));
 	};
 

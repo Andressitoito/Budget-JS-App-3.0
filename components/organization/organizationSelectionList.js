@@ -1,29 +1,80 @@
-const OrganizationSelectionList = () => {
-	return (
-		<>
-			<div className="bg-msk-800 rounded-md flex flex-col gap-1 py-2 p-1 mx-auto w-96">
-				<div className="relative bg-msk-200 rounded-md">
-					<div className="bg-msk-300 relative text-2xl md:text-xl rounded-md m-1">
-						<p className="bg-msk-600 txt-msk-100 text-center text-3xl right-0 rounded-sm top-[-5px] font-bold">
-							Andresitos
-						</p>
-						<p className="bg-blue-200 w-full text-xl md:text-md text-blue-900">
-							Owner:{" "}
-							<span className="font-semibold italic text-blue-800">
-								Andres Ledesma
-							</span>
-						</p>
-						<p className="w-full text-blue-900">
-							Users:{" "}
-							<span className="font-semibold italic text-blue-800">
-								Andres Ledesma
-							</span>
-						</p>
-					</div>
+import OrganizationSelectionItem from "./organizationSelectionItem";
+
+const OrganizationSelectionList = ({
+	organizations_data,
+	rememberSelection,
+}) => {
+	const { owner, guest } = organizations_data;
+
+	const localStorageSaveOrganizationData = (organization_id) => {
+		let BudgetAppJs_3_Org_Selection = {
+			currentOrganization_id: null,
+		};
+
+		if (rememberSelection) {
+			let organizationData = JSON.parse(
+				localStorage.getItem("BudgetAppJs_3_Org_Selection")
+			);
+
+			if (organizationData === null) {
+				localStorage.setItem(
+					"BudgetAppJs_3_Org_Selection",
+					JSON.stringify(BudgetAppJs_3_Org_Selection)
+				);
+
+				organizationData = JSON.parse(
+					localStorage.getItem("BudgetAppJs_3_Org_Selection")
+				);
+			}
+
+			organizationData = {
+				currentOrganization_id: organization_id,
+			};
+
+			localStorage.setItem(
+				"BudgetAppJs_3_Org_Selection",
+				JSON.stringify(organizationData)
+			);
+		}
+	};
+
+	if (owner === "") {
+		return (
+			<>
+				<div className="bg-msk-800 rounded-md flex flex-col gap-2 py-2 p-1 mx-auto w-96">
+					{guest.map((organization) => (
+						<OrganizationSelectionItem
+							localStorageSaveOrganizationData={localStorageSaveOrganizationData}
+							key={organization._id}
+							organization_name={organization.organization}
+							organization_id={organization._id}
+						/>
+					))}
 				</div>
-			</div>
-		</>
-	);
+			</>
+		);
+	} else {
+		return (
+			<>
+				<div className="bg-msk-800 rounded-md flex flex-col gap-2 py-2 p-1 mx-auto w-96">
+					<OrganizationSelectionItem
+						localStorageSaveOrganizationData={localStorageSaveOrganizationData}
+						owner
+						organization_name={owner.organization_name}
+						organization_id={owner.organization_id}
+					/>
+					{guest.map((organization) => (
+						<OrganizationSelectionItem
+							localStorageSaveOrganizationData={localStorageSaveOrganizationData}
+							key={organization._id}
+							organization_name={organization.organization}
+							organization_id={organization._id}
+						/>
+					))}
+				</div>
+			</>
+		);
+	}
 };
 
 export default OrganizationSelectionList;

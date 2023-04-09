@@ -1,32 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
- organization: "the jacksons",
- _id: "6380bad817f10e2eb4598c9b",
- _id_organization: "6380bad817f10e2eb4598c9b",
- users : [
-  {
-   username: "michael jackson",
-   _id: "6380bad817f1asd0e2eb4598c9b",
-  },
-  {
-   username: "andrew jackson",
-   _id: "6380bad817f10e2faseb4598c9b",
-  }
- ]
-}
+	currentOrganization_id: null,
+};
 
 const organizationDataSlice = createSlice({
- name: 'organizationData',
- initialState: initialState,
- reducers: {
-  updateOrganizationData: (state) => {
+	name: "organizationData",
+	initialState: initialState,
+	reducers: {
+		updateOrganizationData: (state, action) => {
+			console.log(action.payload)
+			return state = {
+				currentOrganization_id: action.payload,
+			};
+		},
+	},
+});
 
-  }
- }
+export const { updateOrganizationData } = organizationDataSlice.actions;
 
-})
-
-export const {updateOrganizationData} = organizationDataSlice.actions
-
-export default organizationDataSlice.reducer
+export default organizationDataSlice.reducer;
