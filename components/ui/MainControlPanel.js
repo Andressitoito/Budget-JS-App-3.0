@@ -12,7 +12,6 @@ import { getAllCategories } from "../../lib/categories/getAllCategories";
 const MainControlPanel = () => {
 	const { modalAddNewCategory, user, organizationData } = useSelector((state) => state);
 
-	const { currentOrganization_id } = organizationData
 
 	const dispatch = useDispatch();
 
@@ -20,13 +19,7 @@ const MainControlPanel = () => {
 
 	// }
 
-	useEffect(() => {
-		let category_List;
-		(async () => {
-			category_List = await getAllCategories(currentOrganization_id);
-			dispatch(setCategoryData(category_List));
-		})();
-	}, []);
+
 
 	const handleClickAddNewCategory = () => {
 		dispatch(toggleModalAddNewCategory());

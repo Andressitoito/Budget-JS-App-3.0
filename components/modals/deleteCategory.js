@@ -11,8 +11,13 @@ const DeleteCategory = () => {
 	const dispatch = useDispatch();
 	const dispatchNotification = useNotification();
 
-	const { modalDeleteCategory, categoryData, organizationData } = useSelector((state) => state);
+	const { modalDeleteCategory, categoryData, organizationData } = useSelector(
+		(state) => state
+	);
 	const { currentCategory } = categoryData;
+
+	console.log(currentCategory);
+	console.log(organizationData);
 
 	const onClick = async () => {
 		dispatch(toggleModalDeleteCategory());
@@ -29,7 +34,7 @@ const DeleteCategory = () => {
 		};
 
 		const response = await fetch("/api/database/categories/delete_category", {
-			method: "DELETE",
+			method: "POST",
 			body: JSON.stringify({ category_data }),
 			headers: {
 				"Content-Type": "application/json",
@@ -52,7 +57,9 @@ const DeleteCategory = () => {
 		);
 		const data_transactionList = await response_transactionList.json();
 		dispatch(getTransactionListbyId(data_transactionList.transactions));
-		let category_List = await getAllCategories(organizationData.currentOrganization_id);
+		let category_List = await getAllCategories(
+			organizationData.currentOrganization_id
+		);
 		dispatch(setCategoryData(category_List));
 
 		if (response.ok) {

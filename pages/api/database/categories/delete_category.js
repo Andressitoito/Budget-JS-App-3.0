@@ -2,7 +2,7 @@ import { delete_category } from "../../../../lib/categories/delete_category";
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 
 async function handler(req, res) {
-	if (req.method === "DELETE") {
+	if (req.method === "POST") {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////

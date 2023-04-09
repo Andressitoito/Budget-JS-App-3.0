@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModalNewTransaction } from "../../features/modals/modalNewTransaction";
-import HelperButtons from "../helpers/helperButtons";
+import { toggleModalNewTransaction } from "../../features/Modals/modalNewTransaction";
 import BaseButton from "../interaction/Base-button";
 import NewTransaction from "../modals/newTransaction";
 import TransactionList from "../transactions/transactionList";
@@ -10,9 +9,11 @@ import CategoryCurrentBudget from "./categoryCurrentBudget";
 import CategoryName from "./categoryName";
 
 const CategoryDetails = () => {
-	const { modalNewTransaction } = useSelector((state) => state);
+	const { modalNewTransaction, categoryData } = useSelector((state) => state);
 
 	const dispatch = useDispatch();
+
+	const { currentCategory } = categoryData
 
 	const handleClickNewTransaction = () => {
 		dispatch(toggleModalNewTransaction());
@@ -23,15 +24,16 @@ const CategoryDetails = () => {
 			className="bg-msk-500 flex flex-col gap-3 justify-center 
   bg-gradient-to-b rounded-md pt-2 pb-2 px-2"
 		>
-			<CategoryName />
+			<CategoryName category_name={currentCategory?.category_name} />
 			<div className="flex flex-col">
+				<CategoryBalance currentCategoryBaseAmount={currentCategory?.base_amount} />
 				<CategoryCurrentBudget />
-				<CategoryBaseAmount />
-				<CategoryBalance />
+				<CategoryBaseAmount base_amount={currentCategory?.base_amount} />
 			</div>
 			<div>
 				<BaseButton
 					text={"New Transaction"}
+					disabled={currentCategory === null}
 					success
 					p_xl
 					onClick={() => {
@@ -41,22 +43,9 @@ const CategoryDetails = () => {
 			</div>
 			{modalNewTransaction && <NewTransaction />}
 
-
-
-<HelperButtons/>
-
-
 			<TransactionList />
 		</div>
 	);
 };
 
 export default CategoryDetails;
-
-
-/* 
-All UI panels done
-
-Make all UI panels for transactions, with their own modals, and redux states.
-
-*/

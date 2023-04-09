@@ -41,7 +41,7 @@ const OrganizationSelectionList = ({
 	if (owner === "") {
 		return (
 			<>
-				<div className="bg-msk-800 rounded-md flex flex-col gap-2 py-2 p-1 mx-auto w-96">
+				<div className="bg-msk-800 rounded-md flex flex-col gap-2 py-2 p-1 mx-auto w-80">
 					{guest.map((organization) => (
 						<OrganizationSelectionItem
 							localStorageSaveOrganizationData={localStorageSaveOrganizationData}
@@ -56,7 +56,7 @@ const OrganizationSelectionList = ({
 	} else {
 		return (
 			<>
-				<div className="bg-msk-800 rounded-md flex flex-col gap-2 py-2 p-1 mx-auto w-96">
+				<div className="bg-msk-800 rounded-md flex flex-col gap-2 py-2 p-1 mx-auto w-80">
 					<OrganizationSelectionItem
 						localStorageSaveOrganizationData={localStorageSaveOrganizationData}
 						owner

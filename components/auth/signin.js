@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useNotification } from "../../hooks/notificationHook";
-import { signIn } from "../../features/auth/user";
-import { useDispatch } from "react-redux";
+import { signIn, toggleUser } from "../../features/auth/user";
+import { useDispatch, useSelector } from "react-redux";
 import BaseButton from "../interaction/Base-button";
 import OrganizationSelectionList from "../organization/organizationSelectionList";
-import Cookies from "js-cookie";
+import { updateLocalData, updateLocalUser, updateLocalUserState, updateState } from "../../features/auth/localUser";
 
 const Signin = () => {
+	const { localUser } = useSelector((state) => state);
+	console.log("localUser ", localUser);
+	const { localUserState, organization_list_data } = localUser;
 	const dispatch = useDispatch();
 	const dispatchNotification = useNotification();
 	const [userSignedIn, setUserSignedIn] = useState(null);
 	const [rememberSelection, setRememberSelection] = useState(false);
-	const [localUser, setLocalUser] = useState(null);
 	const [saveUser, setSaveUser] = useState(false);
 
 	const handleCallbackResponse = async (response) => {
@@ -58,7 +60,6 @@ const Signin = () => {
 			// dispatch(signIn(data.user));
 			setUserSignedIn(organizations_data);
 			dispatch(signIn(user_data.user));
-			setLocalUser(userObject);
 		} else {
 			dispatchNotification("Error", `${data.error}`);
 		}
@@ -124,6 +125,8 @@ const Signin = () => {
 			guest: user_.guest_organizations,
 		};
 		setUserSignedIn(organizations_data);
+		dispatch(updateLocalData(organizations_data));
+		dispatch(updateState(true));
 		dispatch(signIn(user_));
 	};
 
@@ -136,22 +139,9 @@ const Signin = () => {
 
 	const handleClickSaveUser = () => {
 		setSaveUser(!saveUser);
+
+		dispatch(toggleUser());
 	};
-
-	useEffect(() => {
-		let saved_user = JSON.parse(localStorage.getItem("saved_user"));
-
-		console.log(saved_user);
-
-		if (saved_user === null) {
-			console.log("local storage is null");
-			localStorage.setItem("saved_user", JSON.stringify(localUser));
-		} else {
-			console.log("Removed saved_user");
-
-			localStorage.removeItem("saved_user");
-		}
-	}, [saveUser]);
 
 	return (
 		<>
@@ -199,7 +189,7 @@ const Signin = () => {
 					</>
 				)}
 
-				{userSignedIn && (
+				{localUserState && (
 					<>
 						<div className="flex justify-center items-center m-2">
 							<input
@@ -217,7 +207,7 @@ const Signin = () => {
 						</div>
 
 						<OrganizationSelectionList
-							organizations_data={userSignedIn}
+							organizations_data={organization_list_data}
 							rememberSelection={rememberSelection}
 						/>
 					</>

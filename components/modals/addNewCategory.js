@@ -14,7 +14,11 @@ const AddNewCategory = () => {
 		getValues,
 		formState: { errors, isValid },
 	} = useForm({ mode: "onChange" });
-	const { modalAddNewCategory, user } = useSelector((state) => state);
+	const { modalAddNewCategory, user, organizationData } = useSelector((state) => state);
+
+	const { currentOrganization_id } = organizationData;
+
+	console.log(currentOrganization_id)
 
 	const dispatch = useDispatch();
 	const dispatchNotification = useNotification();
@@ -25,7 +29,7 @@ const AddNewCategory = () => {
 		dispatchNotification("Pending", "Creating category...");
 		const category = {
 			category_name: getValues("category_name").trim(),
-			organization_id: user.organization_id,
+			organization_id: currentOrganization_id,
 		};
 
 		const response = await fetch("/api/database/categories/create_category", {
@@ -37,8 +41,9 @@ const AddNewCategory = () => {
 		});
 		const data = await response.json();
 
-		const categoryList = await getAllCategories(user.organization_id);
+		const categoryList = await getAllCategories(currentOrganization_id);
 		dispatch(setCategoryData(categoryList));
+		console.log("categoryList FROM ADD CATEGORY", categoryList)
 		if (response.ok) {
 			dispatchNotification("Success", `${data.message}`);
 		} else {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showNotification } from "../../features/Notifications/notifications";
-import { notification_style } from "../../lib/notification_style";
+import { notification_style } from "../../lib/notifications/notification_style";
 
 const Notification = () => {
 	const { notifications } = useSelector((state) => state);
@@ -20,7 +20,7 @@ const Notification = () => {
 						status: "",
 					})
 				);
-			}, 3000);
+			}, 6000);
 			return () => clearTimeout(timer);
 		}
 	}, [status]);

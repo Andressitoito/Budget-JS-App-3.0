@@ -3,21 +3,24 @@ import { Provider } from "react-redux";
 import "../styles/globals.css";
 import "../styles/theme.css";
 import Layout from "../components/layout/layout";
-import { SessionProvider } from "next-auth/react";
 import NotificationContainer from "../components/notifications/notificationContainer";
+import HelperContainer from "../components/helpers/developHelper/helperContainer";
 
-export default function App({ Component, pageProps, session }) {
+export default function App({ Component, pageProps}) {
 
 	return (
 		<>
-			<SessionProvider session={session}>
-				<Layout>
-					<Provider store={store} Component={Component}>
+				<Provider store={store} Component={Component}>
+					<Layout>
 						<NotificationContainer />
+						{/* <HelperContainer/> */}
 						<Component {...pageProps} />
-					</Provider>
-				</Layout>
-			</SessionProvider>
+					</Layout>
+				</Provider>
 		</>
 	);
 }
+
+// import { SessionProvider } from "next-auth/react";
+// </SessionProvider>
+// 			<SessionProvider session={pageProps.session}>

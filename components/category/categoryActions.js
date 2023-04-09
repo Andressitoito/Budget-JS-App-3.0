@@ -1,68 +1,92 @@
-import BaseButton from "../interaction/Base-button";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModalDeleteAllTransactions } from "../../features/modals/modalDeleteAllTransactionsSlice";
+import { toggleModalDeleteAllTransactions } from "../../features/Modals/modalDeleteAllTransactionsSlice";
+import { toggleModalEditCategoryName } from "../../features/Modals/modalEditcategoryNameSlice";
+import { toggleModalEditBaseAmount } from "../../features/Modals/modalEditeBaseAmount";
+import { toggleModalDeleteCategory } from "../../features/Modals/modalDeleteCategory";
+import BaseButton from "../interaction/Base-button";
 import DeleteAllTransactions from "../modals/deleteAllTransactions";
-import { toggleModalEditCategoryName } from "../../features/modals/modalEditcategoryNameSlice";
 import EditCategoryName from "../modals/editCategoryName";
-import { toggleModalEditBaseAmount } from "../../features/modals/modalEditeBaseAmount";
 import EditBaseAmount from "../modals/editBaseAmount";
+import DeleteCategory from "../modals/deleteCategory";
 
 const CategoryActions = () => {
- const {
-  modalDeleteAllTransactions,
-  modalEditCategoryName,
-  modalEditBaseAmount,
- } = useSelector((state) => state);
+	const {
+		modalDeleteAllTransactions,
+		modalDeleteCategory,
+		modalEditCategoryName,
+		modalEditBaseAmount,
+		categoryData,
+	} = useSelector((state) => state);
+	const { currentCategory } = categoryData;
 
- const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
- const handleClickModalEditCategoryName = () => {
-  dispatch(toggleModalEditCategoryName());
- };
+	const handleClickModalEditCategoryName = () => {
+		dispatch(toggleModalEditCategoryName());
+	};
 
- const handleClickModalEditBaseAmount = () => {
-  dispatch(toggleModalEditBaseAmount());
- };
+	const handleClickModalEditBaseAmount = () => {
+		dispatch(toggleModalEditBaseAmount());
+	};
 
- const handleClickModalDelete = () => {
-  dispatch(toggleModalDeleteAllTransactions());
- };
+	const handleClickModalDelete = () => {
+		dispatch(toggleModalDeleteAllTransactions());
+	};
 
- return (
-  <div className="flex justify-center flex-col gap-5">
-   <div>
-    <BaseButton
-     text={"Edit category Name"}
-     xs
-     onClick={() => {
-      handleClickModalEditCategoryName();
-     }}
-    />
-    {modalEditCategoryName && <EditCategoryName />}
-   </div>
-   <div>
-    <BaseButton
-     text={"Edit Base Amount"}
-     xs
-     onClick={() => {
-      handleClickModalEditBaseAmount();
-     }}
-    />
-    {modalEditBaseAmount && <EditBaseAmount />}
-   </div>
-   <div>
-    <BaseButton
-     text={"Delete all transactions"}
-     onClick={() => {
-      handleClickModalDelete();
-     }}
-     xs
-     danger
-    />
-    {modalDeleteAllTransactions && <DeleteAllTransactions />}
-   </div>
-  </div>
- );
+	const handleClickModalDeleteCategory = () => {
+		dispatch(toggleModalDeleteCategory());
+	};
+
+	return (
+		<div className="flex justify-center flex-col gap-5">
+			<div>
+				<BaseButton
+					disabled={currentCategory === null}
+					text={"Edit category Name"}
+					xs
+					onClick={() => {
+						handleClickModalEditCategoryName();
+					}}
+				/>
+				{modalEditCategoryName && <EditCategoryName />}
+			</div>
+			<div>
+				<BaseButton
+					disabled={currentCategory === null}
+					text={"Edit Base Amount"}
+					xs
+					onClick={() => {
+						handleClickModalEditBaseAmount();
+					}}
+				/>
+				{modalEditBaseAmount && <EditBaseAmount />}
+			</div>
+			<div>
+				<BaseButton
+					disabled={currentCategory === null}
+					text={"Delete all transactions"}
+					onClick={() => {
+						handleClickModalDelete();
+					}}
+					xs
+					danger
+				/>
+				{modalDeleteAllTransactions && <DeleteAllTransactions />}
+			</div>
+			<div>
+				<BaseButton
+					disabled={currentCategory === null}
+					text={`${currentCategory ? `Delete category ${currentCategory.category_name}` : 'Delete category'}`}
+					onClick={() => {
+						handleClickModalDeleteCategory();
+					}}
+					xs
+					danger
+				/>
+				{modalDeleteCategory && <DeleteCategory />}
+			</div>
+		</div>
+	);
 };
 
 export default CategoryActions;

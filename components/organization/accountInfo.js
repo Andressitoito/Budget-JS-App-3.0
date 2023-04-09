@@ -2,7 +2,7 @@ import { useState } from "react";
 import CreateNewOrganization from "./createNewOrganizationForm";
 import InputOrganizationID from "./inputOrganizationID";
 
-const AccountInfo = ({ user, user_info }) => {
+const AccountInfo = ({ user, user_info, setActiveTab }) => {
 	const [showOrganizationForm, setShowOrganizationForm] = useState(false);
 
 	const handleClickCheckbox = () => {
@@ -25,7 +25,7 @@ const AccountInfo = ({ user, user_info }) => {
 					{`${user?.given_name}, already have an organization ID?`}
 				</label>
 			</div>
-			{showOrganizationForm ? <InputOrganizationID user_info={user_info} /> : <CreateNewOrganization user_info={user_info} />}
+			{showOrganizationForm ? <InputOrganizationID user_info={user_info} setActiveTab={setActiveTab} /> : <CreateNewOrganization user_info={user_info} setActiveTab={setActiveTab} />}
 		</>
 	);
 };
