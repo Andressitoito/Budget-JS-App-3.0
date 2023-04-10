@@ -160,8 +160,6 @@ const Signin = () => {
 					}}
 				/> */}
 
-				/>
-        main
 				<div className="bg-msk-700 p-1 rounded-md w-96">
 					<h2 className="text-3xl txt-msk-300 text-center font-semibold mb-0">
 						{userSignedIn ? `Choose an organization:` : `Welcome back!`}
