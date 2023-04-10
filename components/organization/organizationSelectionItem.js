@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateOrganizationData } from "../../features/auth/organizationData";
+import { setCurrentCategory } from "../../features/Category/categoryData";
 
 const OrganizationSelectionItem = ({ owner, organization_name, organization_id, localStorageSaveOrganizationData }) => {
 
@@ -12,6 +13,7 @@ const OrganizationSelectionItem = ({ owner, organization_name, organization_id, 
   console.log("set organization");
   localStorageSaveOrganizationData(organization_id)
   dispatch(updateOrganizationData(organization_id))
+  dispatch(setCurrentCategory(null))
   router.replace('/home')
  };
 

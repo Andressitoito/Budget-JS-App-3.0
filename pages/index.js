@@ -49,7 +49,7 @@ useEffect(()=> {
 	};
 
 	return (
-		<div className="flex justify-center mt-2 mx-7 pb-5">
+		<div className="flex justify-center mt-2 mx-7 pb-5 ">
 			{/* If our user doesnt have any attributes it means that there is no user logged in*/}
 
 			{/* {Object.keys(user).length != 0 && (

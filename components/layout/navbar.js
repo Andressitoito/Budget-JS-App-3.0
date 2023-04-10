@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/user";
 
@@ -13,6 +14,10 @@ const Navbar = () => {
 		dispatch(logOut);
 		router.replace("/");
 	};
+
+	useEffect(() => {
+
+	}, [user])
 
 	return (
 		<>
@@ -28,21 +33,20 @@ const Navbar = () => {
 					<ul className="flex gap-3">
 						{!user && (
 							<li
-								className={` ${
-									router.pathname === "/home" ? "bg-blue-600" : ""
-								} active active:bg-slate-50  uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1`}
+								className={` ${router.pathname === "/home" ? "bg-blue-600" : ""
+									} active active:bg-slate-50 select-none uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1`}
 							>
-								<Link href={"/home"}>Home</Link>
+								<Link className="select-none" href={"/home"}>Home</Link>
 							</li>
 						)}
 
-						<li className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1">
-							<Link href={"/"}>{!user ? "Register" : "Organization"}</Link>
+						<li className="select-none uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1">
+							<Link className="select-none" href={"/"}>{!user ? "Register" : "Organization"}</Link>
 						</li>
 						{user && (
 							<li
 								onClick={setLogOut}
-								className="uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1"
+								className=" select-none uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1"
 							>
 								Log Out
 							</li>

@@ -37,7 +37,7 @@ const CategoryItem = (props) => {
 			onClick={handleClickSetCurrentCategory}
 		>
 			<div
-				className="px-2 md:py-1 py-2 my-1 relative
+				className="select-none px-2 md:py-1 py-2 my-1 relative
    bg-blue-500 text-xl md:text-lg
    ring-1 ring-gray-900/3 rounded-md 
    leading-none flex justify-center uppercase txt-msk-200 font-bold text-ellipsis overflow-hidden truncate

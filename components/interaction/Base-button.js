@@ -24,7 +24,7 @@ const BaseButton = (props) => {
 	return (
 		<button
 			disabled={props.disabled === true ? true : false}
-			className={`${bgColor} ${bgColorHover} ${padding} ${width} uppercase	text-xl md:text-base	font-bold	txt-msk-100  py-1.5 px-2 rounded transition delay-100 duration-400 ease-in-out disabled:opacity-50 disabled:pointer-events-none`}
+			className={`${bgColor} ${bgColorHover} ${padding} ${width} select-none uppercase	text-xl md:text-base	font-bold	txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-400 ease-in-out disabled:opacity-50 disabled:pointer-events-none`}
 			onClick={onClick}
 		>
 			<p className={`${textBreak}`}>{props.text}</p>

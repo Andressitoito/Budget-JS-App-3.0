@@ -1,6 +1,9 @@
 import { Modal } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryData } from "../../features/Category/categoryData";
+import {
+	setCategoryData,
+	setCurrentCategory,
+} from "../../features/Category/categoryData";
 import { toggleModalDeleteCategory } from "../../features/Modals/modalDeleteCategory";
 import { getTransactionListbyId } from "../../features/Transactions/getTransactionList";
 import { useNotification } from "../../hooks/notificationHook";
@@ -61,6 +64,7 @@ const DeleteCategory = () => {
 			organizationData.currentOrganization_id
 		);
 		dispatch(setCategoryData(category_List));
+		dispatch(setCurrentCategory(null));
 
 		if (response.ok) {
 			dispatchNotification("Success", `${data.message}`);

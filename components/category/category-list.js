@@ -31,13 +31,3 @@ const CategoryList = () => {
 };
 
 export default CategoryList;
-
-
-give a title and a description for a git commit, this was a very intense work, use words like 'user updated, bugs were fixed': 
-
-at the moment there is a lot going on, a big ongoing work on many levels:
-
-- category list not refreshing with the actual organization id, fixed
-- protecting routes /home to avoid bad loadConfig
-- create new redux states to use reuse the organization selection UI from the Signin
-- ongoing work with save user in local Storage

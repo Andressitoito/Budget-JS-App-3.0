@@ -5,7 +5,12 @@ import { signIn, toggleUser } from "../../features/auth/user";
 import { useDispatch, useSelector } from "react-redux";
 import BaseButton from "../interaction/Base-button";
 import OrganizationSelectionList from "../organization/organizationSelectionList";
-import { updateLocalData, updateLocalUser, updateLocalUserState, updateState } from "../../features/auth/localUser";
+import {
+	updateLocalData,
+	updateLocalUser,
+	updateLocalUserState,
+	updateState,
+} from "../../features/auth/localUser";
 
 const Signin = () => {
 	const { localUser } = useSelector((state) => state);
@@ -57,8 +62,10 @@ const Signin = () => {
 			};
 
 			dispatchNotification("Success", `${data.message}`);
-			// dispatch(signIn(data.user));
+
 			setUserSignedIn(organizations_data);
+			dispatch(updateLocalData(organizations_data));
+			dispatch(updateState(true));
 			dispatch(signIn(user_data.user));
 		} else {
 			dispatchNotification("Error", `${data.error}`);
@@ -146,72 +153,76 @@ const Signin = () => {
 	return (
 		<>
 			<form>
-				<BaseButton
+				{/* <BaseButton
 					text={"sign in!"}
 					onClick={(e) => {
 						getUserSignedIn(e);
 					}}
-				/>
-				<h2 className="text-4xl txt-msk-300 text-center font-semibold mb-0">
-					{userSignedIn ? `Choose an organization:` : `Welcome back!`}
-				</h2>
-				{userSignedIn === null && (
-					<>
-						{/* <div className="flex justify-center p-5 transform ">
-							<div
-								id="signInDiv"
-								className="w-230 text-center scale-x-[140%] scale-y-[120%]"
-							></div>
-						</div> */}
+				/> */}
+				<div className="bg-msk-700 p-1 rounded-md w-80">
+					<h2 className="text-4xl txt-msk-300 text-center font-semibold mb-0">
+						{userSignedIn ? `Choose an organization:` : `Welcome back!`}
+					</h2>
+					{userSignedIn === null && (
+						<>
+							<div className="flex justify-center p-5 transform ">
+								<div
+									id="signInDiv"
+									className="w-230 text-center scale-x-[140%] scale-y-[120%]"
+								></div>
+							</div>
 
-						<p className="txt-msk-200 text-center text-xl mt-0">
-							Please sign in to continue!
-						</p>
-					</>
-				)}
+							<p className="txt-msk-200 text-center text-xl mt-0">
+								Please sign in to continue!
+							</p>
+						</>
+					)}
 
-				{userSignedIn && (
-					<>
-						<div className="flex justify-center items-center mb-5">
-							<input
-								type="checkbox"
-								className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-								id="organizationID"
-								onClick={handleClickSaveUser}
+					{localUserState && (
+						<>
+							{/* <div className="flex justify-center items-center mt-3 mb-2 ">
+								<input
+									type="checkbox"
+									className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+									id="organizationID"
+									onClick={handleClickSaveUser}
+								/>
+								<label
+									className="form-check-label text-lg inline-block txt-msk-200"
+									htmlFor="organizationID"
+								>
+									{`Remember user`}
+								</label>
+							</div> */}
+						</>
+					)}
+				</div>
+
+				<div className="bg-msk-800 rounded-md p-1 pb-4">
+					{localUserState && (
+						<>
+							{/* <div className="flex justify-center items-center m-2">
+								<input
+									type="checkbox"
+									className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+									id="organizationID"
+									onClick={handleClickCheckbox}
+								/>
+								<label
+									className="form-check-label text-lg inline-block txt-msk-200"
+									htmlFor="organizationID"
+								>
+									{`Remember organization`}
+								</label>
+							</div> */}
+
+							<OrganizationSelectionList
+								organizations_data={organization_list_data}
+								rememberSelection={rememberSelection}
 							/>
-							<label
-								className="form-check-label text-lg inline-block txt-msk-200"
-								htmlFor="organizationID"
-							>
-								{`Remember user`}
-							</label>
-						</div>
-					</>
-				)}
-
-				{localUserState && (
-					<>
-						<div className="flex justify-center items-center m-2">
-							<input
-								type="checkbox"
-								className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-								id="organizationID"
-								onClick={handleClickCheckbox}
-							/>
-							<label
-								className="form-check-label text-lg inline-block txt-msk-200"
-								htmlFor="organizationID"
-							>
-								{`Remember organization`}
-							</label>
-						</div>
-
-						<OrganizationSelectionList
-							organizations_data={organization_list_data}
-							rememberSelection={rememberSelection}
-						/>
-					</>
-				)}
+						</>
+					)}
+				</div>
 			</form>
 		</>
 	);

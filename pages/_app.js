@@ -5,18 +5,19 @@ import "../styles/theme.css";
 import Layout from "../components/layout/layout";
 import NotificationContainer from "../components/notifications/notificationContainer";
 import HelperContainer from "../components/helpers/developHelper/helperContainer";
+import CurrentVersion from "../components/layout/currentVersion";
 
-export default function App({ Component, pageProps}) {
-
+export default function App({ Component, pageProps }) {
 	return (
 		<>
-				<Provider store={store} Component={Component}>
-					<Layout>
-						<NotificationContainer />
-						{/* <HelperContainer/> */}
-						<Component {...pageProps} />
-					</Layout>
-				</Provider>
+			<Provider store={store} Component={Component}>
+				<Layout>
+					<NotificationContainer />
+					<CurrentVersion />
+					{/* <HelperContainer/> */}
+					<Component {...pageProps} />
+				</Layout>
+			</Provider>
 		</>
 	);
 }
