@@ -32,10 +32,6 @@ async function handler(req, res) {
 			});
 		}
 
-		console.log("////////////////", user_info);
-
-		console.log("ORGANIZATION: ", organization);
-
 		organization = organization.trim();
 		let saved_organization;
 		let saved_user;
