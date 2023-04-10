@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BudgetAppJs-3.0
 
-## Getting Started
+BudgetAppJs-3.0 is a tool designed to help you manage your money on a day-to-day basis. With its intuitive and user-friendly interface, you can easily keep track of your budget, expenses, and what's left to spend. There are no complicated graphics or charts – just clear, big numbers that tell you everything you need to know.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Organizations
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+With BudgetAppJs-3.0, you can create your own organizations and invite family or friends to join. This allows you to manage your family or group's budget together. Going on a trip? Create an organization, invite your friends, and keep a good track of all your money. As the saying goes, "friendship is like money, easier to get than kept."
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Categories
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Inside each organization, you can create as many categories as you need to get a better overview of all your expenses. Categories can be removed, edited, or deleted as you need.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Transactions
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Each category has its own transaction list, allowing you to add expenses and keep track of them. Each transaction includes information such as the username of the person who made the transaction, the date, the amount, and the item name.
 
-## Learn More
+### Users
 
-To learn more about Next.js, take a look at the following resources:
+Users can be added or removed from the organization, and transactions can be filtered by user for a better overview of spending.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How to Use
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To use BudgetAppJs-3.0, simply create an organization and add categories as needed. Then, start adding transactions to keep track of your expenses. You can also invite other users to join your organization and help manage the budget together.
 
-## Deploy on Vercel
+## Conclusion
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+BudgetAppJs-3.0 is your best friend when it comes to managing your money. With its simple, easy-to-use interface, you can stay on top of your budget and expenses. So why let it go? Try BudgetAppJs-3.0 today and take control of your finances!
