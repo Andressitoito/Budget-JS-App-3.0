@@ -15,15 +15,13 @@ const Navbar = () => {
 		router.replace("/");
 	};
 
-	useEffect(() => {
-
-	}, [user])
+	useEffect(() => {}, [user]);
 
 	return (
 		<>
 			<nav
-				className="  fixed w-full z-20 top-0   
-   bg-msk-500 px-2 sm:px-4 py-1 "
+				className="fixed w-full z-20 top-0   
+   bg-msk-500 px-2 py-1"
 			>
 				<div className="container flex flex-wrap items-center justify-center mx-auto  px-5  md:px-0">
 					<a href="" className="flex items-center">
@@ -33,20 +31,25 @@ const Navbar = () => {
 					<ul className="flex gap-3">
 						{!user && (
 							<li
-								className={` ${router.pathname === "/home" ? "bg-blue-600" : ""
-									} active active:bg-slate-50 select-none uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1`}
+								className={` ${
+									router.pathname === "/home" ? "bg-blue-600" : ""
+								} active active:bg-slate-50 select-none uppercase	md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1`}
 							>
-								<Link className="select-none" href={"/home"}>Home</Link>
+								<Link className="select-none" href={"/home"}>
+									Home
+								</Link>
 							</li>
 						)}
 
-						<li className="select-none uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1">
-							<Link className="select-none" href={"/"}>{!user ? "Register" : "Organization"}</Link>
+						<li className="select-none uppercase	md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1">
+							<Link className="select-none" href={"/"}>
+								{!user ? "Register" : "Organization"}
+							</Link>
 						</li>
 						{user && (
 							<li
 								onClick={setLogOut}
-								className=" select-none uppercase	text-xl md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1"
+								className=" select-none uppercase md:text-base font-bold txt-msk-100 py-1.5 px-2 rounded transition delay-100 duration-500 ease-in-out bg-blue-500 hover:bg-blue-700 m-1"
 							>
 								Log Out
 							</li>
@@ -65,7 +68,7 @@ const Navbar = () => {
 											: `${user.picture}`
 										: "/images/bearded-person.jpg"
 								}
-								alt="ds"
+								alt="perfil picture"
 								width={40}
 								height={40}
 							/>

@@ -8,27 +8,16 @@ const Register = () => {
 	const [activeTab, setActiveTab] = useState("signin");
 	const router = useRouter();
 
+	useEffect(() => {
+		const saved_user = JSON.parse(localStorage.getItem("saved_user"));
 
-useEffect(()=> {
-	const saved_user = JSON.parse(localStorage.getItem("saved_user"));
+		// console.log(saved_user);
 
-
-	console.log(saved_user)
-
-	
-	if (saved_user) {
-		router.replace("/");
-	}
-
-
-}, [])
-
-
-
-	
-	
-	// const { saved_organization_id } = props
-	// console.log(saved_organization_id)
+		if (saved_user) {
+			router.replace("/");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleClickActiveTab = (tab, e) => {
 		setActiveTab(tab);
@@ -133,4 +122,3 @@ useEffect(()=> {
 };
 
 export default Register;
-

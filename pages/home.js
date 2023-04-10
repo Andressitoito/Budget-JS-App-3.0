@@ -9,7 +9,7 @@ import { getAllCategories } from "../lib/categories/getAllCategories";
 
 const Home = () => {
 	const route = useRouter();
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const { user, currentOrganization_id } = useSelector((state) => state);
 
@@ -23,21 +23,17 @@ const Home = () => {
 				route.replace("/");
 			}
 			setShowHome(true);
-
-
 		}
-	}, []);
+	}, [user, route]);
 
-	useEffect(() => {
-
-	}, [])
+	useEffect(() => {}, []);
 
 	return (
 		<>
 			{showHome && (
 				<section className="text-center bg-msk-800 m-auto w-[600px]">
 					<div className="absolute">
-						<CurrentBudget />
+						{/* <CurrentBudget /> */}
 					</div>
 					<MainControlPanel />
 				</section>

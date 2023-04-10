@@ -72,7 +72,6 @@ const Signin = () => {
 	};
 
 	useEffect(() => {
-		/* global google */
 		google.accounts.id.initialize({
 			client_id:
 				"270888240866-9ngld0ma7mg91h5or77rv7607bl7eb5d.apps.googleusercontent.com",
@@ -84,8 +83,9 @@ const Signin = () => {
 			size: "large",
 		});
 
-		// google.accounts.id.prompt();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	// google.accounts.id.prompt();
 
 	////////////////////////////////
 	// HANDLE SIGN OUT
@@ -152,24 +152,24 @@ const Signin = () => {
 	return (
 		<>
 			<form>
-				{/* <BaseButton
+				<BaseButton
 					text={"sign in!"}
 					onClick={(e) => {
 						getUserSignedIn(e);
 					}}
-				/> */}
-				<div className="bg-msk-700 p-1 rounded-md w-80">
-					<h2 className="text-4xl txt-msk-300 text-center font-semibold mb-0">
+				/>
+				<div className="bg-msk-700 p-1 rounded-md w-96">
+					<h2 className="text-3xl txt-msk-300 text-center font-semibold mb-0">
 						{userSignedIn ? `Choose an organization:` : `Welcome back!`}
 					</h2>
 					{userSignedIn === null && (
 						<>
-							<div className="flex justify-center p-5 transform ">
+							{/* <div className="flex justify-center p-5 transform ">
 								<div
 									id="signInDiv"
 									className="w-230 text-center scale-x-[140%] scale-y-[120%]"
 								></div>
-							</div>
+							</div> */}
 
 							<p className="txt-msk-200 text-center text-xl mt-0">
 								Please sign in to continue!

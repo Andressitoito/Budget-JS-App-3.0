@@ -51,6 +51,7 @@ const Signup = ({ setActiveTab }) => {
 		});
 
 		// google.accounts.id.prompt();
+// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	////////////////////////////////
