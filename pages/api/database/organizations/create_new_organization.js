@@ -5,14 +5,32 @@ import { create_new_user } from "../../../../lib/users/create_new_user";
 import { update_user_ownership } from "../../../../lib/users/update_user_ownership";
 
 const User = require("../../models/usersModel");
-const Organization = require("../../models/organizationModel");
 
 async function handler(req, res) {
 	if (req.method === "POST") {
 		////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
 		////////////////////////////////
-		let { organization, user: user_info } = req.body;
+		let { organization, user: user_info, authorization_token } = req.body;
+
+		////////////////////////////////
+		// CHECK AUTHORIZATION TOKEN
+		////////////////////////////////
+		try {
+			let authorized_token = "Кулокулитокартошкин";
+
+			if (authorization_token !== authorized_token) {
+				throw new Error(
+					"Oops! It seems like the token you've entered is invalid. Please double-check the token and try again. If you continue to have issues, please contact our support team for assistance. Thank you!"
+				);
+			}
+		} catch (error) {
+			return res.status(401).json({
+				status: 401,
+				message: "Authorization token denied",
+				error: error.toString(),
+			});
+		}
 
 		console.log("////////////////", user_info);
 

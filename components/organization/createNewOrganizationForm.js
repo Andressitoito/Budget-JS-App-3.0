@@ -47,10 +47,11 @@ const CreateNewOrganizationForm = ({ user_info, setActiveTab }) => {
 
 		const organization = {
 			organization: getValues("organization_name").trim(),
+			authorization_token: getValues("authorization_token").trim(),
 			user: user_org,
 		};
 
-			const response = await fetch(
+		const response = await fetch(
 			"/api/database/organizations/create_new_organization",
 			{
 				method: "POST",

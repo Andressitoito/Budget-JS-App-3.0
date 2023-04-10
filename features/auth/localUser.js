@@ -1,34 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
- localUserState: false,
- organization_list_data: {},
+	localUserState: false,
+	organization_list_data: {},
 };
 
 const localUserSlice = createSlice({
- name: "localUser",
- initialState: initialState,
- reducers: {
-  updateLocalData: (state, action) => {
-   console.log("action.payload ", action.payload);
+	name: "localUser",
+	initialState: initialState,
+	reducers: {
+		updateLocalData: (state, action) => {
+			state.organization_list_data = action.payload;
 
-   state.organization_list_data = action.payload;
-
-   return state;
-  },
-  updateState: (state, action) => {
-   console.log("action.payload ", action.payload);
-   console.log(state.localUserState)
-   state.localUserState = !state.localUserState;
-   console.log("state.localUserState ", state.localUserState)
-
-   return state;
-  },
- },
+			return state;
+		},
+		updateState: (state) => {
+			state.localUserState = !state.localUserState;
+			return state;
+		},
+	},
 });
 
 export const { updateLocalUserState, updateLocalData, updateState } =
- localUserSlice.actions;
+	localUserSlice.actions;
 
 export default localUserSlice.reducer;
 

@@ -20,8 +20,6 @@ const Signup = ({ setActiveTab }) => {
 
 		const { email } = userObject;
 
-		console.log(`mi nombre es ${userObject.name}`);
-
 		const res = await fetch("/api/database/users/find_user", {
 			method: "POST",
 			body: JSON.stringify({

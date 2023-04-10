@@ -14,7 +14,6 @@ import {
 
 const Signin = () => {
 	const { localUser } = useSelector((state) => state);
-	console.log("localUser ", localUser);
 	const { localUserState, organization_list_data } = localUser;
 	const dispatch = useDispatch();
 	const dispatchNotification = useNotification();

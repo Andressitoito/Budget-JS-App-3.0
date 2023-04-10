@@ -15,10 +15,10 @@ const userSlice = createSlice({
 		logOut: (state) => {
 			return (state = null);
 		},
+		toggleUser: () => {},
 	},
 });
 
-export const { signIn, signUp, logOut } =
-	userSlice.actions;
+export const { signIn, signUp, logOut, toggleUser } = userSlice.actions;
 
 export default userSlice.reducer;
