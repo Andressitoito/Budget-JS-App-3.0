@@ -9,7 +9,7 @@ const CategoryCurrentBudget = () => {
 	}, 0);
 
 	return (
-		<div className="bg-msk-800 w-24 m-auto rounded-md p-1 mt-[-4px]">
+		<div className="select-none bg-msk-800 w-24 m-auto rounded-md p-1 mt-[-4px]">
 			<p
 				className={`${setNumberColor(
 					currentSpend, '+'

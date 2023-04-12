@@ -17,11 +17,11 @@ const CategoryName = () => {
 		}
 	}, [currentCategory]);
 
-	const emptyCategory = `bg-msk-300 text-gray-500 text-ellipsis overflow-hidden max-w-[300px] text-2xl md:text-2xl px-3 mx-auto rounded-md italic font-bold`;
+	const emptyCategory =`bg-msk-300 text-gray-500 text-ellipsis overflow-hidden max-w-[300px] text-2xl md:text-2xl px-3 mx-auto rounded-md italic font-bold`;
 	const Category = `bg-msk-300 txt-msk-90 text-ellipsis overflow-hidden max-w-[300px] text-3xl md:text-3xl px-3 mx-auto rounded-md italic font-bold`;
 
 	return (
-		<div className="bg-msk-800 w-64 max-w[90] m-auto rounded-md p-1">
+		<div className="select-none bg-msk-800 w-64 max-w[90] m-auto rounded-md p-1">
 			<p
 				className={
 					currentCategory?.category_name === undefined ? emptyCategory : Category

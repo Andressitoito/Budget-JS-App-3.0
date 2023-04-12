@@ -102,7 +102,7 @@ const Register = () => {
 					<div className="md:w-[240px] md:h-[300px] w-[120px] h-[150px] flex justify-center align-middle rounded-md overflow-hidden relative">
 						<Image
 							src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-							className="absolute out-blue"
+							className="absolute"
 							alt="Phone image"
 							fill
 							style={{ objectFit: "cover" }}

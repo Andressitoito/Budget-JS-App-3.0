@@ -11,7 +11,7 @@ const CategoryBalance = ({ currentCategoryBaseAmount }) => {
 	const balance = parseInt(currentCategoryBaseAmount) - parseInt(currentSpend);
 
 	return (
-		<div className="bg-msk-800 m-auto max-w-[80%] flex rounded-md p-1">
+		<div className="select-none bg-msk-800 m-auto max-w-[80%] flex rounded-md p-1">
 			<p
 				className={`${setNumberColor(
 					balance

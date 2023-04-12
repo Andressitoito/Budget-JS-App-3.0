@@ -31,7 +31,6 @@ const Signup = ({ setActiveTab }) => {
 		});
 
 		const data = await res.json();
-		console.log(data);
 		setUser_info(data.user_info)
 		dispatch(signUp(userObject));
 		setLoadingUser(false);
@@ -40,7 +39,8 @@ const Signup = ({ setActiveTab }) => {
 	useEffect(() => {
 		/* global google */
 		google.accounts.id.initialize({
-			client_id: process.env.GOOGLE_CLIENT_ID,
+			client_id:
+				"270888240866-9ngld0ma7mg91h5or77rv7607bl7eb5d.apps.googleusercontent.com",
 			callback: handleCallbackResponse,
 		});
 
