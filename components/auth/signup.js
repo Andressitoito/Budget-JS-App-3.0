@@ -40,8 +40,7 @@ const Signup = ({ setActiveTab }) => {
 	useEffect(() => {
 		/* global google */
 		google.accounts.id.initialize({
-			client_id:
-				"270888240866-9ngld0ma7mg91h5or77rv7607bl7eb5d.apps.googleusercontent.com",
+			client_id: process.env.GOOGLE_CLIENT_ID,
 			callback: handleCallbackResponse,
 		});
 
