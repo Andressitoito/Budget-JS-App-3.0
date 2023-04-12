@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalNewTransaction } from "../../features/Modals/modalNewTransaction";
 import BaseButton from "../interaction/Base-button";
@@ -13,7 +14,10 @@ const CategoryDetails = () => {
 
 	const dispatch = useDispatch();
 
+	
 	const { currentCategory } = categoryData
+	useEffect(()=> {
+			}, [currentCategory])
 
 	const handleClickNewTransaction = () => {
 		dispatch(toggleModalNewTransaction());
