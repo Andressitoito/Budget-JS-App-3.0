@@ -7,8 +7,6 @@ import BaseButton from "../interaction/Base-button";
 import OrganizationSelectionList from "../organization/organizationSelectionList";
 import {
 	updateLocalData,
-	updateLocalUser,
-	updateLocalUserState,
 	updateState,
 } from "../../features/auth/localUser";
 
@@ -142,6 +140,8 @@ const Signin = () => {
 		console.log(organizationData);
 	};
 
+{/*
+
 	useEffect(() => {
 
 		let saved_user_local = JSON.parse(localStorage.getItem("saved_user_local"))
@@ -159,10 +159,13 @@ const Signin = () => {
 
 		dispatch(toggleUser());
 	};
+  
+   */}
 
 	return (
 		<>
 			<form>
+ {/*
 				<div className="flex justify-center w-full p-3">
 					<BaseButton
 						text={"sign in!"}
@@ -171,6 +174,15 @@ const Signin = () => {
 						}}
 					/>
 				</div>
+      
+				<BaseButton
+					text={"sign in!"}
+					onClick={(e) => {
+						getUserSignedIn(e);
+					}}
+				/>
+        
+        */}
 
 				<div className="bg-msk-700 p-1 rounded-md w-96">
 					<h2 className="text-3xl txt-msk-300 text-center font-semibold mb-0">
@@ -178,12 +190,12 @@ const Signin = () => {
 					</h2>
 					{userSignedIn === null && (
 						<>
-							{/* <div className="flex justify-center p-5 transform ">
+							 <div className="flex justify-center p-5 transform ">
 								<div
 									id="signInDiv"
 									className="w-230 text-center scale-x-[140%] scale-y-[120%]"
 								></div>
-							</div> */}
+							</div>
 
 							<p className="txt-msk-200 text-center text-xl mt-0">
 								Please sign in to continue!
