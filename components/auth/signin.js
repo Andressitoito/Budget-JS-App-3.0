@@ -147,11 +147,11 @@ const Signin = () => {
 	// 	}
 	// }, []);
 
-	// const handleClickSaveUser = () => {
-	// 	setSaveUser(!saveUser);
+	const handleClickSaveUser = () => {
+		setSaveUser(!saveUser);
 
-	// 	dispatch(toggleUser());
-	// };
+		dispatch(toggleUser());
+	};
 
 	return (
 		<>
