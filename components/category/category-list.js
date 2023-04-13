@@ -8,17 +8,18 @@ import CategoryItem from "./categoryItem";
 const CategoryList = () => {
 	const { categoryData, organizationData } = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const dispatchNotification = useNotification()
+	const dispatchNotification = useNotification();
 	const { currentOrganization_id } = organizationData;
 	useEffect(() => {
 		// dispatchNotification('Pending', 'Loading category list!...')
 		let category_List;
 		(async () => {
 			category_List = await getAllCategories(currentOrganization_id);
-			dispatch(setCategoryData(category_List))
-			
+			dispatch(setCategoryData(category_List));
+
 			// dispatchNotification('Success', '')
 		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentOrganization_id]);
 
 	return (
