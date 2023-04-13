@@ -5,10 +5,7 @@ import { signIn, toggleUser } from "../../features/auth/user";
 import { useDispatch, useSelector } from "react-redux";
 import BaseButton from "../interaction/Base-button";
 import OrganizationSelectionList from "../organization/organizationSelectionList";
-import {
-	updateLocalData,
-	updateState,
-} from "../../features/auth/localUser";
+import { updateLocalData, updateState } from "../../features/auth/localUser";
 
 const Signin = () => {
 	const { localUser } = useSelector((state) => state);
@@ -17,7 +14,7 @@ const Signin = () => {
 	const dispatchNotification = useNotification();
 	const [userSignedIn, setUserSignedIn] = useState(null);
 	const [rememberSelection, setRememberSelection] = useState(false);
-	const [saveUser, setSaveUser] = useState(false);
+	// const [saveUser, setSaveUser] = useState(false);
 
 	const handleCallbackResponse = async (response) => {
 		dispatchNotification(
@@ -71,7 +68,8 @@ const Signin = () => {
 
 	useEffect(() => {
 		google.accounts.id.initialize({
-			client_id: process.env.GOOGLE_CLIENT_ID,
+			client_id:
+				"270888240866-9ngld0ma7mg91h5or77rv7607bl7eb5d.apps.googleusercontent.com",
 			callback: handleCallbackResponse,
 		});
 
@@ -96,76 +94,69 @@ const Signin = () => {
 	////////////////////////////////
 	// HELPER SIGNIN FUNCTION
 	////////////////////////////////
-	const getUserSignedIn = (e) => {
-		e.preventDefault();
 
-		const user_ = {
-			_id: "6418e62930a356ee6570ffb2",
-			organization_id: "6418e62930a356ee6570ffb0",
-			organization_owner: "Andresitos",
-			name: "Andres Ledesma",
-			given_name: "Andres",
-			family_name: "Ledesma",
-			picture:
-				"https://lh3.googleusercontent.com/a/AGNmyxbCB3DNEHCnJrxn5M3lmAYdO9SAEUZ478aR8Asy=s96-c",
-			email: "andresledesma87@gmail.com",
-			createdAt: "2023-03-20T20:03:28.299Z",
-			lastLogin: "2023-03-20T23:03:05.626Z",
-			guest_organizations: [
-				{
-					_id: "641a4fc6df07427f20613f80",
-					organization: "Miritas",
-				},
-			],
-			__v: 0,
-		};
+	// const getUserSignedIn = (e) => {
+	// 	e.preventDefault();
 
-		const organizations_data = {
-			owner: {
-				organization_name: user_.organization_owner,
-				organization_id: user_.organization_id,
-			},
-			guest: user_.guest_organizations,
-		};
-		setUserSignedIn(organizations_data);
-		dispatch(updateLocalData(organizations_data));
-		dispatch(updateState(true));
-		dispatch(signIn(user_));
-	};
+	// 	const user_ = {
+	// 		_id: "6418e62930a356ee6570ffb2",
+	// 		organization_id: "6418e62930a356ee6570ffb0",
+	// 		organization_owner: "Andresitos",
+	// 		name: "Andres Ledesma",
+	// 		given_name: "Andres",
+	// 		family_name: "Ledesma",
+	// 		picture:
+	// 			"https://lh3.googleusercontent.com/a/AGNmyxbCB3DNEHCnJrxn5M3lmAYdO9SAEUZ478aR8Asy=s96-c",
+	// 		email: "andresledesma87@gmail.com",
+	// 		createdAt: "2023-03-20T20:03:28.299Z",
+	// 		lastLogin: "2023-03-20T23:03:05.626Z",
+	// 		guest_organizations: [
+	// 			{
+	// 				_id: "641a4fc6df07427f20613f80",
+	// 				organization: "Miritas",
+	// 			},
+	// 		],
+	// 		__v: 0,
+	// 	};
 
-	const handleClickCheckbox = () => {
-		console.log("i will remember you");
-		setRememberSelection(!rememberSelection);
+	// 	const organizations_data = {
+	// 		owner: {
+	// 			organization_name: user_.organization_owner,
+	// 			organization_id: user_.organization_id,
+	// 		},
+	// 		guest: user_.guest_organizations,
+	// 	};
+	// 	setUserSignedIn(organizations_data);
+	// 	dispatch(updateLocalData(organizations_data));
+	// 	dispatch(updateState(true));
+	// 	dispatch(signIn(user_));
+	// };
 
-		console.log(organizationData);
-	};
+	// const handleClickCheckbox = () => {
+	// 	console.log("i will remember you");
+	// 	setRememberSelection(!rememberSelection);
 
-{/*
+	// 	console.log(organizationData);
+	// };
 
-	useEffect(() => {
+	// useEffect(() => {
+	// 	let saved_user_local = JSON.parse(localStorage.getItem("saved_user_local"));
 
-		let saved_user_local = JSON.parse(localStorage.getItem("saved_user_local"))
+	// 	if (saved_user_local === null || saved_user_local === "null") {
+	// 		console.log("not user saved");
+	// 	}
+	// }, []);
 
-		if(saved_user_local === null || saved_user_local === "null") {
+	// const handleClickSaveUser = () => {
+	// 	setSaveUser(!saveUser);
 
-			console.log('not user saved')
-
-		}
-
-	}, [])
-
-	const handleClickSaveUser = () => {
-		setSaveUser(!saveUser);
-
-		dispatch(toggleUser());
-	};
-  
-   */}
+	// 	dispatch(toggleUser());
+	// };
 
 	return (
 		<>
 			<form>
- {/*
+				{/*
 				<div className="flex justify-center w-full p-3">
 					<BaseButton
 						text={"sign in!"}
@@ -190,7 +181,7 @@ const Signin = () => {
 					</h2>
 					{userSignedIn === null && (
 						<>
-							 <div className="flex justify-center p-5 transform ">
+							<div className="flex justify-center p-5 transform ">
 								<div
 									id="signInDiv"
 									className="w-230 text-center scale-x-[140%] scale-y-[120%]"

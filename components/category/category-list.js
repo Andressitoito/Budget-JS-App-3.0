@@ -11,14 +11,14 @@ const CategoryList = () => {
 	const dispatchNotification = useNotification()
 	const { currentOrganization_id } = organizationData;
 	useEffect(() => {
-		dispatchNotification('Pending', 'Loading category list!...')
+		// dispatchNotification('Pending', 'Loading category list!...')
 		let category_List;
 		(async () => {
 			category_List = await getAllCategories(currentOrganization_id);
-			dispatch(setCategoryData(category_List));
-
+			dispatch(setCategoryData(category_List))
+			
+			// dispatchNotification('Success', '')
 		})();
-		dispatchNotification('Success', '')
 	}, [currentOrganization_id]);
 
 	return (
