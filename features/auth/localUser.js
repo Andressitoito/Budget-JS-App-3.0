@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	localUserState: false,
 	organization_list_data: {},
+	remember_user: false
 };
 
 const localUserSlice = createSlice({
@@ -11,13 +12,19 @@ const localUserSlice = createSlice({
 	reducers: {
 		updateLocalData: (state, action) => {
 			state.organization_list_data = action.payload;
-
 			return state;
 		},
 		updateState: (state) => {
 			state.localUserState = !state.localUserState;
 			return state;
 		},
+		toggleSaveUser: () => {
+			
+						
+
+
+
+		}
 	},
 });
 

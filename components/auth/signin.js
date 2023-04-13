@@ -7,8 +7,6 @@ import BaseButton from "../interaction/Base-button";
 import OrganizationSelectionList from "../organization/organizationSelectionList";
 import {
 	updateLocalData,
-	updateLocalUser,
-	updateLocalUserState,
 	updateState,
 } from "../../features/auth/localUser";
 
@@ -73,8 +71,7 @@ const Signin = () => {
 
 	useEffect(() => {
 		google.accounts.id.initialize({
-			client_id:
-				"270888240866-9ngld0ma7mg91h5or77rv7607bl7eb5d.apps.googleusercontent.com",
+			client_id: process.env.GOOGLE_CLIENT_ID,
 			callback: handleCallbackResponse,
 		});
 
@@ -143,22 +140,49 @@ const Signin = () => {
 		console.log(organizationData);
 	};
 
+{/*
+
+	useEffect(() => {
+
+		let saved_user_local = JSON.parse(localStorage.getItem("saved_user_local"))
+
+		if(saved_user_local === null || saved_user_local === "null") {
+
+			console.log('not user saved')
+
+		}
+
+	}, [])
+
 	const handleClickSaveUser = () => {
 		setSaveUser(!saveUser);
 
 		dispatch(toggleUser());
 	};
+  
+   */}
 
 	return (
 		<>
 			<form>
-      {/*
+ {/*
+				<div className="flex justify-center w-full p-3">
+					<BaseButton
+						text={"sign in!"}
+						onClick={(e) => {
+							getUserSignedIn(e);
+						}}
+					/>
+				</div>
+      
 				<BaseButton
 					text={"sign in!"}
 					onClick={(e) => {
 						getUserSignedIn(e);
 					}}
-				/> */}
+				/>
+        
+        */}
 
 				<div className="bg-msk-700 p-1 rounded-md w-96">
 					<h2 className="text-3xl txt-msk-300 text-center font-semibold mb-0">
@@ -166,7 +190,7 @@ const Signin = () => {
 					</h2>
 					{userSignedIn === null && (
 						<>
-							<div className="flex justify-center p-5 transform ">
+							 <div className="flex justify-center p-5 transform ">
 								<div
 									id="signInDiv"
 									className="w-230 text-center scale-x-[140%] scale-y-[120%]"
@@ -181,7 +205,7 @@ const Signin = () => {
 
 					{localUserState && (
 						<>
-							{/* <div className="flex justify-center items-center mt-3 mb-2 ">
+							<div className="flex justify-center items-center mt-3 mb-2 ">
 								<input
 									type="checkbox"
 									className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -194,7 +218,7 @@ const Signin = () => {
 								>
 									{`Remember user`}
 								</label>
-							</div> */}
+							</div>
 						</>
 					)}
 				</div>

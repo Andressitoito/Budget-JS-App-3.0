@@ -31,7 +31,6 @@ const Signup = ({ setActiveTab }) => {
 		});
 
 		const data = await res.json();
-		console.log(data);
 		setUser_info(data.user_info)
 		dispatch(signUp(userObject));
 		setLoadingUser(false);

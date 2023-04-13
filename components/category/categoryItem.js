@@ -33,7 +33,7 @@ const CategoryItem = (props) => {
 
 	return (
 		<button
-			className="bg-msk-700 py-0.5 rounded-md ring-1 ring-violet-700"
+			className="bg-msk-700 py-0.5 rounded-md ring-1 "
 			onClick={handleClickSetCurrentCategory}
 		>
 			<div

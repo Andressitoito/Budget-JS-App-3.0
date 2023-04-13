@@ -15,12 +15,6 @@ const MainControlPanel = () => {
 
 	const dispatch = useDispatch();
 
-	// if (organizationData.currentOrganization_id === null) {
-
-	// }
-
-
-
 	const handleClickAddNewCategory = () => {
 		dispatch(toggleModalAddNewCategory());
 	};
