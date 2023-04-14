@@ -33,7 +33,7 @@ const Home = () => {
 			{showHome && (
 				<section className="text-center bg-msk-800 m-auto w-[600px]">
 					<div className="absolute">
-						{/* <CurrentBudget /> */}
+						<CurrentBudget className='absolute'/>
 					</div>
 					<MainControlPanel />
 				</section>

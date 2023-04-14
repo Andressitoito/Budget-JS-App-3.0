@@ -2,13 +2,12 @@ import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 import { delete_transaction } from "../../../../lib/transactions/delete_transaction";
 
 async function handler(req, res) {
- if (req.method === "DELETE") {
+ if (req.method === "POST") {
   ////////////////////////////////
   // DECLARE GLOBAL VARIABLES
   ////////////////////////////////
   const { transaction_id, transaction_item } = req.body;
 
-  let deleted_transaction_message
   ////////////////////////////////
   // CONNECT TO THE DATABASE
   ////////////////////////////////
@@ -18,7 +17,7 @@ async function handler(req, res) {
   // DELETE TRANSACTION
   ////////////////////////////////
   try {
-   deleted_transaction_message = await delete_transaction(transaction_id)
+   await delete_transaction(transaction_id)
   } catch (error) {
    return res.status(422).json({
     status: 422,
