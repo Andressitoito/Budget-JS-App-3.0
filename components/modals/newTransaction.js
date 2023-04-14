@@ -13,7 +13,9 @@ const NewTransaction = () => {
 		getValues,
 		formState: { errors, isValid },
 	} = useForm({ mode: "onChange" });
-	const { modalNewTransaction, categoryData } = useSelector((state) => state);
+	const { modalNewTransaction, categoryData, user } = useSelector(
+		(state) => state
+	);
 
 	const { currentCategory } = categoryData;
 
@@ -30,12 +32,11 @@ const NewTransaction = () => {
 
 		const transaction = {
 			category_id: currentCategory._id,
-			organization_id: "6418e62930a356ee6570ffb0",
-			username: "Andrew",
+			organization_id: currentCategory.organization_id,
+			username: user.given_name.substring(0, 20),
 			item: getValues("item_name").trim(),
 			price: getValues("item_price").trim(),
 		};
-
 
 		const response = await fetch(
 			"/api/database/transactions/create_transaction",

@@ -20,7 +20,7 @@ const TransactionItem = (props) => {
 		dispatch(toggleModalEditTransaction({_id, item, price}));
 	};
 
-	const handleClickModalDeleteTransaction = () => {
+	const handleClickModalDeleteTransaction = (_id) => {
 		dispatch(toggleModalDeleteTransaction({_id, item}));
 	};
 
@@ -29,7 +29,7 @@ const TransactionItem = (props) => {
 	return (
 		<div className="relative bg-msk-200 rounded-md">
 			<div className="bg-msk-300 relative text-2xl md:text-xl rounded-md m-1">
-				<p className="bg-msk-600 txt-msk-100 right-0 rounded-sm top-[-5px]">
+				<p className="bg-msk-600 txt-msk-100 right-0 rounded-sm top-[-5px] font-semibold">
 					{username}
 				</p>
 				<p className="w-full text-xl md:text-md">{readableTime}</p>
@@ -51,7 +51,7 @@ const TransactionItem = (props) => {
 						p_xs
 						danger
 						onClick={() => {
-							handleClickModalDeleteTransaction(_id, );
+							handleClickModalDeleteTransaction(_id);
 						}}
 					/>
 

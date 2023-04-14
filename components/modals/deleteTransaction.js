@@ -33,7 +33,7 @@ const DeleteTransaction = () => {
 		const response = await fetch(
 			"/api/database/transactions/delete_transaction",
 			{
-				method: "DELETE",
+				method: "POST",
 				body: JSON.stringify(transaction_data),
 				headers: {
 					"Content-Type": "application/json",
@@ -91,13 +91,12 @@ const DeleteTransaction = () => {
 						}}
 					/>
 					<BaseButton
-						text={"Yes, I am sure"}
+						text={`Yes, delete ${transaction_item}`}
 						danger
 						onClick={() => {
 							onClick();
 						}}
 					>
-						Yes, Im sure
 					</BaseButton>
 				</div>
 			</div>
