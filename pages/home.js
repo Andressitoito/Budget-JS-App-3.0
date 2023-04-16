@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentBudget from "../components/ui/currentBudget";
 import MainControlPanel from "../components/ui/MainControlPanel";
-import { setCategoryData } from "../features/Category/categoryData";
-import { getAllCategories } from "../lib/categories/getAllCategories";
 
 const Home = () => {
 	const route = useRouter();
@@ -33,7 +31,7 @@ const Home = () => {
 			{showHome && (
 				<section className="text-center bg-msk-800 m-auto w-[600px]">
 					<div className="absolute">
-						<CurrentBudget className='absolute'/>
+						{/* <CurrentBudget className='absolute'/> */}
 					</div>
 					<MainControlPanel />
 				</section>
