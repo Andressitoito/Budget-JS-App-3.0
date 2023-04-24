@@ -5,13 +5,11 @@ import CategoryActions from "../category/categoryActions";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalAddNewCategory } from "../../features/Modals/modalAddNewCategory";
 import AddNewCategory from "../modals/addNewCategory";
-import { useEffect } from "react";
-import { setCategoryData } from "../../features/Category/categoryData";
-import { getAllCategories } from "../../lib/categories/getAllCategories";
 
 const MainControlPanel = () => {
-	const { modalAddNewCategory, user, organizationData } = useSelector((state) => state);
-
+	const { modalAddNewCategory, user, organizationData } = useSelector(
+		(state) => state
+	);
 
 	const dispatch = useDispatch();
 
@@ -20,7 +18,7 @@ const MainControlPanel = () => {
 	};
 
 	return (
-		<section className="relative bg-msk-600 w-2/3 mx-auto p-2 rounded-md">
+		<section className="select-none relative bg-msk-600 w-2/3 mx-auto p-2 rounded-md">
 			<div className="absolute top-7 left-[-100px]">
 				<BaseButton
 					text={"Add category"}

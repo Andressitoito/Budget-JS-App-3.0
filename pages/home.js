@@ -29,11 +29,11 @@ const Home = () => {
 	return (
 		<>
 			{showHome && (
-				<section className="text-center bg-msk-800 m-auto w-[600px]">
-					<div className="absolute">
-						{/* <CurrentBudget className='absolute'/> */}
-					</div>
+				<section className="select-none relative text-center bg-msk-800 m-auto w-[600px]">
 					<MainControlPanel />
+					{/* <div className="absolute left-10">
+						<CurrentBudget/>
+					</div> */}
 				</section>
 			)}
 		</>

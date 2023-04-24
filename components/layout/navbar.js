@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/user";
+import CurrentBudget from "../ui/currentBudget";
 
 const Navbar = () => {
 	const router = useRouter();
@@ -78,6 +79,7 @@ const Navbar = () => {
 					{/* AVATAR BADGE END */}
 				</div>
 			</nav>
+			<CurrentBudget/>
 		</>
 	);
 };
