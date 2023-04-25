@@ -1,5 +1,5 @@
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
-import { get_all_transactions } from "../../../../lib/transactions/get_all_transactions";
+import { get_sum_all_transactions } from "../../../../lib/transactions/get_sum_all_transactions";
 
 async function handler(req, res) {
 	////////////////////////////////
@@ -18,7 +18,7 @@ async function handler(req, res) {
 	////////////////////////////////
 	try {
   
-		transactions = await get_all_transactions(organization_id);
+		transactions = await get_sum_all_transactions(organization_id);
 
   console.log("transactions ", transactions)
 	} catch (error) {
