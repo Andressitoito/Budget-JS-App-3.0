@@ -17,10 +17,9 @@ async function handler(req, res) {
 	// GET TRANSACTIONS ARRAY
 	////////////////////////////////
 	try {
-  
 		transactions = await get_sum_all_transactions(organization_id);
 
-  console.log("transactions ", transactions)
+		console.log("transactions ", transactions)
 	} catch (error) {
 		return res.status(500).json({
 			status: 500,
