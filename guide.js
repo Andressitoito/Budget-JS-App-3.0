@@ -34,7 +34,13 @@ from here to each button is given _id_category and categoryName wich is passed t
 From each category button we can call to a redux state where we can take any data.
  
 
+
+
+
 `
+
+
+
 /* 
 google ClientID
 

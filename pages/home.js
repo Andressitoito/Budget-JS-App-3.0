@@ -7,7 +7,7 @@ import MainControlPanel from "../components/ui/MainControlPanel";
 
 const Home = () => {
 	const route = useRouter();
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	const { user, currentOrganization_id } = useSelector((state) => state);
 
@@ -29,11 +29,11 @@ const Home = () => {
 	return (
 		<>
 			{showHome && (
-				<section className="text-center bg-msk-800 m-auto w-[600px]">
-					<div className="absolute">
-						{/* <CurrentBudget className='absolute'/> */}
-					</div>
+				<section className="select-none relative text-center bg-msk-800 m-auto w-[600px]">
 					<MainControlPanel />
+					{/* <div className="absolute left-10">
+						<CurrentBudget/>
+					</div> */}
 				</section>
 			)}
 		</>
@@ -42,26 +42,3 @@ const Home = () => {
 
 export default Home;
 
-// export async function getServerSideProps(context) {
-// 	const { req } = context;
-
-// 	let userSaved = req.cookies;
-
-// 	if (Object.keys(userSaved).length === 0) {
-// 		return {
-// 			redirect: {
-// 				destination: "/",
-// 				permanent: false,
-// 			},
-// 		};
-// 	} else if (userSaved.userLoggedIn === "userLoggedTrue") {
-// 		return { props: {} };
-// 	} else {
-// 		return {
-// 			redirect: {
-// 				destination: "/",
-// 				permanent: false,
-// 			},
-// 		};
-// 	}
-// }
