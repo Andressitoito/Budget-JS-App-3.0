@@ -1,18 +1,18 @@
-import jwt from 'jsonwebtoken'; // or any other library you're using for token handling
+import jwt from 'jsonwebtoken';
 
-const secret = process.env.JWT_SECRET; // Ensure this is set in your environment variables
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 export default function handler(req, res) {
- const { token } = req.body;
+ if (req.method === 'POST') {
+  const { token } = req.body;
 
- if (!token) {
-  return res.status(400).json({ valid: false, message: "Token is required" });
- }
-
- try {
-  jwt.verify(token, secret);
-  return res.status(200).json({ valid: true });
- } catch (error) {
-  return res.status(401).json({ valid: false, message: "Invalid token" });
+  try {
+   const decoded = jwt.verify(token, JWT_SECRET);
+   res.status(200).json({ valid: true, user: decoded });
+  } catch (error) {
+   res.status(401).json({ valid: false });
+  }
+ } else {
+  res.status(405).json({ message: 'Method Not Allowed' });
  }
 }
