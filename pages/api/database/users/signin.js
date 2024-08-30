@@ -1,30 +1,30 @@
 import { mongo_connect } from "../../../../lib/mongodb/mongo_connect";
 import { random_message } from "../../../../lib/signin/random_message";
-
 const User = require("../../models/usersModel");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+console.log("JWT ", JWT_SECRET)
 
 async function handler(req, res) {
 	if (req.method === "POST") {
-		////////////////////////////////
+		//////////////////////////////////
 		// DECLARE GLOBAL VARIABLES
-		////////////////////////////////
-  		let email = req.body;
+		//////////////////////////////////
+		let email = req.body;
 		let user;
 
-  console.log(user)
-  console.log(email)
-		////////////////////////////////
+		//////////////////////////////////
 		// CONNECT TO THE DATABASE
-		////////////////////////////////
+		//////////////////////////////////
 		await mongo_connect();
 
-		////////////////////////////////
+		//////////////////////////////////
 		// CHECK USER
-		////////////////////////////////
+		//////////////////////////////////
 		try {
 			const userData = await User.findOne({ email: email });
-
-   console.log(userData)
 
 			if (userData?.email === email) {
 				user = userData;
@@ -40,18 +40,25 @@ async function handler(req, res) {
 				error: error.toString(),
 			});
 		}
-		////////////////////////////////
+
+		//////////////////////////////////
 		// GET RANDOM MESSAGE
-		////////////////////////////////
+		//////////////////////////////////
 		const message = random_message(user.given_name);
 
-		////////////////////////////////
+		//////////////////////////////////
+		// GENERATE JWT TOKEN
+		//////////////////////////////////
+		const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1000h' });
+
+		//////////////////////////////////
 		// SEND RESPONSE USER
-		////////////////////////////////
+		//////////////////////////////////
 		res.status(200).json({
 			status: 200,
 			message: message,
 			user: user,
+			token: token
 		});
 	}
 }

@@ -20,10 +20,60 @@ const Signin = () => {
 	const [rememberSelection, setRememberSelection] = useState(false);
 	const [savedUser, setSavedUser] = useState(false);
 
+	// const handleCallbackResponse = async (response) => {
+	// 	dispatchNotification(
+	// 		"Pending",
+	// 		"Signin in, getting user and organization data..."
+	// 	);
+
+	// 	let userObject = jwt_decode(response.credential);
+
+	// 	document.getElementById("signInDiv").hidden = true;
+
+	// 	const res = await fetch(`/api/database/users/signin`, {
+	// 		method: "POST",
+	// 		body: JSON.stringify(userObject.email),
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 		},
+	// 	});
+
+	// 	const data = await res.json();
+
+	// 	if (res.ok) {
+	// 		const email = userObject.email;
+	// 		const response = await fetch("/api/database/users/return_user", {
+	// 			method: "POST",
+	// 			body: JSON.stringify({ email }),
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 			},
+	// 		});
+	// 		const user_data = await response.json();
+
+	// 		const organizations_data = {
+	// 			owner: {
+	// 				organization_name: user_data.user.organization_owner,
+	// 				organization_id: user_data.user.organization_id,
+	// 			},
+	// 			guest: user_data.user.guest_organizations,
+	// 		};
+
+	// 		dispatchNotification("Success", `${data.message}`);
+
+	// 		setUserSignedIn(organizations_data);
+	// 		dispatch(updateLocalData(organizations_data));
+	// 		dispatch(updateState(true));
+	// 		dispatch(signIn(user_data.user));
+	// 	} else {
+	// 		dispatchNotification("Error", `${data.error}`);
+	// 	}
+	// };
+
 	const handleCallbackResponse = async (response) => {
 		dispatchNotification(
 			"Pending",
-			"Signin in, getting user and organization data..."
+			"Signing in, getting user and organization data..."
 		);
 
 		let userObject = jwt_decode(response.credential);
@@ -41,30 +91,27 @@ const Signin = () => {
 		const data = await res.json();
 
 		if (res.ok) {
-			const email = userObject.email;
-			const response = await fetch("/api/database/users/return_user", {
-				method: "POST",
-				body: JSON.stringify({ email }),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const user_data = await response.json();
+			const token = data.token;
+			const user = data.user;
 
 			const organizations_data = {
 				owner: {
-					organization_name: user_data.user.organization_owner,
-					organization_id: user_data.user.organization_id,
+					organization_name: user.organization_owner,
+					organization_id: user.organization_id,
 				},
-				guest: user_data.user.guest_organizations,
+				guest: user.guest_organizations,
 			};
 
 			dispatchNotification("Success", `${data.message}`);
 
+			// Save user and token in local storage
+			localStorage.setItem("localUser", JSON.stringify(user));
+			localStorage.setItem("jwtToken", token);
+
 			setUserSignedIn(organizations_data);
 			dispatch(updateLocalData(organizations_data));
 			dispatch(updateState(true));
-			dispatch(signIn(user_data.user));
+			dispatch(signIn(user));
 		} else {
 			dispatchNotification("Error", `${data.error}`);
 		}
