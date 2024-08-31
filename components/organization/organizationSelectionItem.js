@@ -14,7 +14,7 @@ const OrganizationSelectionItem = ({
 	const dispatch = useDispatch();
 
 	const handleClickSetOrganization = () => {
-		localStorageSaveOrganizationData(organization_id);
+		// localStorageSaveOrganizationData(organization_id);
 		dispatch(updateOrganizationData(organization_id));
 		dispatch(setCurrentCategory(null));
 		router.replace("/home");
