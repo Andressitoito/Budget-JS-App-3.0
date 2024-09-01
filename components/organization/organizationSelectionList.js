@@ -7,33 +7,21 @@ const OrganizationSelectionList = ({
 	const { owner, guest } = organizations_data;
 
 	const localStorageSaveOrganizationData = (organization_id) => {
-		let BudgetAppJs_3_Org_Selection = {
-			currentOrganization_id: null,
-		};
+		let currentOrganization_id = organization_id
 
-		if (rememberSelection) {
-			let organizationData = JSON.parse(
-				localStorage.getItem("BudgetAppJs_3_Org_Selection")
-			);
+		let organizationData = JSON.parse(
+			localStorage.getItem("BudgetAppJs_3_Org_Selection")
+		);
 
-			if (organizationData === null) {
-				localStorage.setItem(
-					"BudgetAppJs_3_Org_Selection",
-					JSON.stringify(BudgetAppJs_3_Org_Selection)
-				);
-
-				organizationData = JSON.parse(
-					localStorage.getItem("BudgetAppJs_3_Org_Selection")
-				);
-			}
-
-			organizationData = {
-				currentOrganization_id: organization_id,
-			};
-
+		if (organizationData === null) {
 			localStorage.setItem(
 				"BudgetAppJs_3_Org_Selection",
-				JSON.stringify(organizationData)
+				JSON.stringify(currentOrganization_id)
+			);
+		} else {
+			localStorage.setItem(
+				"BudgetAppJs_3_Org_Selection",
+				JSON.stringify(currentOrganization_id)
 			);
 		}
 	};
