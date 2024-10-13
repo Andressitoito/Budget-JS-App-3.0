@@ -10,7 +10,13 @@ export default function handler(req, res) {
    const decoded = jwt.verify(token, JWT_SECRET);
    res.status(200).json({ valid: true, user: decoded });
   } catch (error) {
-   res.status(401).json({ valid: false });
+   if (error.name === 'TokenExpiredError') {
+    res.status(401).json({ valid: false, message: 'Token has expired' });
+   } else if (error.name === 'JsonWebTokenError') {
+    res.status(401).json({ valid: false, message: 'Invalid token' });
+   } else {
+    res.status(401).json({ valid: false, message: 'Token validation failed' });
+   }
   }
  } else {
   res.status(405).json({ message: 'Method Not Allowed' });
